@@ -413,64 +413,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* Professional Diagnostics Console Assistant */
-        .console-assistant {
-            position: fixed;
-            bottom: 20px;
-            right: 24px;
-            width: 300px;
-            background: var(--bg-surface);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            font-size: 12px;
-            z-index: 100;
-        }
-
-        .console-header {
-            background: var(--bg-card);
-            padding: 8px 12px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-        }
-
-        .console-body {
-            padding: 10px;
-            max-height: 140px;
-            overflow-y: auto;
-            color: var(--text-muted);
-            font-family: monospace;
-        }
-
-        .console-input-row {
-            display: flex;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .console-input {
-            flex: 1;
-            background: var(--bg-primary);
-            border: none;
-            padding: 8px;
-            color: white;
-            font-size: 11px;
-            outline: none;
-            font-family: monospace;
-        }
-
-        .console-send {
-            background: var(--accent-blue);
-            border: none;
-            color: white;
-            padding: 0 12px;
-            cursor: pointer;
-            font-size: 11px;
-            font-weight: 600;
-        }
-
         /* Mission control visual system */
         :root {
             --bg-primary: #050914;
@@ -561,11 +503,6 @@
 
         .search-input:focus,
         .form-control:focus,
-        .console-input:focus {
-            border-color: var(--accent-cyan);
-            box-shadow: 0 0 0 3px rgba(98, 201, 245, .12);
-        }
-
         .btn-sensors {
             min-height: 38px;
             padding: 8px 15px;
@@ -789,7 +726,6 @@
         .btn-execute:focus-visible,
         .btn-sensors:focus-visible,
         .tab:focus-visible,
-        .console-send:focus-visible,
         .btn-leave:focus-visible {
             outline: 2px solid var(--accent-cyan);
             outline-offset: 3px;
@@ -808,46 +744,6 @@
         .diagnostic-results {
             border-radius: 4px;
             border-color: rgba(98,201,245,.25);
-        }
-
-        .console-assistant {
-            position: static;
-            width: min(420px, calc(100% - 56px));
-            margin: 0 max(28px, calc((100vw - 1280px) / 2)) 24px auto;
-            overflow: hidden;
-            border-color: rgba(98,201,245,.25);
-            border-radius: 5px;
-            background: rgba(8, 16, 32, .96);
-            box-shadow: 0 18px 50px rgba(0,0,0,.42);
-            backdrop-filter: blur(14px);
-        }
-
-        .console-header {
-            min-height: 40px;
-            background: #101f3a;
-            color: var(--text-main);
-            letter-spacing: .04em;
-        }
-
-        .console-header span:first-child::before {
-            display: inline-block;
-            width: 7px;
-            height: 7px;
-            margin-right: 8px;
-            border-radius: 50%;
-            background: var(--accent-cyan);
-            box-shadow: 0 0 9px var(--accent-cyan);
-            content: "";
-        }
-
-        .console-body { line-height: 1.7; }
-
-        .console-input-row { min-height: 38px; }
-
-        .console-send {
-            padding: 0 14px;
-            background: var(--accent-blue);
-            text-transform: uppercase;
         }
 
         @media (max-width: 760px) {
@@ -890,10 +786,6 @@
             .telemetry-toolbar { align-items: flex-start; }
             .preset-group { flex-wrap: wrap; }
             .slash-layout { grid-template-columns: 1fr auto; gap: 10px; }
-            .console-assistant {
-                width: calc(100% - 36px);
-                margin: 0 auto 18px;
-            }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -1603,21 +1495,6 @@
 
     </main>
 
-    <!-- Professional Terminal Assistant Widget -->
-    <div class="console-assistant">
-        <div class="console-header">
-            <span>NASA Assistant Console</span>
-            <span style="font-size: 10px; color: var(--text-muted);">v2.4</span>
-        </div>
-        <div id="console-body" class="console-body">
-            > System online. Ready for telemetry analysis.
-        </div>
-        <div class="console-input-row">
-            <input type="text" id="console-input" class="console-input" placeholder="Type command..." onkeypress="handleCommand(event)">
-            <button class="console-send" onclick="sendConsoleCommand()">Send</button>
-        </div>
-    </div>
-
     <script>
         function switchView(viewName) {
             const dashboardView = document.getElementById('dashboard-view');
@@ -1910,21 +1787,6 @@
             }
         }
 
-        function handleCommand(e) {
-            if (e.key === 'Enter') sendConsoleCommand();
-        }
-
-        function sendConsoleCommand() {
-            const input = document.getElementById('console-input');
-            const cmd = input.value.trim();
-            if (!cmd) return;
-
-            const body = document.getElementById('console-body');
-            body.innerHTML += `<div>> ${cmd}</div>`;
-            body.innerHTML += `<div style="color: var(--accent-cyan);">> Executed successfully. Telemetry stable.</div>`;
-            input.value = '';
-            body.scrollTop = body.scrollHeight;
-        }
     </script>
 </body>
 </html>
