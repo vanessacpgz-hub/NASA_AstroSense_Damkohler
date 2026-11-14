@@ -1189,6 +1189,58 @@
         @media (prefers-reduced-motion: reduce) {
             .status-led { animation: none; }
         }
+
+        .extinguisher-panel {
+            max-width: 860px;
+            padding: clamp(22px, 4vw, 38px);
+            border: 1px solid var(--border-color);
+            border-top: 2px solid var(--accent-red);
+            border-radius: 5px;
+            background: linear-gradient(145deg, rgba(16,31,57,.96), rgba(8,15,30,.96));
+            box-shadow: 0 20px 55px rgba(0,0,0,.2);
+        }
+
+        .extinguisher-panel h3 {
+            margin-bottom: 12px;
+            color: var(--text-main);
+            font-size: 13px;
+            letter-spacing: .1em;
+        }
+
+        .extinguisher-panel p {
+            max-width: 700px;
+            margin-bottom: 16px;
+            color: var(--text-muted);
+            font-size: 13px;
+            line-height: 1.75;
+        }
+
+        .extinguisher-panel .data-disclosure {
+            padding: 12px 14px;
+            border-left: 2px solid var(--accent-cyan);
+            background: rgba(98,201,245,.06);
+            color: #bac8d9;
+            font-size: 11px;
+        }
+
+        .extinguisher-panel .btn-execute {
+            max-width: 300px;
+            margin-top: 10px;
+        }
+
+        #flex-chat-status {
+            min-height: 20px;
+            margin: 10px 0 0;
+            color: var(--accent-cyan);
+            font-size: 11px;
+        }
+
+        #fx-btn,
+        #fx-box { display: none !important; }
+
+        body.extinguisher-chat-active #fx-btn { display: block !important; }
+        body.extinguisher-chat-active #fx-box { display: none !important; }
+        body.extinguisher-chat-active #fx-box.open { display: flex !important; }
     </style>
 </head>
 <body>
@@ -1238,6 +1290,7 @@
     <!-- Navigation Tabs -->
     <nav class="nav-tabs">
         <button class="tab active" onclick="switchTab('fire-safety', event)">Fire safety</button>
+        <button class="tab" onclick="switchTab('fire-extinguisher', event)">Fire extinguisher</button>
         <button class="tab" onclick="switchTab('predictive-modeling', event)">Predictive modeling of flammability and fire scenarios</button>
         <button class="tab" onclick="switchTab('flame-group', event)">Flame group</button>
         <button class="tab" onclick="switchTab('flame-dissipation', event)">Flame dissipation</button>
@@ -1311,6 +1364,22 @@
                 <div id="event-log-entries" class="event-log-entries" role="log" aria-live="polite" aria-relevant="additions"></div>
             </section>
         </div>
+
+        <section id="extinguisher-view" class="view-section">
+            <div class="mission-meta">
+                <span class="mission-kicker">AstroSense / Fire Extinguisher</span>
+                <span class="demo-badge">FLEX experiment data</span>
+            </div>
+            <h2>FLEX Fire Extinguisher Assistant</h2>
+            <p>Explore information from the FLEX flame-extinguishment experiments conducted with methanol and heptane in microgravity.</p>
+            <div class="extinguisher-panel">
+                <h3>EXPERIMENT DATA ASSISTANT</h3>
+                <p>This assistant answers questions using its FLEX experimental dataset (274 tests). It is separate from the simulated telemetry dashboard and does not control fire-suppression hardware.</p>
+                <p class="data-disclosure">When you send a message, your question and chat history are sent to the external FLEX chat service.</p>
+                <button class="btn-execute" type="button" onclick="openFlexChat()">OPEN FLEX CHAT</button>
+                <p id="flex-chat-status" role="status" aria-live="polite">Chat loads when you open it. Use the floating chat button to continue the conversation.</p>
+            </div>
+        </section>
 
         <!-- Sensor Module View -->
         <div id="sensors-view" class="view-section">
@@ -1394,18 +1463,32 @@
 
     <script>
         function switchView(viewName) {
-            document.getElementById('dashboard-view').classList.remove('active');
-            document.getElementById('sensors-view').classList.remove('active');
-            if (viewName === 'sensors') {
-                document.getElementById('sensors-view').classList.add('active');
-            } else {
-                document.getElementById('dashboard-view').classList.add('active');
+            const dashboardView = document.getElementById('dashboard-view');
+            const sensorsView = document.getElementById('sensors-view');
+            const extinguisherView = document.getElementById('extinguisher-view');
+            [dashboardView, sensorsView, extinguisherView].forEach(view => view.classList.remove('active'));
+
+            const showExtinguisher = viewName === 'extinguisher';
+            const targetView = viewName === 'sensors'
+                ? sensorsView
+                : showExtinguisher ? extinguisherView : dashboardView;
+            targetView.classList.add('active');
+
+            const chatButton = document.getElementById('fx-btn');
+            const chatWindow = document.getElementById('fx-box');
+            if (!showExtinguisher && chatButton && chatWindow && chatWindow.classList.contains('open')) {
+                chatButton.click();
             }
+            document.body.classList.toggle('extinguisher-chat-active', showExtinguisher);
         }
 
         function switchTab(tabId, event) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             event.target.classList.add('active');
+            if (tabId === 'fire-extinguisher') {
+                switchView('extinguisher');
+                return;
+            }
             switchView('dashboard');
 
             const titleEl = document.getElementById('active-tab-title');
@@ -1423,6 +1506,46 @@
             } else if (tabId === 'flame-dissipation') {
                 titleEl.innerText = "Flame dissipation";
                 descEl.innerText = "Thermal quenching and energy dissipation tracking to optimize fire suppression response times in aerospace engineering environments.";
+            }
+        }
+
+        let flexChatPromise;
+        function loadFlexChat() {
+            if (document.getElementById('fx-btn')) return Promise.resolve();
+            if (flexChatPromise) return flexChatPromise;
+
+            flexChatPromise = new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = 'https://flex-chatbot.damkohler.workers.dev/chat-widget.js';
+                script.dataset.api = 'https://flex-chatbot.damkohler.workers.dev/api/chat';
+                script.dataset.title = 'FLEX Fire Extinguisher Assistant';
+                script.async = true;
+                script.onload = resolve;
+                script.onerror = () => {
+                    flexChatPromise = null;
+                    reject(new Error('The FLEX chat widget could not be loaded.'));
+                };
+                document.head.appendChild(script);
+            });
+
+            return flexChatPromise;
+        }
+
+        async function openFlexChat() {
+            const status = document.getElementById('flex-chat-status');
+            status.innerText = 'Loading FLEX assistant…';
+            try {
+                await loadFlexChat();
+                const chatButton = document.getElementById('fx-btn');
+                const chatWindow = document.getElementById('fx-box');
+                if (!chatButton || !chatWindow) {
+                    throw new Error('The FLEX chat widget did not initialize.');
+                }
+                if (!chatWindow.classList.contains('open')) chatButton.click();
+                status.innerText = 'FLEX assistant ready.';
+            } catch (error) {
+                status.innerText = 'Chat unavailable. Check your connection and try again.';
+                addEvent('ERROR', 'FLEX chat widget failed to load.');
             }
         }
 
