@@ -1268,67 +1268,104 @@
 
         #extinguisher-chat-container {
             margin-top: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            background: #081222;
         }
 
-        #fx-btn { display: none !important; }
-
-        #extinguisher-chat-container #fx-box {
-            position: relative !important;
-            inset: auto !important;
-            display: flex !important;
-            width: 100% !important;
-            max-width: none !important;
-            height: 480px !important;
-            max-height: 70vh !important;
-            border: 1px solid var(--border-color) !important;
-            border-radius: 5px !important;
-            background: #081222 !important;
-            box-shadow: none !important;
-            color: var(--text-main) !important;
-            font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace !important;
-            z-index: auto !important;
+        .flex-chat-log {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            height: 360px;
+            overflow-y: auto;
+            padding: 18px;
         }
 
-        #extinguisher-chat-container #fx-head {
-            background: #102442 !important;
-            border-bottom: 1px solid var(--border-color);
-            color: var(--text-main) !important;
-        }
-
-        #extinguisher-chat-container #fx-log {
-            background: #060d19 !important;
+        .flex-chat-message {
+            max-width: min(88%, 680px);
+            padding: 10px 13px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
             color: var(--text-main);
+            font-size: 13px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
         }
 
-        #extinguisher-chat-container .fx-a {
-            border: 1px solid var(--border-color) !important;
-            background: #101f36 !important;
-            color: var(--text-main) !important;
+        .flex-chat-message.assistant {
+            align-self: flex-start;
+            background: #101f36;
         }
 
-        #extinguisher-chat-container .fx-u {
-            background: #155fc1 !important;
-            color: white !important;
+        .flex-chat-message.user {
+            align-self: flex-end;
+            border-color: rgba(98,201,245,.25);
+            background: #155fc1;
         }
 
-        #extinguisher-chat-container #fx-form {
-            border-top: 1px solid var(--border-color) !important;
-            background: #0a1425 !important;
+        .flex-chat-message.pending { color: var(--text-muted); }
+
+        .flex-chat-message.error {
+            border-color: rgba(237,69,72,.5);
+            background: rgba(237,69,72,.1);
+            color: #ffb4b5;
         }
 
-        #extinguisher-chat-container #fx-in {
-            border-color: var(--border-color) !important;
-            background: #050914 !important;
-            color: var(--text-main) !important;
+        .flex-chat-form {
+            display: flex;
+            gap: 8px;
+            padding: 12px;
+            border-top: 1px solid var(--border-color);
+            background: #0a1425;
         }
 
-        #extinguisher-chat-container #fx-send {
-            background: var(--accent-blue) !important;
+        .flex-chat-input {
+            min-width: 0;
+            min-height: 42px;
+            flex: 1;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: #050914;
+            color: var(--text-main);
+            font: inherit;
         }
 
-        #extinguisher-chat-container #fx-hint {
-            background: #0a1425 !important;
+        .flex-chat-input:focus {
+            border-color: var(--accent-cyan);
+            outline: 2px solid rgba(98,201,245,.18);
+        }
+
+        .flex-chat-send {
+            min-width: 88px;
+            border: 0;
+            border-radius: 4px;
+            background: var(--accent-blue);
+            color: white;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+        }
+
+        .flex-chat-send:disabled { opacity: .6; cursor: wait; }
+
+        .flex-chat-footnote {
+            margin: 0 !important;
+            padding: 0 12px 10px;
             color: var(--text-muted) !important;
+            font-size: 10px !important;
+        }
+
+        @media (max-width: 520px) {
+            .flex-chat-log { height: 320px; padding: 12px; }
+            .flex-chat-form { gap: 6px; padding: 8px; }
+            .flex-chat-send { min-width: 70px; }
+            .flex-chat-message { max-width: 94%; font-size: 12px; }
         }
 
         @media (max-width: 760px) {
@@ -1487,8 +1524,17 @@
                 </div>
                 <p class="data-disclosure">This is an educational data assistant, not emergency or operational fire-safety guidance. Messages and chat history are sent to the external FLEX chat service.</p>
                 <h3>ASK THE FLEX DATA ASSISTANT</h3>
-                <p id="flex-chat-status" role="status" aria-live="polite">The FLEX assistant loads when you open this section.</p>
-                <div id="extinguisher-chat-container" aria-label="FLEX experiment chatbot"></div>
+                <p id="flex-chat-status" role="status" aria-live="polite">Ready to query the FLEX experiment data.</p>
+                <div id="extinguisher-chat-container" aria-label="FLEX experiment chatbot">
+                    <div id="flex-chat-log" class="flex-chat-log" role="log" aria-live="polite" aria-relevant="additions">
+                        <div class="flex-chat-message assistant">Hello. Ask about the FLEX experiments with methanol and heptane. Responses are limited to the experimental dataset.</div>
+                    </div>
+                    <form id="flex-chat-form" class="flex-chat-form" onsubmit="sendFlexChat(event)">
+                        <input id="flex-chat-input" class="flex-chat-input" type="text" maxlength="500" autocomplete="off" placeholder="Ask a question about FLEX data…" aria-label="Question for the FLEX data assistant">
+                        <button id="flex-chat-send" class="flex-chat-send" type="submit">Send</button>
+                    </form>
+                    <p class="flex-chat-footnote">The question and conversation history are sent to the external FLEX data service.</p>
+                </div>
             </div>
         </section>
 
@@ -1592,7 +1638,6 @@
             event.target.classList.add('active');
             if (tabId === 'fire-extinguisher') {
                 switchView('extinguisher');
-                openFlexChat();
                 return;
             }
             switchView('dashboard');
@@ -1615,46 +1660,64 @@
             }
         }
 
-        let flexChatPromise;
-        function loadFlexChat() {
-            if (document.getElementById('fx-box')) return Promise.resolve();
-            if (flexChatPromise) return flexChatPromise;
+        const flexChatApi = 'https://flex-chatbot.damkohler.workers.dev/api/chat';
+        const flexChatHistory = [];
 
-            flexChatPromise = new Promise((resolve, reject) => {
-                const script = document.createElement('script');
-                script.src = 'https://flex-chatbot.damkohler.workers.dev/chat-widget.js';
-                script.dataset.api = 'https://flex-chatbot.damkohler.workers.dev/api/chat';
-                script.dataset.title = 'FLEX Fire Extinguisher Assistant';
-                script.async = true;
-                script.onload = resolve;
-                script.onerror = () => {
-                    flexChatPromise = null;
-                    reject(new Error('The FLEX chat widget could not be loaded.'));
-                };
-                document.head.appendChild(script);
-            });
-
-            return flexChatPromise;
+        function appendFlexChatMessage(kind, text) {
+            const message = document.createElement('div');
+            message.className = `flex-chat-message ${kind}`;
+            message.textContent = text;
+            document.getElementById('flex-chat-log').appendChild(message);
+            return message;
         }
 
-        async function openFlexChat() {
+        async function sendFlexChat(event) {
+            event.preventDefault();
+            const input = document.getElementById('flex-chat-input');
+            const sendButton = document.getElementById('flex-chat-send');
             const status = document.getElementById('flex-chat-status');
-            status.innerText = 'Loading FLEX assistant…';
+            const log = document.getElementById('flex-chat-log');
+            const question = input.value.trim();
+            if (!question) return;
+
+            input.value = '';
+            input.disabled = true;
+            sendButton.disabled = true;
+            appendFlexChatMessage('user', question);
+            flexChatHistory.push({ role: 'user', content: question });
+            const pending = appendFlexChatMessage('assistant pending', 'Querying the FLEX experiment data…');
+            status.innerText = 'Contacting the FLEX data service…';
+            log.scrollTop = log.scrollHeight;
+
             try {
-                await loadFlexChat();
-                const chatWindow = document.getElementById('fx-box');
-                const container = document.getElementById('extinguisher-chat-container');
-                if (!chatWindow || !container) {
-                    throw new Error('The FLEX chat widget did not initialize.');
+                const response = await fetch(flexChatApi, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: JSON.stringify({ messages: flexChatHistory })
+                });
+                const result = await response.json();
+                if (!response.ok) {
+                    throw new Error(result.error || `FLEX service returned HTTP ${response.status}.`);
                 }
-                if (!container.contains(chatWindow)) container.appendChild(chatWindow);
-                chatWindow.classList.add('open');
-                const chatButton = document.getElementById('fx-btn');
-                if (chatButton) chatButton.remove();
-                status.innerText = 'FLEX assistant ready.';
+                if (typeof result.answer !== 'string' || !result.answer.trim()) {
+                    throw new Error('The FLEX service returned an empty answer.');
+                }
+
+                pending.classList.remove('pending');
+                pending.textContent = result.answer;
+                flexChatHistory.push({ role: 'assistant', content: result.answer });
+                status.innerText = 'Response received from the FLEX data service.';
             } catch (error) {
-                status.innerText = 'Chat unavailable. Check your connection and try again.';
-                addEvent('ERROR', 'FLEX chat widget failed to load.');
+                pending.classList.remove('pending');
+                pending.classList.add('error');
+                pending.textContent = 'Could not reach the FLEX service. Check your connection and try again.';
+                flexChatHistory.pop();
+                status.innerText = 'Request failed. Please try again.';
+            } finally {
+                input.disabled = false;
+                sendButton.disabled = false;
+                input.focus();
+                log.scrollTop = log.scrollHeight;
             }
         }
 
