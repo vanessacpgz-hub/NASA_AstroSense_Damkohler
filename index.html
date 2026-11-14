@@ -904,6 +904,291 @@
                 animation-iteration-count: 1 !important;
             }
         }
+
+        .mission-clocks {
+            display: flex;
+            flex: 0 0 auto;
+            gap: 18px;
+            padding: 5px 16px;
+            border-left: 1px solid var(--border-color);
+        }
+
+        .clock-readout {
+            display: grid;
+            gap: 2px;
+        }
+
+        .clock-readout span {
+            color: var(--text-muted);
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: .12em;
+        }
+
+        .clock-readout time {
+            color: var(--text-main);
+            font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+            font-size: 13px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .header-control {
+            min-height: 36px;
+            padding: 7px 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: rgba(13,25,48,.75);
+            color: var(--text-main);
+            cursor: pointer;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: .06em;
+            white-space: nowrap;
+        }
+
+        .header-control:hover,
+        .header-control[aria-pressed="true"] {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        .header-control.alert-test {
+            border-color: rgba(237,69,72,.45);
+            color: #ff9a9c;
+        }
+
+        .alert-banner {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            min-height: 48px;
+            padding: 8px max(28px, calc((100vw - 1280px) / 2));
+            border-bottom: 1px solid rgba(245,158,11,.6);
+            background: repeating-linear-gradient(135deg, rgba(245,158,11,.16) 0 12px, rgba(12,18,31,.96) 12px 24px);
+            color: #fff3cc;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .06em;
+        }
+
+        .alert-banner[hidden] { display: none; }
+
+        .alert-label {
+            padding: 4px 7px;
+            background: #d97706;
+            color: #160f04;
+            font-size: 9px;
+            letter-spacing: .12em;
+        }
+
+        .alert-message { flex: 1; }
+
+        .alert-dismiss {
+            border: 0;
+            background: transparent;
+            color: inherit;
+            cursor: pointer;
+            font: inherit;
+            text-decoration: underline;
+        }
+
+        body.crt-mode::after {
+            position: fixed;
+            inset: 0;
+            z-index: 20;
+            background: repeating-linear-gradient(to bottom, transparent 0 3px, rgba(74,222,128,.07) 4px);
+            content: "";
+            pointer-events: none;
+        }
+
+        body.crt-mode {
+            --accent-cyan: #7ee787;
+        }
+
+        body.crt-mode .workspace,
+        body.crt-mode header,
+        body.crt-mode .nav-tabs {
+            text-shadow: 0 0 8px rgba(126,231,135,.16);
+        }
+
+        .card-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .card-header-row h3 { margin-bottom: 0; }
+
+        .status-led {
+            width: 7px;
+            height: 7px;
+            flex: 0 0 7px;
+            border-radius: 50%;
+            background: #54d6a0;
+            box-shadow: 0 0 10px rgba(84,214,160,.8);
+            animation: led-pulse 2s ease-in-out infinite;
+        }
+
+        .status-led.caution {
+            background: #fbbf24;
+            box-shadow: 0 0 10px rgba(251,191,36,.8);
+        }
+
+        @keyframes led-pulse {
+            50% { opacity: .48; }
+        }
+
+        .card-reading {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .card-reading strong {
+            color: var(--text-main);
+            font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+            font-size: clamp(26px, 4vw, 34px);
+            font-variant-numeric: tabular-nums;
+            font-weight: 600;
+            line-height: 1;
+        }
+
+        .card-reading > span:not(.status-pill) {
+            color: var(--accent-cyan);
+            font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+            font-size: 12px;
+        }
+
+        .status-pill {
+            margin-left: auto;
+            padding: 4px 7px;
+            border: 1px solid rgba(84,214,160,.24);
+            border-radius: 2px;
+            color: #71d5ae;
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: .08em;
+        }
+
+        .status-pill.caution {
+            border-color: rgba(251,191,36,.4);
+            color: #fbbf24;
+        }
+
+        .sparkline {
+            display: block;
+            width: 100%;
+            height: 46px;
+            margin: 8px 0 10px;
+            overflow: visible;
+        }
+
+        .sparkline polyline {
+            fill: none;
+            stroke: var(--accent-cyan);
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-width: 2;
+            vector-effect: non-scaling-stroke;
+        }
+
+        .sparkline.heat polyline { stroke: #f7a85a; }
+        .sparkline.pressure polyline { stroke: #a78bfa; }
+
+        .card p.telemetry-note {
+            max-width: none;
+            font-size: 10px;
+            line-height: 1.5;
+        }
+
+        .event-log {
+            margin-top: 22px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            background: rgba(7,13,26,.76);
+        }
+
+        .event-log-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(16,31,58,.72);
+        }
+
+        .event-log-header h3 {
+            color: var(--text-main);
+            font-size: 10px;
+            letter-spacing: .12em;
+        }
+
+        .event-log-header span {
+            color: var(--text-muted);
+            font-size: 9px;
+            letter-spacing: .08em;
+        }
+
+        .event-log-entries {
+            display: grid;
+            gap: 7px;
+            max-height: 168px;
+            overflow-y: auto;
+            padding: 13px 16px;
+            font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+        }
+
+        .event-entry {
+            display: grid;
+            grid-template-columns: 78px 74px minmax(0, 1fr);
+            gap: 10px;
+            color: #a9b8cb;
+            font-size: 10px;
+            line-height: 1.5;
+        }
+
+        .event-time { color: #8293ac; }
+        .event-level { color: #71d5ae; font-weight: 700; }
+        .event-level.warn { color: #fbbf24; }
+        .event-level.demo { color: var(--accent-cyan); }
+
+        @media (max-width: 760px) {
+            .mission-clocks {
+                order: 2;
+                gap: 12px;
+                margin-left: auto;
+                padding-right: 0;
+            }
+
+            .header-actions {
+                order: 4;
+                flex-wrap: wrap;
+                width: 100%;
+                margin-left: 0;
+            }
+
+            .alert-banner { padding: 8px 18px; }
+        }
+
+        @media (max-width: 520px) {
+            .mission-clocks { width: 100%; margin-left: 0; padding-left: 0; border-left: 0; }
+            .header-actions { gap: 6px; }
+            .btn-sensors { flex: 1; justify-content: center; }
+            .header-control { flex: 1; }
+            .alert-banner { align-items: flex-start; gap: 8px; padding: 10px 14px; font-size: 9px; }
+            .alert-label { flex: 0 0 auto; }
+            .alert-dismiss { font-size: 9px; }
+            .event-entry { grid-template-columns: 66px 54px minmax(0, 1fr); gap: 6px; font-size: 9px; }
+            .event-log-entries { padding: 12px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .status-led { animation: none; }
+        }
     </style>
 </head>
 <body>
@@ -918,18 +1203,37 @@
             </div>
         </div>
 
+        <div class="mission-clocks" aria-label="Mission clocks">
+            <div class="clock-readout">
+                <span>UTC</span>
+                <time id="utc-clock">--:--:--</time>
+            </div>
+            <div class="clock-readout">
+                <span>MISSION ELAPSED</span>
+                <time id="mission-clock">T+ 00:00:00</time>
+            </div>
+        </div>
+
         <div class="search-container">
             <span class="search-icon">⚲</span>
             <input type="text" class="search-input" placeholder="Query mission parameters, telemetry ID...">
         </div>
 
         <div class="header-actions">
+            <button id="crt-toggle" class="header-control" type="button" aria-pressed="false" onclick="toggleCRTMode()">CRT: OFF</button>
+            <button class="header-control alert-test" type="button" onclick="triggerO2Alert()">TEST ALERT</button>
             <button class="btn-sensors" onclick="switchView('sensors')">
                 <span>⚡</span> Connect Sensors
             </button>
             <a href="#" class="btn-leave">Exit session</a>
         </div>
     </header>
+
+    <section id="alert-banner" class="alert-banner" role="alert" hidden>
+        <span class="alert-label">CAUTION</span>
+        <span class="alert-message">O₂ LEVEL VARIANCE DETECTED — simulated sensor fault for demonstration.</span>
+        <button class="alert-dismiss" type="button" onclick="dismissO2Alert()">Dismiss</button>
+    </section>
 
     <!-- Navigation Tabs -->
     <nav class="nav-tabs">
@@ -955,18 +1259,57 @@
 
             <div class="dashboard-grid">
                 <div class="card">
-                    <h3>Active Telemetry Nodes</h3>
-                    <p>14 active sensor links connected across microgravity testing modules and combustion chambers.</p>
+                    <div class="card-header-row">
+                        <h3>Cabin Oxygen</h3>
+                        <span id="o2-led" class="status-led" aria-label="Nominal status"></span>
+                    </div>
+                    <div class="card-reading">
+                        <strong id="o2-reading">20.9</strong>
+                        <span>% O₂</span>
+                        <span id="o2-status" class="status-pill">NOMINAL</span>
+                    </div>
+                    <svg class="sparkline" viewBox="0 0 100 36" role="img" aria-label="Simulated oxygen trend">
+                        <polyline id="o2-chart" points="0,19 8,17 16,20 24,14 32,18 40,13 48,17 56,12 64,18 72,15 80,17 88,13 96,16 100,14"></polyline>
+                    </svg>
+                    <p class="telemetry-note">Virtual cabin sensor · demo readings only</p>
                 </div>
                 <div class="card">
-                    <h3>NASA Safe Baselines</h3>
-                    <p>Oxygen concentration threshold: &lt; 21.5%<br>Radiative heat flux safety limit: &lt; 2.0 kW/m²</p>
+                    <div class="card-header-row">
+                        <h3>Radiative Heat Flux</h3>
+                        <span class="status-led" aria-label="Nominal status"></span>
+                    </div>
+                    <div class="card-reading">
+                        <strong id="heat-reading">1.20</strong>
+                        <span>kW/m²</span>
+                    </div>
+                    <svg class="sparkline heat" viewBox="0 0 100 36" role="img" aria-label="Simulated heat flux trend">
+                        <polyline id="heat-chart" points="0,20 8,17 16,21 24,15 32,19 40,16 48,20 56,13 64,18 72,16 80,20 88,15 96,17 100,14"></polyline>
+                    </svg>
+                    <p class="telemetry-note">Virtual chamber sensor · scenario limit 2.0 kW/m²</p>
                 </div>
                 <div class="card">
-                    <h3>Diagnostic Engine</h3>
-                    <p>Random Forest classifier active on Modbus TCP telemetry streams. Zero anomalies detected in last 24h.</p>
+                    <div class="card-header-row">
+                        <h3>Cabin Pressure</h3>
+                        <span class="status-led" aria-label="Nominal status"></span>
+                    </div>
+                    <div class="card-reading">
+                        <strong id="pressure-reading">101.3</strong>
+                        <span>kPa</span>
+                    </div>
+                    <svg class="sparkline pressure" viewBox="0 0 100 36" role="img" aria-label="Simulated cabin pressure trend">
+                        <polyline id="pressure-chart" points="0,18 8,16 16,20 24,17 32,15 40,18 48,13 56,16 64,19 72,15 80,17 88,13 96,16 100,14"></polyline>
+                    </svg>
+                    <p class="telemetry-note">14 virtual nodes · no physical sensor connection</p>
                 </div>
             </div>
+
+            <section class="event-log" aria-labelledby="event-log-title">
+                <div class="event-log-header">
+                    <h3 id="event-log-title">FLIGHT EVENT LOG</h3>
+                    <span>UTC · SIMULATION</span>
+                </div>
+                <div id="event-log-entries" class="event-log-entries" role="log" aria-live="polite" aria-relevant="additions"></div>
+            </section>
         </div>
 
         <!-- Sensor Module View -->
@@ -995,7 +1338,7 @@
                 <div class="telemetry-toolbar">
                     <div class="connection-status">
                         <div class="status-indicator"></div>
-                        <span>PORT: COM3 / BAUDRATE: 115200 (ACTIVE)</span>
+                        <span>SIMULATED FEED / VIRTUAL NODE</span>
                     </div>
                     <div class="preset-group">
                         <button class="btn-preset" onclick="setPreset('normal')">Nominal (1.2)</button>
@@ -1082,6 +1425,144 @@
                 descEl.innerText = "Thermal quenching and energy dissipation tracking to optimize fire suppression response times in aerospace engineering environments.";
             }
         }
+
+        function toggleCRTMode() {
+            const enabled = document.body.classList.toggle('crt-mode');
+            document.getElementById('crt-toggle').setAttribute('aria-pressed', String(enabled));
+            document.getElementById('crt-toggle').innerText = enabled ? "CRT: ON" : "CRT: OFF";
+            addEvent("DISPLAY", `CRT display mode ${enabled ? "enabled" : "disabled"}.`);
+        }
+
+        const missionStart = Date.now();
+        const telemetry = {
+            oxygen: 20.9,
+            heat: 1.2,
+            pressure: 101.3,
+            oxygenHistory: [20.82, 20.88, 20.8, 20.94, 20.86, 20.98, 20.89, 21.01, 20.87, 20.94, 20.82, 20.95, 20.9, 20.96],
+            heatHistory: [1.12, 1.18, 1.1, 1.21, 1.15, 1.19, 1.12, 1.25, 1.17, 1.2, 1.13, 1.22, 1.18, 1.24],
+            pressureHistory: [101.2, 101.3, 101.1, 101.25, 101.35, 101.2, 101.4, 101.3, 101.18, 101.32, 101.25, 101.4, 101.3, 101.38]
+        };
+        let oxygenAlertActive = false;
+
+        function updateMissionClocks() {
+            const now = new Date();
+            document.getElementById('utc-clock').innerText = new Intl.DateTimeFormat('en-GB', {
+                timeZone: 'UTC',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            }).format(now);
+
+            const elapsed = Math.floor((Date.now() - missionStart) / 1000);
+            const hours = String(Math.floor(elapsed / 3600)).padStart(2, '0');
+            const minutes = String(Math.floor((elapsed % 3600) / 60)).padStart(2, '0');
+            const seconds = String(elapsed % 60).padStart(2, '0');
+            document.getElementById('mission-clock').innerText = `T+ ${hours}:${minutes}:${seconds}`;
+        }
+
+        function appendHistory(history, value) {
+            history.push(value);
+            if (history.length > 24) history.shift();
+        }
+
+        function updateSparkline(id, values, min, max) {
+            const points = values.map((value, index) => {
+                const x = (index / (values.length - 1)) * 100;
+                const y = 33 - ((value - min) / (max - min)) * 28;
+                return `${x.toFixed(1)},${y.toFixed(1)}`;
+            }).join(' ');
+            document.getElementById(id).setAttribute('points', points);
+        }
+
+        function updateTelemetry() {
+            const randomChange = (amount) => (Math.random() - 0.5) * amount;
+            telemetry.oxygen = oxygenAlertActive
+                ? 19.4
+                : Math.max(20.65, Math.min(21.15, telemetry.oxygen + randomChange(0.08)));
+            telemetry.heat = Math.max(0.92, Math.min(1.62, telemetry.heat + randomChange(0.16)));
+            telemetry.pressure = Math.max(100.8, Math.min(101.8, telemetry.pressure + randomChange(0.3)));
+
+            appendHistory(telemetry.oxygenHistory, telemetry.oxygen);
+            appendHistory(telemetry.heatHistory, telemetry.heat);
+            appendHistory(telemetry.pressureHistory, telemetry.pressure);
+
+            document.getElementById('o2-reading').innerText = telemetry.oxygen.toFixed(1);
+            document.getElementById('heat-reading').innerText = telemetry.heat.toFixed(2);
+            document.getElementById('pressure-reading').innerText = telemetry.pressure.toFixed(1);
+
+            const o2Status = document.getElementById('o2-status');
+            const o2Led = document.getElementById('o2-led');
+            o2Status.classList.toggle('caution', oxygenAlertActive);
+            o2Status.innerText = oxygenAlertActive ? "CAUTION" : "NOMINAL";
+            o2Led.classList.toggle('caution', oxygenAlertActive);
+            o2Led.setAttribute('aria-label', oxygenAlertActive ? "Caution status" : "Nominal status");
+
+            updateSparkline('o2-chart', telemetry.oxygenHistory, 19, 22);
+            updateSparkline('heat-chart', telemetry.heatHistory, 0.7, 2);
+            updateSparkline('pressure-chart', telemetry.pressureHistory, 100, 103);
+        }
+
+        function addEvent(level, message) {
+            const entries = document.getElementById('event-log-entries');
+            const row = document.createElement('div');
+            row.className = 'event-entry';
+
+            const time = document.createElement('span');
+            time.className = 'event-time';
+            time.innerText = `${new Intl.DateTimeFormat('en-GB', {
+                timeZone: 'UTC',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            }).format(new Date())}Z`;
+
+            const eventType = document.createElement('span');
+            eventType.className = `event-level${level === "CAUTION" ? " warn" : level === "DEMO" ? " demo" : ""}`;
+            eventType.innerText = level;
+
+            const detail = document.createElement('span');
+            detail.innerText = message;
+
+            row.append(time, eventType, detail);
+            entries.appendChild(row);
+            while (entries.children.length > 24) entries.firstElementChild.remove();
+            entries.scrollTop = entries.scrollHeight;
+        }
+
+        function triggerO2Alert() {
+            oxygenAlertActive = true;
+            document.getElementById('alert-banner').hidden = false;
+            updateTelemetry();
+            addEvent("CAUTION", "Oxygen variance alert injected for demonstration.");
+        }
+
+        function dismissO2Alert() {
+            oxygenAlertActive = false;
+            document.getElementById('alert-banner').hidden = true;
+            updateTelemetry();
+            addEvent("ACK", "Demonstration alert acknowledged; nominal simulation resumed.");
+        }
+
+        updateMissionClocks();
+        updateTelemetry();
+        addEvent("DEMO", "Virtual telemetry initialized; no hardware connection is active.");
+        const eventMessages = [
+            ["LINK_OK", "Virtual node 04 packet received. CRC valid."],
+            ["SIM_DATA", "Cabin oxygen sample generated."],
+            ["TREND", "Heat flux remains within the demo scenario limit."],
+            ["LINK_OK", "Virtual node 11 packet received. CRC valid."],
+            ["SIM_DATA", "Cabin pressure sample generated."]
+        ];
+        let eventMessageIndex = 0;
+        window.setInterval(updateMissionClocks, 1000);
+        window.setInterval(updateTelemetry, 2500);
+        window.setInterval(() => {
+            const [level, message] = eventMessages[eventMessageIndex];
+            addEvent(level, message);
+            eventMessageIndex = (eventMessageIndex + 1) % eventMessages.length;
+        }, 5000);
 
         let currentVal = 1.2;
         function setPreset(type) {
