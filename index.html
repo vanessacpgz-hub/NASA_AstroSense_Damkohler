@@ -1215,7 +1215,43 @@
             line-height: 1.75;
         }
 
-        .extinguisher-panel .data-disclosure {
+        .extinguisher-facts {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            margin: 22px 0;
+        }
+
+        .extinguisher-fact {
+            padding: 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: rgba(5,9,20,.48);
+        }
+
+        .extinguisher-fact span {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: .1em;
+        }
+
+        .extinguisher-fact strong {
+            color: var(--accent-cyan);
+            font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+            font-size: 17px;
+        }
+
+        .extinguisher-fact p {
+            margin: 7px 0 0;
+            font-size: 11px;
+            line-height: 1.55;
+        }
+
+        .data-disclosure {
+            margin: 20px 0 0;
             padding: 12px 14px;
             border-left: 2px solid var(--accent-cyan);
             background: rgba(98,201,245,.06);
@@ -1223,24 +1259,81 @@
             font-size: 11px;
         }
 
-        .extinguisher-panel .btn-execute {
-            max-width: 300px;
-            margin-top: 10px;
-        }
-
         #flex-chat-status {
-            min-height: 20px;
-            margin: 10px 0 0;
+            min-height: 22px;
+            margin: 0;
             color: var(--accent-cyan);
             font-size: 11px;
         }
 
-        #fx-btn,
-        #fx-box { display: none !important; }
+        #extinguisher-chat-container {
+            margin-top: 16px;
+        }
 
-        body.extinguisher-chat-active #fx-btn { display: block !important; }
-        body.extinguisher-chat-active #fx-box { display: none !important; }
-        body.extinguisher-chat-active #fx-box.open { display: flex !important; }
+        #fx-btn { display: none !important; }
+
+        #extinguisher-chat-container #fx-box {
+            position: relative !important;
+            inset: auto !important;
+            display: flex !important;
+            width: 100% !important;
+            max-width: none !important;
+            height: 480px !important;
+            max-height: 70vh !important;
+            border: 1px solid var(--border-color) !important;
+            border-radius: 5px !important;
+            background: #081222 !important;
+            box-shadow: none !important;
+            color: var(--text-main) !important;
+            font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace !important;
+            z-index: auto !important;
+        }
+
+        #extinguisher-chat-container #fx-head {
+            background: #102442 !important;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-main) !important;
+        }
+
+        #extinguisher-chat-container #fx-log {
+            background: #060d19 !important;
+            color: var(--text-main);
+        }
+
+        #extinguisher-chat-container .fx-a {
+            border: 1px solid var(--border-color) !important;
+            background: #101f36 !important;
+            color: var(--text-main) !important;
+        }
+
+        #extinguisher-chat-container .fx-u {
+            background: #155fc1 !important;
+            color: white !important;
+        }
+
+        #extinguisher-chat-container #fx-form {
+            border-top: 1px solid var(--border-color) !important;
+            background: #0a1425 !important;
+        }
+
+        #extinguisher-chat-container #fx-in {
+            border-color: var(--border-color) !important;
+            background: #050914 !important;
+            color: var(--text-main) !important;
+        }
+
+        #extinguisher-chat-container #fx-send {
+            background: var(--accent-blue) !important;
+        }
+
+        #extinguisher-chat-container #fx-hint {
+            background: #0a1425 !important;
+            color: var(--text-muted) !important;
+        }
+
+        @media (max-width: 760px) {
+            .extinguisher-facts { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -1370,14 +1463,32 @@
                 <span class="mission-kicker">AstroSense / Fire Extinguisher</span>
                 <span class="demo-badge">FLEX experiment data</span>
             </div>
-            <h2>FLEX Fire Extinguisher Assistant</h2>
-            <p>Explore information from the FLEX flame-extinguishment experiments conducted with methanol and heptane in microgravity.</p>
+            <h2>Fire Extinguisher Research</h2>
+            <p>Explore how fire-suppression research studies flames in microgravity, where combustion can behave differently from flames on Earth.</p>
             <div class="extinguisher-panel">
-                <h3>EXPERIMENT DATA ASSISTANT</h3>
-                <p>This assistant answers questions using its FLEX experimental dataset (274 tests). It is separate from the simulated telemetry dashboard and does not control fire-suppression hardware.</p>
-                <p class="data-disclosure">When you send a message, your question and chat history are sent to the external FLEX chat service.</p>
-                <button class="btn-execute" type="button" onclick="openFlexChat()">OPEN FLEX CHAT</button>
-                <p id="flex-chat-status" role="status" aria-live="polite">Chat loads when you open it. Use the floating chat button to continue the conversation.</p>
+                <h3>FLEX EXPERIMENT OVERVIEW</h3>
+                <p>The Flame Extinguishment Experiment (FLEX) investigates flame behavior and extinguishment in microgravity. The assistant below is scoped to the FLEX dataset supplied by its service, rather than the live-style telemetry elsewhere in AstroSense.</p>
+                <div class="extinguisher-facts">
+                    <article class="extinguisher-fact">
+                        <span>EXPERIMENT ENVIRONMENT</span>
+                        <strong>Microgravity</strong>
+                        <p>Studies flame behavior in conditions relevant to spacecraft.</p>
+                    </article>
+                    <article class="extinguisher-fact">
+                        <span>FUELS IN CHAT DATA</span>
+                        <strong>Methanol · Heptane</strong>
+                        <p>Ask the assistant to compare records for these two fuels.</p>
+                    </article>
+                    <article class="extinguisher-fact">
+                        <span>ASSISTANT DATASET</span>
+                        <strong>274 tests</strong>
+                        <p>Dataset size reported by the supplied FLEX chat service.</p>
+                    </article>
+                </div>
+                <p class="data-disclosure">This is an educational data assistant, not emergency or operational fire-safety guidance. Messages and chat history are sent to the external FLEX chat service.</p>
+                <h3>ASK THE FLEX DATA ASSISTANT</h3>
+                <p id="flex-chat-status" role="status" aria-live="polite">The FLEX assistant loads when you open this section.</p>
+                <div id="extinguisher-chat-container" aria-label="FLEX experiment chatbot"></div>
             </div>
         </section>
 
@@ -1474,12 +1585,6 @@
                 : showExtinguisher ? extinguisherView : dashboardView;
             targetView.classList.add('active');
 
-            const chatButton = document.getElementById('fx-btn');
-            const chatWindow = document.getElementById('fx-box');
-            if (!showExtinguisher && chatButton && chatWindow && chatWindow.classList.contains('open')) {
-                chatButton.click();
-            }
-            document.body.classList.toggle('extinguisher-chat-active', showExtinguisher);
         }
 
         function switchTab(tabId, event) {
@@ -1487,6 +1592,7 @@
             event.target.classList.add('active');
             if (tabId === 'fire-extinguisher') {
                 switchView('extinguisher');
+                openFlexChat();
                 return;
             }
             switchView('dashboard');
@@ -1511,7 +1617,7 @@
 
         let flexChatPromise;
         function loadFlexChat() {
-            if (document.getElementById('fx-btn')) return Promise.resolve();
+            if (document.getElementById('fx-box')) return Promise.resolve();
             if (flexChatPromise) return flexChatPromise;
 
             flexChatPromise = new Promise((resolve, reject) => {
@@ -1536,12 +1642,15 @@
             status.innerText = 'Loading FLEX assistant…';
             try {
                 await loadFlexChat();
-                const chatButton = document.getElementById('fx-btn');
                 const chatWindow = document.getElementById('fx-box');
-                if (!chatButton || !chatWindow) {
+                const container = document.getElementById('extinguisher-chat-container');
+                if (!chatWindow || !container) {
                     throw new Error('The FLEX chat widget did not initialize.');
                 }
-                if (!chatWindow.classList.contains('open')) chatButton.click();
+                if (!container.contains(chatWindow)) container.appendChild(chatWindow);
+                chatWindow.classList.add('open');
+                const chatButton = document.getElementById('fx-btn');
+                if (chatButton) chatButton.remove();
                 status.innerText = 'FLEX assistant ready.';
             } catch (error) {
                 status.innerText = 'Chat unavailable. Check your connection and try again.';
