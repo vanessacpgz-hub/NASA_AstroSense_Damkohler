@@ -1013,6 +1013,10 @@
             background: rgba(16,31,58,.72);
         }
 
+        .event-log:not([open]) .event-log-header {
+            border-bottom: 0;
+        }
+
         .event-log-header h3 {
             color: var(--text-main);
             font-size: 10px;
@@ -1174,20 +1178,20 @@
             letter-spacing: .1em;
         }
 
-        .flammability-accordion-list {
+        .content-accordion-list {
             display: grid;
             gap: 12px;
             margin-top: 18px;
         }
 
-        .flammability-accordion {
+        .content-accordion {
             overflow: hidden;
             border: 1px solid var(--border-color);
             border-radius: 5px;
             background: rgba(5,9,20,.48);
         }
 
-        .flammability-accordion summary {
+        .content-accordion summary {
             display: flex;
             align-items: center;
             gap: 12px;
@@ -1200,10 +1204,10 @@
             list-style: none;
         }
 
-        .flammability-accordion summary::-webkit-details-marker { display: none; }
-        .flammability-accordion summary:focus-visible { outline: 2px solid var(--accent-cyan); outline-offset: -3px; }
+        .content-accordion summary::-webkit-details-marker { display: none; }
+        .content-accordion summary:focus-visible { outline: 2px solid var(--accent-cyan); outline-offset: -3px; }
 
-        .flammability-accordion summary::after {
+        .content-accordion summary::after {
             margin-left: auto;
             color: var(--accent-cyan);
             content: "+";
@@ -1211,26 +1215,44 @@
             line-height: 1;
         }
 
-        .flammability-accordion[open] summary::after { content: "−"; }
+        .content-accordion[open] summary::after { content: "−"; }
 
-        .flammability-accordion summary span {
+        .content-accordion summary > span:first-child {
             color: var(--accent-cyan);
             font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
         }
 
-        .flammability-accordion-content {
+        .sensor-panel.content-accordion {
+            padding: 0;
+        }
+
+        .sensor-panel.content-accordion > summary {
+            padding: 16px 18px;
+            background: rgba(16,31,58,.55);
+        }
+
+        .sensor-panel.content-accordion[open] > summary {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sensor-panel .sensor-accordion-content {
+            padding: 18px 20px;
+            border-top: 0;
+        }
+
+        .content-accordion-content {
             padding: 2px 18px 18px;
             border-top: 1px solid var(--border-color);
         }
 
-        .flammability-accordion-content p {
+        .content-accordion-content p {
             margin: 12px 0;
             color: #bac8d9;
             font-size: 12px;
             line-height: 1.7;
         }
 
-        .flammability-accordion-content ul {
+        .content-accordion-content ul {
             margin: 10px 0;
             padding-left: 22px;
             color: #bac8d9;
@@ -1289,6 +1311,27 @@
         .event-log[hidden],
         .data-figures[hidden] {
             display: none;
+        }
+
+        .dashboard-grid .telemetry-accordion {
+            padding: 20px;
+        }
+
+        .dashboard-grid .telemetry-accordion > summary {
+            padding: 0;
+            border: 0;
+            background: transparent;
+        }
+
+        .dashboard-grid .telemetry-accordion[open] > summary {
+            margin-bottom: 14px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .telemetry-accordion-content {
+            display: grid;
+            gap: 12px;
         }
 
         .flex-data-table-wrap {
@@ -1599,119 +1642,153 @@
             </p>
 
             <div id="dashboard-grid" class="dashboard-grid">
-                <div class="card">
-                    <div class="card-header-row">
-                        <h3>Cabin Oxygen</h3>
-                        <span id="o2-led" class="status-led" aria-label="Nominal status"></span>
+                <details class="card content-accordion telemetry-accordion">
+                    <summary>
+                        <div class="card-header-row">
+                            <h3>Cabin Oxygen</h3>
+                            <span id="o2-led" class="status-led" aria-label="Nominal status"></span>
+                        </div>
+                    </summary>
+                    <div class="telemetry-accordion-content">
+                        <div class="card-reading">
+                            <strong id="o2-reading">20.9</strong>
+                            <span>% O₂</span>
+                            <span id="o2-status" class="status-pill">NOMINAL</span>
+                        </div>
+                        <svg class="sparkline" viewBox="0 0 100 36" role="img" aria-label="Simulated oxygen trend">
+                            <polyline id="o2-chart" points="0,19 8,17 16,20 24,14 32,18 40,13 48,17 56,12 64,18 72,15 80,17 88,13 96,16 100,14"></polyline>
+                        </svg>
+                        <p class="telemetry-note">Virtual cabin sensor · demo readings only</p>
                     </div>
-                    <div class="card-reading">
-                        <strong id="o2-reading">20.9</strong>
-                        <span>% O₂</span>
-                        <span id="o2-status" class="status-pill">NOMINAL</span>
+                </details>
+                <details class="card content-accordion telemetry-accordion">
+                    <summary>
+                        <div class="card-header-row">
+                            <h3>Radiative Heat Flux</h3>
+                            <span class="status-led" aria-label="Nominal status"></span>
+                        </div>
+                    </summary>
+                    <div class="telemetry-accordion-content">
+                        <div class="card-reading">
+                            <strong id="heat-reading">1.20</strong>
+                            <span>kW/m²</span>
+                        </div>
+                        <svg class="sparkline heat" viewBox="0 0 100 36" role="img" aria-label="Simulated heat flux trend">
+                            <polyline id="heat-chart" points="0,20 8,17 16,21 24,15 32,19 40,16 48,20 56,13 64,18 72,16 80,20 88,15 96,17 100,14"></polyline>
+                        </svg>
+                        <p class="telemetry-note">Virtual chamber sensor · scenario limit 2.0 kW/m²</p>
                     </div>
-                    <svg class="sparkline" viewBox="0 0 100 36" role="img" aria-label="Simulated oxygen trend">
-                        <polyline id="o2-chart" points="0,19 8,17 16,20 24,14 32,18 40,13 48,17 56,12 64,18 72,15 80,17 88,13 96,16 100,14"></polyline>
-                    </svg>
-                    <p class="telemetry-note">Virtual cabin sensor · demo readings only</p>
-                </div>
-                <div class="card">
-                    <div class="card-header-row">
-                        <h3>Radiative Heat Flux</h3>
-                        <span class="status-led" aria-label="Nominal status"></span>
+                </details>
+                <details class="card content-accordion telemetry-accordion">
+                    <summary>
+                        <div class="card-header-row">
+                            <h3>Cabin Pressure</h3>
+                            <span class="status-led" aria-label="Nominal status"></span>
+                        </div>
+                    </summary>
+                    <div class="telemetry-accordion-content">
+                        <div class="card-reading">
+                            <strong id="pressure-reading">101.3</strong>
+                            <span>kPa</span>
+                        </div>
+                        <svg class="sparkline pressure" viewBox="0 0 100 36" role="img" aria-label="Simulated cabin pressure trend">
+                            <polyline id="pressure-chart" points="0,18 8,16 16,20 24,17 32,15 40,18 48,13 56,16 64,19 72,15 80,17 88,13 96,16 100,14"></polyline>
+                        </svg>
+                        <p class="telemetry-note">14 virtual nodes · no physical sensor connection</p>
                     </div>
-                    <div class="card-reading">
-                        <strong id="heat-reading">1.20</strong>
-                        <span>kW/m²</span>
-                    </div>
-                    <svg class="sparkline heat" viewBox="0 0 100 36" role="img" aria-label="Simulated heat flux trend">
-                        <polyline id="heat-chart" points="0,20 8,17 16,21 24,15 32,19 40,16 48,20 56,13 64,18 72,16 80,20 88,15 96,17 100,14"></polyline>
-                    </svg>
-                    <p class="telemetry-note">Virtual chamber sensor · scenario limit 2.0 kW/m²</p>
-                </div>
-                <div class="card">
-                    <div class="card-header-row">
-                        <h3>Cabin Pressure</h3>
-                        <span class="status-led" aria-label="Nominal status"></span>
-                    </div>
-                    <div class="card-reading">
-                        <strong id="pressure-reading">101.3</strong>
-                        <span>kPa</span>
-                    </div>
-                    <svg class="sparkline pressure" viewBox="0 0 100 36" role="img" aria-label="Simulated cabin pressure trend">
-                        <polyline id="pressure-chart" points="0,18 8,16 16,20 24,17 32,15 40,18 48,13 56,16 64,19 72,15 80,17 88,13 96,16 100,14"></polyline>
-                    </svg>
-                    <p class="telemetry-note">14 virtual nodes · no physical sensor connection</p>
-                </div>
+                </details>
             </div>
 
-            <section id="flight-event-log" class="event-log" aria-labelledby="event-log-title">
-                <div class="event-log-header">
+            <details id="flight-event-log" class="event-log content-accordion" aria-labelledby="event-log-title">
+                <summary class="event-log-header">
                     <h3 id="event-log-title">FLIGHT EVENT LOG</h3>
                     <span>UTC · SIMULATION</span>
-                </div>
+                </summary>
                 <div id="event-log-entries" class="event-log-entries" role="log" aria-live="polite" aria-relevant="additions"></div>
-            </section>
+            </details>
 
             <section id="flame-group-research" class="data-figures" aria-labelledby="archive-title" hidden>
                 <h3 id="archive-title">PSI COMBUSTION EXPERIMENT ARCHIVE</h3>
+                <div class="content-accordion-list">
 
-                <figure class="data-figure">
-                    <img src="assets/psi-archive-overview.png" alt="Bar chart comparing record counts for eight PSI combustion datasets, alongside the 12-day SLICE campaign timeline from February to March 2012." loading="lazy" decoding="async">
-                    <figcaption>
-                        <h4>What is in the archive: eight datasets, about 1,600 records</h4>
-                        <p><strong>What it shows:</strong> How many records each dataset in the PSI repository contributes. The three blue bars are the ACME campaigns flown on the ISS: BRE (194 flames ignited), CLD Flame (344) and s-Flame (276), 814 flames in total. The other datasets are SPICE (151 unique flames), CFI (87 tests), Flame Design (207 runs), and CFI-G (179 normal-flame tests and 154 inverse-flame tests).</p>
-                        <p><strong>How to read it:</strong> The bars do not share a unit: ACME counts flames ignited, SPICE counts unique flames, and CFI, Flame Design and CFI-G count tests or runs. Compare orders of magnitude, not quality.</p>
-                        <p>The right panel shows SLICE (PSI-106), the oldest campaign: 12 test days between February and March 2012, using methane, ethylene and ethane diluted with nitrogen, plus a final day with propane.</p>
-                    </figcaption>
-                </figure>
+                    <details class="content-accordion">
+                        <summary><span>01</span> What is in the archive: eight datasets, about 1,600 records</summary>
+                        <div class="content-accordion-content">
+                            <figure class="data-figure">
+                                <img src="assets/psi-archive-overview.png" alt="Bar chart comparing record counts for eight PSI combustion datasets, alongside the 12-day SLICE campaign timeline from February to March 2012." loading="lazy" decoding="async">
+                                <figcaption>
+                                    <p><strong>What it shows:</strong> How many records each dataset in the PSI repository contributes. The three blue bars are the ACME campaigns flown on the ISS: BRE (194 flames ignited), CLD Flame (344) and s-Flame (276), 814 flames in total. The other datasets are SPICE (151 unique flames), CFI (87 tests), Flame Design (207 runs), and CFI-G (179 normal-flame tests and 154 inverse-flame tests).</p>
+                                    <p><strong>How to read it:</strong> The bars do not share a unit: ACME counts flames ignited, SPICE counts unique flames, and CFI, Flame Design and CFI-G count tests or runs. Compare orders of magnitude, not quality.</p>
+                                    <p>The right panel shows SLICE (PSI-106), the oldest campaign: 12 test days between February and March 2012, using methane, ethylene and ethane diluted with nitrogen, plus a final day with propane.</p>
+                                </figcaption>
+                            </figure>
+                        </div>
+                    </details>
 
-                <figure class="data-figure">
-                    <img src="assets/psi-acme-campaigns.png" alt="Four charts summarizing ACME BRE, CLD Flame and s-Flame campaigns by test day, fuel, burner size and diluent." loading="lazy" decoding="async">
-                    <figcaption>
-                        <h4>ACME: three campaigns, 814 flames ignited in orbit</h4>
-                        <p><strong>What it shows:</strong> ACME (Advanced Combustion via Microgravity Experiments) is the largest combustion series in this set of ISS experiments. The top-left panel shows BRE (Burning Rate Emulator) by date and fuel, with a gap between April 2019 and September 2020 and an intense campaign in late 2020.</p>
-                        <p>The top-right panel summarizes BRE by fuel and burner size: 116 flames with pure ethylene, 39 with methane and 39 with 50% ethylene. A 25 mm burner was used on 16 of the 18 test days and a 50 mm burner on 2. The bottom-left panel orders the 32 CLD Flame test days in three blocks: methane, ethylene and an improved coflow design. The bottom-right panel shows s-Flame: 9 days with nitrogen as diluent (145 flames) and 9 with helium (131 flames), with the gray line giving the cumulative total of 276.</p>
-                        <p><strong>How to read it:</strong> Bar height is the number of flames ignited that day. Helium did not raise the daily ignition count (14.6 per day on average vs. 16.1 with nitrogen), so the figure should not be read as a helium advantage.</p>
-                    </figcaption>
-                </figure>
+                    <details class="content-accordion">
+                        <summary><span>02</span> ACME: three campaigns, 814 flames ignited in orbit</summary>
+                        <div class="content-accordion-content">
+                            <figure class="data-figure">
+                                <img src="assets/psi-acme-campaigns.png" alt="Four charts summarizing ACME BRE, CLD Flame and s-Flame campaigns by test day, fuel, burner size and diluent." loading="lazy" decoding="async">
+                                <figcaption>
+                                    <p><strong>What it shows:</strong> ACME (Advanced Combustion via Microgravity Experiments) is the largest combustion series in this set of ISS experiments. The top-left panel shows BRE (Burning Rate Emulator) by date and fuel, with a gap between April 2019 and September 2020 and an intense campaign in late 2020.</p>
+                                    <p>The top-right panel summarizes BRE by fuel and burner size: 116 flames with pure ethylene, 39 with methane and 39 with 50% ethylene. A 25 mm burner was used on 16 of the 18 test days and a 50 mm burner on 2. The bottom-left panel orders the 32 CLD Flame test days in three blocks: methane, ethylene and an improved coflow design. The bottom-right panel shows s-Flame: 9 days with nitrogen as diluent (145 flames) and 9 with helium (131 flames), with the gray line giving the cumulative total of 276.</p>
+                                    <p><strong>How to read it:</strong> Bar height is the number of flames ignited that day. Helium did not raise the daily ignition count (14.6 per day on average vs. 16.1 with nitrogen), so the figure should not be read as a helium advantage.</p>
+                                </figcaption>
+                            </figure>
+                        </div>
+                    </details>
 
-                <figure class="data-figure">
-                    <img src="assets/psi-cfi-conditions.png" alt="Three charts of CFI dodecane tests showing oxygen and pressure conditions, test counts per pressure, and support-fiber use by atmosphere." loading="lazy" decoding="async">
-                    <figcaption>
-                        <h4>CFI: pressure and oxygen conditions explored with dodecane</h4>
-                        <p><strong>What it shows:</strong> CFI gathers 87 tests run between March and June 2017 with n-dodecane, pure or mixed with iso-dodecane (22 tests with pure fuel, 24 with a 75/25 mixture and 41 with a 60/40 mixture). Every test used one of two oxygen levels, 17% or 21%, at pressures from 0.5 to 5 atm; points are slightly jittered so they do not overlap. The center panel counts tests per pressure level, with 47 at 1 atm and 14 at 3 atm. The right panel crosses support-fiber use with the atmosphere.</p>
-                        <p><strong>How to read it:</strong> “N₂/O₂ without helium” groups all mixtures without helium (21/79 and 17/83). “N₂ below 0.79 (no He)” is a group of 4 tests whose nitrogen fraction is below 0.79 and that contain no helium. The table does not say what makes up the rest of the gas. The 14 tests with helium are a minority, and the high-pressure levels (3 and 5 atm) have too few tests to support firm conclusions on their own.</p>
-                    </figcaption>
-                </figure>
+                    <details class="content-accordion">
+                        <summary><span>03</span> CFI: pressure and oxygen conditions explored with dodecane</summary>
+                        <div class="content-accordion-content">
+                            <figure class="data-figure">
+                                <img src="assets/psi-cfi-conditions.png" alt="Three charts of CFI dodecane tests showing oxygen and pressure conditions, test counts per pressure, and support-fiber use by atmosphere." loading="lazy" decoding="async">
+                                <figcaption>
+                                    <p><strong>What it shows:</strong> CFI gathers 87 tests run between March and June 2017 with n-dodecane, pure or mixed with iso-dodecane (22 tests with pure fuel, 24 with a 75/25 mixture and 41 with a 60/40 mixture). Every test used one of two oxygen levels, 17% or 21%, at pressures from 0.5 to 5 atm; points are slightly jittered so they do not overlap. The center panel counts tests per pressure level, with 47 at 1 atm and 14 at 3 atm. The right panel crosses support-fiber use with the atmosphere.</p>
+                                    <p><strong>How to read it:</strong> “N₂/O₂ without helium” groups all mixtures without helium (21/79 and 17/83). “N₂ below 0.79 (no He)” is a group of 4 tests whose nitrogen fraction is below 0.79 and that contain no helium. The table does not say what makes up the rest of the gas. The 14 tests with helium are a minority, and the high-pressure levels (3 and 5 atm) have too few tests to support firm conclusions on their own.</p>
+                                </figcaption>
+                            </figure>
+                        </div>
+                    </details>
 
-                <figure class="data-figure">
-                    <img src="assets/psi-flame-design.png" alt="Three Flame Design charts showing adiabatic flame temperature against fuel flow and stoichiometric mixture fraction, plus steady and ramp runs per test day." loading="lazy" decoding="async">
-                    <figcaption>
-                        <h4>Flame Design: adiabatic flame temperature vs. flow and dilution</h4>
-                        <p><strong>What it shows:</strong> Flame Design contains 207 runs over 14 test days, 187 with ethylene and 20 with propane. Of these, 60 are ramps, in which the flow changes during the run, so they have no single flow value and do not appear in the first two panels. The left panel plots adiabatic flame temperature (T<sub>ad</sub>) against fuel flow for steady runs. The center panel plots it against Z<sub>st</sub>, the mean stoichiometric mixture fraction, with color showing how diluted the fuel is. The right panel counts runs per test day, separating steady runs from ramps.</p>
-                        <p><strong>How to read it:</strong> In the center panel, T<sub>ad</sub> drops as Z<sub>st</sub> rises, which in this table happens as the fuel is diluted more. Runs with nearly pure fuel (yellow) reach about 2830 K. On average, propane gives a higher T<sub>ad</sub> than ethylene (about 2632 K vs. 2425 K).</p>
-                    </figcaption>
-                </figure>
+                    <details class="content-accordion">
+                        <summary><span>04</span> Flame Design: adiabatic flame temperature vs. flow and dilution</summary>
+                        <div class="content-accordion-content">
+                            <figure class="data-figure">
+                                <img src="assets/psi-flame-design.png" alt="Three Flame Design charts showing adiabatic flame temperature against fuel flow and stoichiometric mixture fraction, plus steady and ramp runs per test day." loading="lazy" decoding="async">
+                                <figcaption>
+                                    <p><strong>What it shows:</strong> Flame Design contains 207 runs over 14 test days, 187 with ethylene and 20 with propane. Of these, 60 are ramps, in which the flow changes during the run, so they have no single flow value and do not appear in the first two panels. The left panel plots adiabatic flame temperature (T<sub>ad</sub>) against fuel flow for steady runs. The center panel plots it against Z<sub>st</sub>, the mean stoichiometric mixture fraction, with color showing how diluted the fuel is. The right panel counts runs per test day, separating steady runs from ramps.</p>
+                                    <p><strong>How to read it:</strong> In the center panel, T<sub>ad</sub> drops as Z<sub>st</sub> rises, which in this table happens as the fuel is diluted more. Runs with nearly pure fuel (yellow) reach about 2830 K. On average, propane gives a higher T<sub>ad</sub> than ethylene (about 2632 K vs. 2425 K).</p>
+                                </figcaption>
+                            </figure>
+                        </div>
+                    </details>
 
-                <figure class="data-figure">
-                    <img src="assets/psi-cfi-g-results.png" alt="Six CFI-G charts comparing normal and inverse flame ignition conditions, outcomes, durations, pressure, and observed inverse-flame colors." loading="lazy" decoding="async">
-                    <figcaption>
-                        <h4>CFI-G: when a flame ignites, how long it lasts and how it ends</h4>
-                        <p><strong>What it shows:</strong> CFI-G compares two geometries, normal flames (fuel inside) and inverse flames (oxidizer inside), using ethane, propane and butane. The upper-left panels plot T<sub>ad</sub> against oxygen fraction, with red for tests with hot ignition and gray for the rest. Normal flames cluster around 21% O₂ and between 35% and 40%, while inverse flames span 12% to 85%. The upper-right panel shows how each test ended: in normal flames 102 self-extinguished, 31 ended when the flow stopped and 46 are not reported; in inverse flames the counts are 81, 58 and 15.</p>
-                        <p>The lower-left panel compares flame duration by fuel: the highest medians are for ethane (about 51 s in normal flames at 30%, 48 s in inverse flames) and the lowest is propane at 30% in normal flames (5 s), with outliers up to 304 s. The lower-center panel relates pressure to mean duration. The lower-right panel counts the colors of inverse flames: 59 blue, 29 at the limit (no visible flame), 20 yellow-blue and 10 yellow.</p>
-                        <p><strong>How to read it:</strong> Hot ignition is more common at high T<sub>ad</sub>, but there are exceptions in both directions. In the pressure panel, inverse flames drop from about 55 s at 0.5 bar to about 18–20 s between 2 and 3.5 bar, while normal flames show no clear trend (80 s at 0.5 bar, 37 at 1, 57 at 2 and 2 at 3 bar, the last with only 12 tests). Each point mixes different fuels and oxygen levels, so pressure cannot be isolated as the cause.</p>
-                    </figcaption>
-                </figure>
+                    <details class="content-accordion">
+                        <summary><span>05</span> CFI-G: when a flame ignites, how long it lasts and how it ends</summary>
+                        <div class="content-accordion-content">
+                            <figure class="data-figure">
+                                <img src="assets/psi-cfi-g-results.png" alt="Six CFI-G charts comparing normal and inverse flame ignition conditions, outcomes, durations, pressure, and observed inverse-flame colors." loading="lazy" decoding="async">
+                                <figcaption>
+                                    <p><strong>What it shows:</strong> CFI-G compares two geometries, normal flames (fuel inside) and inverse flames (oxidizer inside), using ethane, propane and butane. The upper-left panels plot T<sub>ad</sub> against oxygen fraction, with red for tests with hot ignition and gray for the rest. Normal flames cluster around 21% O₂ and between 35% and 40%, while inverse flames span 12% to 85%. The upper-right panel shows how each test ended: in normal flames 102 self-extinguished, 31 ended when the flow stopped and 46 are not reported; in inverse flames the counts are 81, 58 and 15.</p>
+                                    <p>The lower-left panel compares flame duration by fuel: the highest medians are for ethane (about 51 s in normal flames at 30%, 48 s in inverse flames) and the lowest is propane at 30% in normal flames (5 s), with outliers up to 304 s. The lower-center panel relates pressure to mean duration. The lower-right panel counts the colors of inverse flames: 59 blue, 29 at the limit (no visible flame), 20 yellow-blue and 10 yellow.</p>
+                                    <p><strong>How to read it:</strong> Hot ignition is more common at high T<sub>ad</sub>, but there are exceptions in both directions. In the pressure panel, inverse flames drop from about 55 s at 0.5 bar to about 18–20 s between 2 and 3.5 bar, while normal flames show no clear trend (80 s at 0.5 bar, 37 at 1, 57 at 2 and 2 at 3 bar, the last with only 12 tests). Each point mixes different fuels and oxygen levels, so pressure cannot be isolated as the cause.</p>
+                                </figcaption>
+                            </figure>
+                        </div>
+                    </details>
+                </div>
             </section>
 
             <section id="flammability-research" class="data-figures" aria-labelledby="flammability-research-title" hidden>
                 <h3 id="flammability-research-title">NASA PSI FLAMMABILITY RESEARCH</h3>
                 <p class="telemetry-note">Select a study title to expand its findings, study parameters, and figure.</p>
 
-                <div class="flammability-accordion-list">
-                    <details class="flammability-accordion">
+                <div class="content-accordion-list">
+                    <details class="content-accordion">
                         <summary><span>01</span> Soot (PSI-60)</summary>
-                        <div class="flammability-accordion-content">
+                        <div class="content-accordion-content">
                             <p>Without gravity, flames are longer, wider and about 230 K cooler, and they produce much more soot.</p>
                             <ul>
                                 <li>Methane peak local soot volume fraction: about 2× (range 1.8–2) in 0g vs. 1g.</li>
@@ -1727,9 +1804,9 @@
                         </div>
                     </details>
 
-                    <details class="flammability-accordion">
+                    <details class="content-accordion">
                         <summary><span>02</span> Smoke and Aerosols (PSI-115)</summary>
-                        <div class="flammability-accordion-content">
+                        <div class="content-accordion-content">
                             <p><strong>Particle size distribution:</strong> Smoke particles follow a lognormal distribution, and most are smaller than 500 nm. In 0g smoke does not rise, so it ages in place through coagulation and condensation for 10–1,800 s.</p>
                             <p><strong>Characteristic diameters:</strong> D<sub>10</sub>, D<sub>32</sub> and mass median diameter are computed from geometric mean diameter (D<sub>g</sub>) and geometric standard deviation (σ<sub>g</sub>) with Hatch–Choate relations. For silicone (D<sub>g</sub> = 240 nm, σ<sub>g</sub> = 1.7), the mass median diameter rises to about 560 nm.</p>
                             <p><strong>Test time scales:</strong> Igniter activation 15–60 s; pyrolysis event 120 s; smoke aging 10–1,800 s.</p>
@@ -1740,18 +1817,18 @@
                         </div>
                     </details>
 
-                    <details class="flammability-accordion">
+                    <details class="content-accordion">
                         <summary><span>03</span> Flame Spread over Solids (PSI-62 and SAME)</summary>
-                        <div class="flammability-accordion-content">
+                        <div class="content-accordion-content">
                             <p><strong>SAME pyrolysis tests:</strong> Eight tests on Teflon and Kapton at 5 or 10 cm/s airflow, with a mass-loss rate of 1–2 mg/min and 1 or 20 minutes of smoke aging.</p>
                             <p><strong>Parameter space:</strong> BASS wind-tunnel tests forced flow from 0 to 40 cm/s and oxygen from 14% to 21% (nominal: 18% oxygen and 20 cm/s). The goal is the “Goldilocks” flammability zone: too little flow and radiation quenches the flame; too much and the flame is blown off.</p>
                             <p><strong>Sample and duct scale:</strong> BASS duct 76 × 76 mm (58 cm²); SAFFIRE-II sample 145 cm²; SAFFIRE-I sample 3,760 cm² (about 26 times larger than SAFFIRE-II). SIBAL fabric is 75% cotton and 25% fiberglass.</p>
                         </div>
                     </details>
 
-                    <details class="flammability-accordion">
+                    <details class="content-accordion">
                         <summary><span>04</span> FLEX: Methanol Droplets, Burning Rate and LOI</summary>
-                        <div class="flammability-accordion-content">
+                        <div class="content-accordion-content">
                             <p>The figure compares initial and extinction droplet diameters across five methanol FLEX tests at 1 atm and 21% oxygen; test 4 has no extinction-diameter data. The measured burning rates range from 0.48 to 0.60 mm²/s, with a mean of 0.556 mm²/s.</p>
                             <p>The right panel shows minimum oxygen fractions to sustain a flame (0g): methanol 12%, n-heptane 15%, and air as a 21% reference.</p>
                             <figure class="data-figure">
@@ -1761,9 +1838,9 @@
                         </div>
                     </details>
 
-                    <details class="flammability-accordion">
+                    <details class="content-accordion">
                         <summary><span>05</span> Monte Carlo Parameters</summary>
-                        <div class="flammability-accordion-content">
+                        <div class="content-accordion-content">
                             <p>The chart gives the minimum, maximum and mean (μ) for 14 variables across four studies, with normal, truncated normal, lognormal or uniform distributions. Every simulation run samples these ranges to generate thousands of possible fire scenarios.</p>
                             <p>A marker near the center indicates a symmetric distribution; a marker near an end indicates skew, as for pressure, particle diameter and fuel flow.</p>
                             <figure class="data-figure">
@@ -1773,9 +1850,9 @@
                         </div>
                     </details>
 
-                    <details class="flammability-accordion">
+                    <details class="content-accordion">
                         <summary><span>06</span> Research Map: The NASA PSI Studies Behind the Model</summary>
-                        <div class="flammability-accordion-content">
+                        <div class="content-accordion-content">
                             <p>The left panel shows the active period of eight NASA Physical Sciences Informatics (PSI) investigations. Blue bars are ground-based studies (analysis, CFD and direct numerical simulation); orange bars are experiments flown on the International Space Station (ISS). The right panel shows the number of scientific publications in the reference catalog (13 total).</p>
                             <p><strong>How the studies connect:</strong> Each ground study is validated against one or more ISS flight experiments, so every part of the model can be checked against real microgravity data.</p>
                             <figure class="data-figure">
@@ -1796,70 +1873,90 @@
             <h2>Fire Extinguisher Research</h2>
             <p>Explore how fire-suppression research studies flames in microgravity, where combustion can behave differently from flames on Earth.</p>
             <div class="extinguisher-panel">
-                <h3>FLEX EXPERIMENT OVERVIEW</h3>
-                <p>The Flame Extinguishment Experiment (FLEX) investigates flame behavior and extinguishment in microgravity. The assistant below is scoped to the FLEX dataset supplied by its service, rather than the live-style telemetry elsewhere in AstroSense.</p>
-                <div class="extinguisher-facts">
-                    <article class="extinguisher-fact">
-                        <span>EXPERIMENT ENVIRONMENT</span>
-                        <strong>Microgravity</strong>
-                        <p>Studies flame behavior in conditions relevant to spacecraft.</p>
-                    </article>
-                    <article class="extinguisher-fact">
-                        <span>FUELS IN CHAT DATA</span>
-                        <strong>Methanol · Heptane</strong>
-                        <p>Ask the assistant to compare records for these two fuels.</p>
-                    </article>
-                    <article class="extinguisher-fact">
-                        <span>ASSISTANT DATASET</span>
-                        <strong>274 tests</strong>
-                        <p>Dataset size reported by the supplied FLEX chat service.</p>
-                    </article>
+                <div class="content-accordion-list">
+                    <details class="content-accordion">
+                        <summary><span>01</span> FLEX experiment overview</summary>
+                        <div class="content-accordion-content">
+                            <p>The Flame Extinguishment Experiment (FLEX) investigates flame behavior and extinguishment in microgravity. The assistant below is scoped to the FLEX dataset supplied by its service, rather than the live-style telemetry elsewhere in AstroSense.</p>
+                            <div class="extinguisher-facts">
+                                <article class="extinguisher-fact">
+                                    <span>EXPERIMENT ENVIRONMENT</span>
+                                    <strong>Microgravity</strong>
+                                    <p>Studies flame behavior in conditions relevant to spacecraft.</p>
+                                </article>
+                                <article class="extinguisher-fact">
+                                    <span>FUELS IN CHAT DATA</span>
+                                    <strong>Methanol · Heptane</strong>
+                                    <p>Ask the assistant to compare records for these two fuels.</p>
+                                </article>
+                                <article class="extinguisher-fact">
+                                    <span>ASSISTANT DATASET</span>
+                                    <strong>274 tests</strong>
+                                    <p>Dataset size reported by the supplied FLEX chat service.</p>
+                                </article>
+                            </div>
+                        </div>
+                    </details>
                 </div>
                 <section class="data-figures" aria-labelledby="flex-figures-title">
                     <h3 id="flex-figures-title">FLEX TEST CONDITIONS AND RESULTS (~1 ATM)</h3>
+                    <div class="content-accordion-list">
 
-                    <figure class="data-figure">
-                        <img src="assets/flex-test-conditions.png" alt="Scatter plots of FLEX tests at approximately one atmosphere, showing initial oxygen fraction versus added carbon dioxide or helium. Point color identifies extinction, completion, or disruption; marker shape distinguishes methanol and heptane." loading="lazy" decoding="async">
-                        <figcaption>
-                            <h4>Figure 1: Test conditions map (~1 atm)</h4>
-                            <p><strong>What it shows:</strong> Every FLEX test in this map ran at approximately 1 atm and is positioned by its gas mixture. The left panel shows CO₂ added to air; the right panel shows helium added.</p>
-                            <p><strong>How to read it:</strong> Each point is one test. The horizontal axis is the added diluent fraction (0 means only oxygen and nitrogen); the vertical axis is the initial oxygen fraction. Color indicates the outcome: red, flame extinguished; green, droplet burned completely; gray, test ended by droplet disruption. Circles are methanol and squares are heptane.</p>
-                            <p>The diagonal pattern appears because adding a diluent to air automatically lowers the oxygen fraction.</p>
-                            <p class="figure-takeaway"><strong>Takeaway:</strong> This is the experimental design, not a result. It shows which conditions were actually tested.</p>
-                        </figcaption>
-                    </figure>
-
-                    <figure class="data-figure">
-                        <img src="assets/flex-extinction-diameter.png" alt="Scatter plot of visible droplet diameter at flame extinction versus initial oxygen fraction for methanol and heptane tests with carbon dioxide, helium, or nitrogen." loading="lazy" decoding="async">
-                        <figcaption>
-                            <h4>Figure 2: Extinction diameter vs. oxygen</h4>
-                            <p><strong>What it shows:</strong> Droplet diameter when the flame went out, for tests that ended in extinction.</p>
-                            <p><strong>How to read it:</strong> A higher point means the flame went out earlier, while the droplet was still larger. A point near 1 mm means the flame lasted almost until the droplet was consumed.</p>
-                            <p class="figure-takeaway"><strong>Takeaway:</strong> With less oxygen, flames tend to go out at larger droplet sizes, consistent with cooler flames and greater radiative heat loss.</p>
-                            <p class="figure-note"><strong>Note:</strong> The scatter is large because droplets did not all start at the same size. Read this as a trend, not a precise curve.</p>
-                        </figcaption>
-                    </figure>
-
-                    <figure class="data-figure">
-                        <img src="assets/flex-loi-upper-bound.png" alt="Bar chart showing the lowest observed oxygen fraction with a flame for methanol and heptane under nitrogen, carbon dioxide, and helium dilution." loading="lazy" decoding="async">
-                        <figcaption>
-                            <h4>Figure 3: Lowest oxygen with a flame observed</h4>
-                            <p><strong>What it shows:</strong> For each fuel and gas mixture, the lowest oxygen fraction at which a flame was still observed. The n above each bar is the number of tests.</p>
-                            <div class="flex-data-table-wrap">
-                                <table class="flex-data-table">
-                                    <thead>
-                                        <tr><th>Fuel</th><th>N₂ only</th><th>+ CO₂</th><th>+ He</th></tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr><td>Methanol</td><td>0.12 (n=42)</td><td>0.14 (n=29)</td><td>0.13 (n=14)</td></tr>
-                                        <tr><td>Heptane</td><td>0.13 (n=37)</td><td>0.17 (n=27)</td><td>0.16 (n=12)</td></tr>
-                                    </tbody>
-                                </table>
+                        <details class="content-accordion">
+                            <summary><span>01</span> Test conditions map (~1 atm)</summary>
+                            <div class="content-accordion-content">
+                                <figure class="data-figure">
+                                    <img src="assets/flex-test-conditions.png" alt="Scatter plots of FLEX tests at approximately one atmosphere, showing initial oxygen fraction versus added carbon dioxide or helium. Point color identifies extinction, completion, or disruption; marker shape distinguishes methanol and heptane." loading="lazy" decoding="async">
+                                    <figcaption>
+                                        <p><strong>What it shows:</strong> Every FLEX test in this map ran at approximately 1 atm and is positioned by its gas mixture. The left panel shows CO₂ added to air; the right panel shows helium added.</p>
+                                        <p><strong>How to read it:</strong> Each point is one test. The horizontal axis is the added diluent fraction (0 means only oxygen and nitrogen); the vertical axis is the initial oxygen fraction. Color indicates the outcome: red, flame extinguished; green, droplet burned completely; gray, test ended by droplet disruption. Circles are methanol and squares are heptane.</p>
+                                        <p>The diagonal pattern appears because adding a diluent to air automatically lowers the oxygen fraction.</p>
+                                        <p class="figure-takeaway"><strong>Takeaway:</strong> This is the experimental design, not a result. It shows which conditions were actually tested.</p>
+                                    </figcaption>
+                                </figure>
                             </div>
-                            <p class="figure-takeaway"><strong>Takeaway:</strong> Heptane needs more oxygen than methanol to sustain a flame in all three mixtures.</p>
-                            <p class="figure-note"><strong>Note:</strong> These values are upper bounds on the true Limiting Oxygen Index (LOI), not the LOI itself. CO₂ and He are not ranked by suppression effectiveness here: adding them lowered oxygen in a coupled way, so the comparison mixes experimental design with suppressant effect.</p>
-                        </figcaption>
-                    </figure>
+                        </details>
+
+                        <details class="content-accordion">
+                            <summary><span>02</span> Extinction diameter vs. oxygen</summary>
+                            <div class="content-accordion-content">
+                                <figure class="data-figure">
+                                    <img src="assets/flex-extinction-diameter.png" alt="Scatter plot of visible droplet diameter at flame extinction versus initial oxygen fraction for methanol and heptane tests with carbon dioxide, helium, or nitrogen." loading="lazy" decoding="async">
+                                    <figcaption>
+                                        <p><strong>What it shows:</strong> Droplet diameter when the flame went out, for tests that ended in extinction.</p>
+                                        <p><strong>How to read it:</strong> A higher point means the flame went out earlier, while the droplet was still larger. A point near 1 mm means the flame lasted almost until the droplet was consumed.</p>
+                                        <p class="figure-takeaway"><strong>Takeaway:</strong> With less oxygen, flames tend to go out at larger droplet sizes, consistent with cooler flames and greater radiative heat loss.</p>
+                                        <p class="figure-note"><strong>Note:</strong> The scatter is large because droplets did not all start at the same size. Read this as a trend, not a precise curve.</p>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        </details>
+
+                        <details class="content-accordion">
+                            <summary><span>03</span> Lowest oxygen with a flame observed</summary>
+                            <div class="content-accordion-content">
+                                <figure class="data-figure">
+                                    <img src="assets/flex-loi-upper-bound.png" alt="Bar chart showing the lowest observed oxygen fraction with a flame for methanol and heptane under nitrogen, carbon dioxide, and helium dilution." loading="lazy" decoding="async">
+                                    <figcaption>
+                                        <p><strong>What it shows:</strong> For each fuel and gas mixture, the lowest oxygen fraction at which a flame was still observed. The n above each bar is the number of tests.</p>
+                                        <div class="flex-data-table-wrap">
+                                            <table class="flex-data-table">
+                                                <thead>
+                                                    <tr><th>Fuel</th><th>N₂ only</th><th>+ CO₂</th><th>+ He</th></tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr><td>Methanol</td><td>0.12 (n=42)</td><td>0.14 (n=29)</td><td>0.13 (n=14)</td></tr>
+                                                    <tr><td>Heptane</td><td>0.13 (n=37)</td><td>0.17 (n=27)</td><td>0.16 (n=12)</td></tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <p class="figure-takeaway"><strong>Takeaway:</strong> Heptane needs more oxygen than methanol to sustain a flame in all three mixtures.</p>
+                                        <p class="figure-note"><strong>Note:</strong> These values are upper bounds on the true Limiting Oxygen Index (LOI), not the LOI itself. CO₂ and He are not ranked by suppression effectiveness here: adding them lowered oxygen in a coupled way, so the comparison mixes experimental design with suppressant effect.</p>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        </details>
+                    </div>
                 </section>
                 <p class="data-disclosure">This is an educational data assistant, not emergency or operational fire-safety guidance. Messages and chat history are sent to the external FLEX chat service.</p>
             </div>
@@ -1888,7 +1985,9 @@
                     </div>
                 </div>
 
-                <div id="sensor-standard-controls">
+                <details id="sensor-standard-controls" class="sensor-panel content-accordion">
+                    <summary><span>01</span> Standard telemetry and diagnostics</summary>
+                    <div class="content-accordion-content sensor-accordion-content">
                     <div class="telemetry-toolbar">
                         <div class="connection-status">
                             <div class="status-indicator"></div>
@@ -1925,7 +2024,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                    </div>
+                </details>
             </div>
 
             <div id="flame-group-view" class="flame-group-module" hidden>
@@ -1941,7 +2041,9 @@
 
                 <div class="flame-group-grid">
                     <div style="display: flex; flex-direction: column; gap: 20px;">
-                        <div class="sensor-panel" style="padding: 18px 20px;">
+                        <details class="sensor-panel content-accordion">
+                            <summary><span>01</span> Fuel specimen and scenario presets</summary>
+                            <div class="content-accordion-content sensor-accordion-content">
                             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 14px;">
                                 <div>
                                     <label for="fuel-select" style="display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; margin-bottom: 6px; color: var(--text-muted);">Active Fuel Specimen</label>
@@ -1963,9 +2065,11 @@
                                 <span id="fuel-formula-badge" style="font-family: monospace; font-size: 11px; padding: 3px 8px; border-radius: 3px; background: rgba(98, 201, 245, 0.18); color: var(--accent-cyan); font-weight: 700; white-space: nowrap;">C₁₂H₂₆</span>
                             </div>
                         </div>
+                        </details>
 
-                        <div class="sensor-panel">
-                            <h3 style="margin-bottom: 16px; color: var(--accent-cyan); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;">🎛️ Sensor Telemetry Simulation Sliders</h3>
+                        <details class="sensor-panel content-accordion">
+                            <summary><span>02</span> Sensor telemetry simulation sliders</summary>
+                            <div class="content-accordion-content sensor-accordion-content">
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                                 <div style="background: var(--bg-primary); padding: 14px; border-radius: 4px; border: 1px solid var(--border-color);">
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
@@ -2016,12 +2120,14 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                            </div>
+                        </details>
 
-                        <div class="sensor-panel">
+                        <details id="suppression-agent-panel" class="sensor-panel content-accordion" ontoggle="if (this.open && typeof resizeSuppressionChart === 'function') window.requestAnimationFrame(resizeSuppressionChart)">
+                            <summary><span>03</span> Optimal suppression agent comparison</summary>
+                            <div class="content-accordion-content sensor-accordion-content">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 8px; flex-wrap: wrap;">
                                 <div>
-                                    <h3 style="margin: 0; color: var(--text-main); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;">🧯 Optimal Suppression Agent</h3>
                                     <span style="font-size: 10px; color: var(--text-muted);">Efficiency ranked by flame regime, fuel chemistry & pressure</span>
                                 </div>
                                 <span id="recommended-ext-badge" style="font-size: 11px; font-weight: 700; font-family: monospace; padding: 4px 10px; border-radius: 4px; background: rgba(84,214,160,0.15); color: #71d5ae; border: 1px solid rgba(84,214,160,0.35);">Ideal: Xenon (Xe)</span>
@@ -2034,11 +2140,13 @@
                                 For n-Dodecane Cool Flames in microgravity, Xenon (Xe) excels due to low thermal diffusivity and high heat capacity without dispersing droplets.
                             </p>
                         </div>
+                        </details>
                     </div>
 
                     <div style="display: flex; flex-direction: column; gap: 20px;">
-                        <div class="sensor-panel" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-                            <h3 style="align-self: flex-start; margin-bottom: 12px; color: var(--text-main); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;">🔥 Flame Geometry & Cluster</h3>
+                        <details class="sensor-panel content-accordion">
+                            <summary><span>04</span> Flame geometry and gravity</summary>
+                            <div class="content-accordion-content sensor-accordion-content" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
                             <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; margin-bottom: 12px; background: var(--bg-primary); padding: 8px 12px; border-radius: 4px; border: 1px solid var(--border-color);">
                                 <span style="font-size: 10px; color: var(--text-muted);">Environment:</span>
                                 <button id="gravity-btn" type="button" onclick="toggleGravity()" class="header-control" style="font-size: 9px; padding: 4px 8px;">μg (Microgravity)</button>
@@ -2051,14 +2159,17 @@
                                 STATUS: COOL FLAME DETECTED
                             </div>
                         </div>
+                        </details>
 
-                        <div class="sensor-panel">
+                        <details class="sensor-panel content-accordion">
+                            <summary><span>05</span> PSI technical log <span id="global-score" style="margin-left: auto; font-size: 10px; color: var(--accent-cyan);">Safety Score: 84/100</span></summary>
+                            <div class="content-accordion-content sensor-accordion-content">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                                <h3 style="margin: 0; color: var(--text-main); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;">📋 PSI Technical Log</h3>
-                                <span id="global-score" style="font-family: monospace; font-size: 10px; color: var(--accent-cyan);">Safety Score: 84/100</span>
+                                <span style="font-size: 10px; color: var(--text-muted);">Simulation events and threshold notes</span>
                             </div>
                             <div id="log-container" style="background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 4px; padding: 10px; height: 185px; overflow-y: auto; font-family: monospace; font-size: 10px; color: var(--text-muted); line-height: 1.55; text-align: left;"></div>
                         </div>
+                        </details>
                     </div>
                 </div>
             </div>
