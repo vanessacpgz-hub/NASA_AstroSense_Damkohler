@@ -3653,8 +3653,9 @@
             const showFlammabilityResearch = tabId === 'predictive-modeling';
             const showFireSafetyResearch = tabId === 'fire-safety';
             const showResearch = showFlameArchive || showFlammabilityResearch;
-            document.getElementById('dashboard-grid').hidden = showResearch;
-            document.getElementById('flight-event-log').hidden = showResearch;
+            const hideTelemetryOverview = showResearch || showFireSafetyResearch;
+            document.getElementById('dashboard-grid').hidden = hideTelemetryOverview;
+            document.getElementById('flight-event-log').hidden = hideTelemetryOverview;
             document.getElementById('fire-safety-research').hidden = !showFireSafetyResearch;
             document.getElementById('flame-group-research').hidden = !showFlameArchive;
             document.getElementById('flammability-research').hidden = !showFlammabilityResearch;
