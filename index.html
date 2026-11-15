@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AstroSense | Telemetry & Combustion Diagnostics</title>
+    <title>AstroSense | Fire Research for Space Exploration</title>
+    <meta name="description" content="Explore space fire safety research, specialized AI assistants, scientific data, and mathematical models with AstroSense.">
     <style>
         :root {
             --bg-primary: #0b1329;
@@ -1842,10 +1843,786 @@
         @media (max-width: 760px) {
             .extinguisher-facts { grid-template-columns: 1fr; }
         }
+
+        #platform-shell[hidden],
+        #landing-page[hidden] {
+            display: none !important;
+        }
+
+        #platform-shell {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        .landing-page {
+            --landing-bg: #07101f;
+            --landing-panel: #0e1a2c;
+            --landing-border: rgba(148, 183, 210, .18);
+            --landing-cyan: #7de4ee;
+            --landing-muted: #a7b5c5;
+            min-height: 100vh;
+            overflow: hidden;
+            background:
+                radial-gradient(ellipse at 74% 14%, rgba(12, 81, 112, .2), transparent 38%),
+                var(--landing-bg);
+            color: #f5f8fb;
+        }
+
+        .landing-shell {
+            width: min(1200px, calc(100% - 56px));
+            margin: 0 auto;
+        }
+
+        .landing-header {
+            display: flex;
+            min-height: 86px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 26px;
+            border-bottom: 1px solid var(--landing-border);
+        }
+
+        .landing-brand {
+            display: inline-flex;
+            flex: 0 0 auto;
+            align-items: center;
+            gap: 12px;
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .landing-brand-mark {
+            display: grid;
+            width: 42px;
+            height: 42px;
+            place-items: center;
+            border: 1px solid rgba(125, 228, 238, .6);
+            border-radius: 12px 3px 12px 3px;
+            background: linear-gradient(145deg, rgba(125, 228, 238, .16), rgba(32, 92, 130, .08));
+            color: var(--landing-cyan);
+            font-size: 21px;
+            font-weight: 800;
+        }
+
+        .landing-brand-copy {
+            display: grid;
+            gap: 4px;
+        }
+
+        .landing-brand-copy strong {
+            font-size: 14px;
+            letter-spacing: .16em;
+        }
+
+        .landing-brand-copy small {
+            color: var(--landing-muted);
+            font-size: 8px;
+            letter-spacing: .11em;
+        }
+
+        .landing-nav {
+            display: flex;
+            align-items: center;
+            gap: clamp(14px, 2.5vw, 32px);
+        }
+
+        .landing-nav a,
+        .landing-nasa-link {
+            color: #c4d1de;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-decoration: none;
+            transition: color .2s ease;
+        }
+
+        .landing-nav a:hover,
+        .landing-nasa-link:hover {
+            color: var(--landing-cyan);
+        }
+
+        .landing-nasa-link {
+            flex: 0 0 auto;
+            color: var(--landing-cyan);
+            letter-spacing: .03em;
+            text-transform: none;
+        }
+
+        .landing-hero {
+            display: grid;
+            min-height: min(700px, calc(100vh - 86px));
+            align-items: center;
+            padding: 64px 0 72px;
+        }
+
+        .landing-hero-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.08fr) minmax(340px, .92fr);
+            align-items: center;
+            gap: clamp(36px, 5vw, 64px);
+        }
+
+        .landing-eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 22px;
+            color: var(--landing-cyan);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+        }
+
+        .landing-eyebrow::before {
+            width: 26px;
+            height: 1px;
+            background: currentColor;
+            content: "";
+        }
+
+        .landing-hero h1 {
+            max-width: 740px;
+            font-size: clamp(38px, 4.5vw, 58px);
+            font-weight: 750;
+            letter-spacing: -.055em;
+            line-height: 1.04;
+        }
+
+        .landing-hero h1 span {
+            color: var(--landing-cyan);
+        }
+
+        .landing-hero-copy {
+            max-width: 54ch;
+            margin-top: 24px;
+            color: #bdc9d6;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .landing-primary {
+            display: inline-flex;
+            min-height: 48px;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            margin-top: 30px;
+            padding: 0 20px;
+            border: 1px solid var(--landing-cyan);
+            border-radius: 3px;
+            background: var(--landing-cyan);
+            color: #06121e;
+            cursor: pointer;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: .12em;
+            text-decoration: none;
+            transition: transform .2s ease, background .2s ease, color .2s ease;
+        }
+
+        .landing-primary:hover {
+            transform: translateY(-2px);
+            background: transparent;
+            color: var(--landing-cyan);
+        }
+
+        .landing-primary:focus-visible,
+        .module-card:focus-visible,
+        .landing-nav a:focus-visible,
+        .landing-nasa-link:focus-visible {
+            outline: 2px solid #fff;
+            outline-offset: 4px;
+        }
+
+        .landing-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 18px;
+            margin-top: 30px;
+            color: #92a4b7;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: .12em;
+        }
+
+        .landing-tags span + span::before {
+            margin-right: 18px;
+            color: var(--landing-cyan);
+            content: "·";
+        }
+
+        .landing-hero-figure {
+            position: relative;
+            margin: 0;
+            padding: 10px;
+            border: 1px solid var(--landing-border);
+            background: linear-gradient(145deg, rgba(25, 50, 72, .82), rgba(7, 16, 31, .75));
+            box-shadow: 0 26px 90px rgba(0, 0, 0, .34);
+        }
+
+        .landing-hero-figure::before {
+            position: absolute;
+            z-index: 1;
+            top: -1px;
+            left: -1px;
+            width: 56px;
+            height: 3px;
+            background: var(--landing-cyan);
+            content: "";
+        }
+
+        .landing-hero-figure img {
+            display: block;
+            width: 100%;
+            aspect-ratio: 1.8;
+            object-fit: cover;
+            background: #02060c;
+        }
+
+        .landing-hero-figure figcaption {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px 4px 2px;
+            color: #a7b5c5;
+            font-size: 9px;
+            letter-spacing: .08em;
+            line-height: 1.5;
+        }
+
+        .landing-hero-figure figcaption strong {
+            color: #e8f4fa;
+        }
+
+        .landing-section {
+            padding: 100px 0;
+            border-top: 1px solid var(--landing-border);
+        }
+
+        .landing-section-heading {
+            max-width: 760px;
+            margin-bottom: 42px;
+        }
+
+        .landing-section-heading h2,
+        .landing-about h2,
+        .landing-flamy h2,
+        .landing-simulation h2,
+        .landing-final-cta h2 {
+            margin-top: 14px;
+            font-size: clamp(30px, 4vw, 48px);
+            font-weight: 650;
+            letter-spacing: -.04em;
+            line-height: 1.12;
+        }
+
+        .landing-about-grid {
+            display: grid;
+            grid-template-columns: .9fr 1.1fr;
+            gap: clamp(40px, 9vw, 140px);
+            align-items: start;
+        }
+
+        .landing-about h2 {
+            margin-top: 0;
+        }
+
+        .landing-about-copy {
+            display: grid;
+            gap: 18px;
+            color: var(--landing-muted);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .landing-modules-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .module-card {
+            display: flex;
+            min-height: 230px;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 25px;
+            border: 1px solid var(--landing-border);
+            border-radius: 3px;
+            background: linear-gradient(140deg, rgba(18, 35, 57, .92), rgba(10, 21, 37, .82));
+            color: inherit;
+            cursor: pointer;
+            text-align: left;
+            transition: border-color .2s ease, transform .2s ease, background .2s ease;
+        }
+
+        .module-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(125, 228, 238, .65);
+            background: linear-gradient(140deg, rgba(20, 50, 69, .95), rgba(10, 21, 37, .9));
+        }
+
+        .module-index {
+            color: var(--landing-cyan);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .15em;
+        }
+
+        .module-card strong {
+            margin-top: 24px;
+            font-size: 20px;
+            font-weight: 650;
+            letter-spacing: -.02em;
+        }
+
+        .module-card p {
+            max-width: 52ch;
+            margin-top: 10px;
+            color: var(--landing-muted);
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .module-card-cta {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            margin-top: auto;
+            padding-top: 20px;
+            color: #e9f5f8;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+
+        .module-card-cta span:last-child {
+            color: var(--landing-cyan);
+            font-size: 16px;
+            line-height: 10px;
+        }
+
+        .landing-flamy-grid,
+        .landing-simulation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(40px, 8vw, 110px);
+            align-items: center;
+        }
+
+        .landing-flamy-copy,
+        .landing-simulation-copy {
+            color: var(--landing-muted);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .landing-flamy-copy p + p {
+            margin-top: 14px;
+        }
+
+        .flamy-panel,
+        .simulation-panel {
+            border: 1px solid var(--landing-border);
+            background: linear-gradient(145deg, rgba(17, 34, 55, .96), rgba(9, 18, 33, .92));
+            box-shadow: 0 24px 70px rgba(0, 0, 0, .2);
+        }
+
+        .flamy-panel {
+            padding: 24px;
+        }
+
+        .flamy-panel-heading,
+        .simulation-panel-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid var(--landing-border);
+            color: #f0f7fb;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .12em;
+        }
+
+        .flamy-panel-heading span:last-child,
+        .simulation-panel-heading span:last-child {
+            color: var(--landing-cyan);
+            font-size: 8px;
+        }
+
+        .flamy-modes {
+            display: grid;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .flamy-mode {
+            padding: 16px;
+            border: 1px solid rgba(148, 183, 210, .13);
+            background: rgba(5, 13, 25, .48);
+        }
+
+        .flamy-mode strong {
+            display: block;
+            color: var(--landing-cyan);
+            font-size: 10px;
+            letter-spacing: .12em;
+        }
+
+        .flamy-mode p {
+            margin-top: 7px;
+            color: var(--landing-muted);
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        .simulation-panel {
+            padding: 22px;
+        }
+
+        .simulation-plot {
+            position: relative;
+            display: grid;
+            height: 220px;
+            align-items: end;
+            margin-top: 22px;
+            padding: 18px 16px 30px 38px;
+            border-left: 1px solid rgba(148, 183, 210, .4);
+            border-bottom: 1px solid rgba(148, 183, 210, .4);
+            background: repeating-linear-gradient(to bottom, transparent 0, transparent 43px, rgba(148, 183, 210, .1) 44px);
+        }
+
+        .simulation-plot::before,
+        .simulation-plot::after {
+            position: absolute;
+            color: #91a4b7;
+            font-size: 8px;
+            letter-spacing: .1em;
+        }
+
+        .simulation-plot::before {
+            top: 3px;
+            left: 0;
+            content: "SCENARIO RESPONSE";
+        }
+
+        .simulation-plot::after {
+            right: 0;
+            bottom: 7px;
+            content: "REFERENCE  →  MODEL INPUT";
+        }
+
+        .simulation-curve {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .simulation-note {
+            margin-top: 16px;
+            padding: 13px 15px;
+            border-left: 2px solid var(--landing-cyan);
+            background: rgba(125, 228, 238, .07);
+            color: #d3e2ec;
+            font-size: 11px;
+            line-height: 1.65;
+        }
+
+        .landing-simulation-copy ul {
+            display: grid;
+            gap: 12px;
+            margin: 24px 0 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .landing-simulation-copy li {
+            position: relative;
+            padding-left: 22px;
+        }
+
+        .landing-simulation-copy li::before {
+            position: absolute;
+            left: 0;
+            color: var(--landing-cyan);
+            content: "＋";
+        }
+
+        .landing-final-cta {
+            padding: 76px 24px;
+            border: 1px solid var(--landing-border);
+            background:
+                radial-gradient(ellipse at 82% 50%, rgba(35, 115, 145, .22), transparent 44%),
+                #0c192a;
+            text-align: center;
+        }
+
+        .landing-final-cta .landing-eyebrow {
+            justify-content: center;
+        }
+
+        .landing-final-cta h2 {
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        .landing-final-cta p {
+            max-width: 600px;
+            margin: 18px auto 0;
+            color: var(--landing-muted);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .landing-footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 25px 0 30px;
+            color: #8192a5;
+            font-size: 9px;
+            letter-spacing: .08em;
+        }
+
+        .landing-footer a {
+            color: #aec1d0;
+            text-decoration: none;
+        }
+
+        .landing-footer a:hover {
+            color: var(--landing-cyan);
+        }
+
+        @media (max-width: 900px) {
+            .landing-nav { gap: 16px; }
+            .landing-nav a { font-size: 8px; }
+            .landing-hero-grid { grid-template-columns: 1fr; gap: 34px; }
+            .landing-hero h1 { font-size: clamp(40px, 6vw, 58px); }
+            .landing-hero-figure { max-width: 760px; }
+        }
+
+        @media (max-width: 700px) {
+            .landing-shell { width: min(100% - 36px, 560px); }
+            .landing-header { min-height: 74px; flex-wrap: wrap; gap: 12px; padding: 15px 0; }
+            .landing-nav { order: 3; width: 100%; justify-content: space-between; gap: 8px; }
+            .landing-nav a { font-size: 8px; }
+            .landing-nasa-link { margin-left: auto; font-size: 9px; }
+            .landing-hero { min-height: auto; padding: 64px 0 70px; }
+            .landing-hero-grid,
+            .landing-about-grid,
+            .landing-flamy-grid,
+            .landing-simulation-grid { grid-template-columns: 1fr; gap: 36px; }
+            .landing-hero h1 { font-size: clamp(38px, 10vw, 58px); }
+            .landing-hero-copy { font-size: 14px; }
+            .landing-hero-figure { max-width: 560px; }
+            .landing-section { padding: 72px 0; }
+            .landing-section-heading { margin-bottom: 28px; }
+            .landing-modules-grid { grid-template-columns: 1fr; }
+            .module-card { min-height: 205px; }
+            .landing-final-cta { padding: 58px 18px; }
+        }
+
+        @media (max-width: 420px) {
+            .landing-brand-mark { width: 36px; height: 36px; }
+            .landing-brand-copy strong { font-size: 12px; }
+            .landing-brand-copy small { font-size: 7px; }
+            .landing-nav a { letter-spacing: .04em; }
+            .landing-hero h1 { font-size: 36px; }
+            .landing-hero-figure figcaption { flex-direction: column; }
+            .landing-footer { flex-direction: column; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .landing-page *,
+            .landing-page *::before,
+            .landing-page *::after {
+                scroll-behavior: auto !important;
+                transition-duration: .01ms !important;
+                animation-duration: .01ms !important;
+            }
+        }
     </style>
 </head>
 <body>
 
+    <div id="landing-page" class="landing-page">
+        <div class="landing-shell">
+            <div class="landing-header">
+                <a class="landing-brand" href="#landing-top" aria-label="AstroSense home">
+                    <span class="landing-brand-mark" aria-hidden="true">A</span>
+                    <span class="landing-brand-copy">
+                        <strong>ASTROSENSE</strong>
+                        <small>NASA SPACE APPS CHALLENGE 2026</small>
+                    </span>
+                </a>
+                <nav class="landing-nav" aria-label="Explore AstroSense">
+                    <a href="#about">ABOUT</a>
+                    <a href="#modules">PLATFORM</a>
+                    <a href="#flamy">FLAMY AI</a>
+                    <a href="#simulations">SIMULATIONS</a>
+                </nav>
+                <a class="landing-nasa-link" href="https://ciencia.nasa.gov/" target="_blank" rel="noopener noreferrer">ciencia.nasa.gov ↗</a>
+            </div>
+
+            <div class="landing-main">
+                <section id="landing-top" class="landing-hero">
+                    <div class="landing-hero-grid">
+                        <div>
+                            <p class="landing-eyebrow">SPACE FIRE RESEARCH · 2026</p>
+                            <h1>UNDERSTANDING FIRE.<br><span>PROTECTING THE FUTURE</span> OF SPACE EXPLORATION.</h1>
+                            <p class="landing-hero-copy">An AI-powered scientific platform for exploring fire safety, suppression, flammability and flame behavior in space.</p>
+                            <button class="landing-primary" type="button" onclick="enterPlatform('fire-safety')">EXPLORE ASTROSENSE <span aria-hidden="true">→</span></button>
+                            <div class="landing-tags" aria-label="Research, artificial intelligence, and simulation">
+                                <span>RESEARCH</span><span>ARTIFICIAL INTELLIGENCE</span><span>SIMULATION</span>
+                            </div>
+                        </div>
+                        <figure class="landing-hero-figure">
+                            <img src="assets/saffire-hero.jpg" alt="Plexiglass burning inside NASA's SAFFIRE-IV spacecraft fire experiment." fetchpriority="high">
+                            <figcaption>
+                                <strong>FIRE BEHAVIOR IN MICROGRAVITY</strong>
+                                <span>NASA/JSC · SAFFIRE-IV</span>
+                            </figcaption>
+                        </figure>
+                    </div>
+                </section>
+
+                <section id="about" class="landing-section landing-about">
+                    <div class="landing-about-grid">
+                        <div>
+                            <p class="landing-eyebrow">ABOUT THE PROJECT</p>
+                            <h2>Bridging scientific research and intelligent analysis for fire safety in space.</h2>
+                        </div>
+                        <div class="landing-about-copy">
+                            <p>AstroSense is an integrated scientific platform designed to organize, explore and analyze NASA research on fire behavior and safety in space environments.</p>
+                            <p>By combining specialized AI assistants, structured scientific databases and interactive mathematical simulations, AstroSense transforms complex research into accessible tools for scientific exploration and scenario analysis.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="modules" class="landing-section">
+                    <div class="landing-section-heading">
+                        <p class="landing-eyebrow">EXPLORE THE PLATFORM</p>
+                        <h2>Four research domains. One connected workspace.</h2>
+                    </div>
+                    <div class="landing-modules-grid">
+                        <button class="module-card" type="button" onclick="enterPlatform('fire-safety')">
+                            <span class="module-index">01 — FIRE SAFETY</span>
+                            <strong>Protect the crew and spacecraft</strong>
+                            <p>Explore fire hazards, prevention strategies, material safety and fire protection considerations in spacecraft environments.</p>
+                            <span class="module-card-cta"><span>Explore module</span><span aria-hidden="true">↗</span></span>
+                        </button>
+                        <button class="module-card" type="button" onclick="enterPlatform('fire-extinguisher')">
+                            <span class="module-index">02 — FIRE EXTINGUISHER</span>
+                            <strong>Understand suppression in space</strong>
+                            <p>Explore fire suppression technologies, extinguishing agents and their behavior under microgravity conditions.</p>
+                            <span class="module-card-cta"><span>Explore module</span><span aria-hidden="true">↗</span></span>
+                        </button>
+                        <button class="module-card" type="button" onclick="enterPlatform('predictive-modeling')">
+                            <span class="module-index">03 — PREDICTIVE MODELING</span>
+                            <strong>Explore flammability scenarios</strong>
+                            <p>Analyze flammability parameters and explore mathematical models for predicting fire behavior and potential scenarios.</p>
+                            <span class="module-card-cta"><span>Explore module</span><span aria-hidden="true">↗</span></span>
+                        </button>
+                        <button class="module-card" type="button" onclick="enterPlatform('flame-group')">
+                            <span class="module-index">04 — FLAME GROUP</span>
+                            <strong>Study combustion and flame dynamics</strong>
+                            <p>Explore scientific research on flame behavior, combustion dynamics and flame characteristics in space environments.</p>
+                            <span class="module-card-cta"><span>Explore module</span><span aria-hidden="true">↗</span></span>
+                        </button>
+                    </div>
+                </section>
+
+                <section id="flamy" class="landing-section landing-flamy">
+                    <div class="landing-flamy-grid">
+                        <div>
+                            <p class="landing-eyebrow">MEET FLAMY</p>
+                            <h2>Your AI-powered research coordinator.</h2>
+                            <div class="landing-flamy-copy">
+                                <p><strong>One platform. Multiple specialized AI assistants.</strong></p>
+                                <p>Flamy coordinates specialized AI assistants connected to scientific datasets and research for their respective modules. Ask scientific questions, retrieve relevant information and explore the research in two consultation modes.</p>
+                            </div>
+                        </div>
+                        <div class="flamy-panel">
+                            <div class="flamy-panel-heading">
+                                <span>FLAMY · RESEARCH NETWORK</span>
+                                <span>2 CONSULTATION MODES</span>
+                            </div>
+                            <div class="flamy-modes">
+                                <div class="flamy-mode">
+                                    <strong>DATABASE MODE</strong>
+                                    <p>Answers based exclusively on the integrated research database.</p>
+                                </div>
+                                <div class="flamy-mode">
+                                    <strong>INTERNET MODE</strong>
+                                    <p>Combines the integrated research database with external internet sources.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="simulations" class="landing-section landing-simulation">
+                    <div class="landing-simulation-grid">
+                        <div class="landing-simulation-copy">
+                            <p class="landing-eyebrow">FROM SCIENTIFIC RESEARCH TO INTERACTIVE SIMULATION</p>
+                            <h2>Explore how parameters shape fire-related scenarios.</h2>
+                            <p>Use mathematical approximations based on scientific research to explore different operating conditions.</p>
+                            <ul>
+                                <li>Modify simulation parameters.</li>
+                                <li>Explore different operating conditions.</li>
+                                <li>Compare selected values against reference conditions.</li>
+                                <li>Visualize parameter proximity through an indicator system.</li>
+                            </ul>
+                            <button class="landing-primary" type="button" onclick="enterPlatform('predictive-modeling')">EXPLORE THE MODELS <span aria-hidden="true">→</span></button>
+                        </div>
+                        <div>
+                            <div class="simulation-panel">
+                                <div class="simulation-panel-heading">
+                                    <span>SCENARIO EXPLORER</span>
+                                    <span>CONCEPTUAL PREVIEW</span>
+                                </div>
+                                <div class="simulation-plot" role="img" aria-label="Illustrative curve showing a model response across a reference-to-input range; it is not experimental data.">
+                                    <svg class="simulation-curve" viewBox="0 0 400 150" preserveAspectRatio="none" aria-hidden="true">
+                                        <defs>
+                                            <linearGradient id="simulation-fill" x1="0" x2="0" y1="0" y2="1">
+                                                <stop offset="0" stop-color="#7de4ee" stop-opacity=".28"></stop>
+                                                <stop offset="1" stop-color="#7de4ee" stop-opacity="0"></stop>
+                                            </linearGradient>
+                                        </defs>
+                                        <path d="M0 128 C55 122 73 91 120 98 S185 73 224 80 S290 34 330 48 S370 18 400 20 L400 150 L0 150 Z" fill="url(#simulation-fill)"></path>
+                                        <path d="M0 128 C55 122 73 91 120 98 S185 73 224 80 S290 34 330 48 S370 18 400 20" fill="none" stroke="#7de4ee" stroke-width="2.5" vector-effect="non-scaling-stroke"></path>
+                                        <circle cx="330" cy="48" r="5" fill="#07101f" stroke="#f4b366" stroke-width="2.5" vector-effect="non-scaling-stroke"></circle>
+                                    </svg>
+                                </div>
+                            </div>
+                            <p class="simulation-note"><strong>Model limitation:</strong> These are mathematical approximations based on scientific literature, not experimentally validated simulations.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="landing-section">
+                    <div class="landing-final-cta">
+                        <p class="landing-eyebrow">CONTINUE THE EXPLORATION</p>
+                        <h2>Explore the science behind fire in space.</h2>
+                        <p>Discover research, interact with scientific data and explore fire behavior through AI and mathematical modeling.</p>
+                        <button class="landing-primary" type="button" onclick="enterPlatform('fire-safety')">ENTER THE PLATFORM <span aria-hidden="true">→</span></button>
+                    </div>
+                </section>
+            </div>
+
+            <footer class="landing-footer">
+                <span>ASTROSENSE · NASA SPACE APPS CHALLENGE 2026</span>
+                <a href="https://ciencia.nasa.gov/" target="_blank" rel="noopener noreferrer">ciencia.nasa.gov ↗</a>
+            </footer>
+        </div>
+    </div>
+
+    <div id="platform-shell" hidden>
     <!-- Header -->
     <header>
         <div class="user-profile">
@@ -1873,6 +2650,7 @@
         </div>
 
         <div class="header-actions">
+            <button class="header-control" type="button" onclick="returnToLanding()">Home</button>
             <button id="crt-toggle" class="header-control" type="button" aria-pressed="false" onclick="toggleCRTMode()">CRT: OFF</button>
             <button class="header-control alert-test" type="button" onclick="triggerO2Alert()">TEST ALERT</button>
             <button class="btn-sensors" onclick="switchView('sensors')">
@@ -1890,11 +2668,11 @@
 
     <!-- Navigation Tabs -->
     <nav class="nav-tabs">
-        <button class="tab active" onclick="switchTab('fire-safety', event)">Fire safety</button>
-        <button class="tab" onclick="switchTab('fire-extinguisher', event)">Fire extinguisher</button>
-        <button class="tab" onclick="switchTab('predictive-modeling', event)">Predictive modeling of flammability and fire scenarios</button>
-        <button class="tab" onclick="switchTab('flame-group', event)">Flame group</button>
-        <button class="tab" onclick="switchTab('flame-dissipation', event)">Flame dissipation</button>
+        <button class="tab active" data-tab-id="fire-safety" onclick="switchTab('fire-safety', event)">Fire safety</button>
+        <button class="tab" data-tab-id="fire-extinguisher" onclick="switchTab('fire-extinguisher', event)">Fire extinguisher</button>
+        <button class="tab" data-tab-id="predictive-modeling" onclick="switchTab('predictive-modeling', event)">Predictive modeling of flammability and fire scenarios</button>
+        <button class="tab" data-tab-id="flame-group" onclick="switchTab('flame-group', event)">Flame group</button>
+        <button class="tab" data-tab-id="flame-dissipation" onclick="switchTab('flame-dissipation', event)">Flame dissipation</button>
     </nav>
 
     <!-- Workspace -->
@@ -2806,6 +3584,7 @@
             </div>
         </section>
     </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js" defer></script>
     <script src="dashboard.js" defer></script>
@@ -2813,6 +3592,19 @@
     <script src="dashboard-predictive.js" defer></script>
     <script src="dashboard-dissipation.js" defer></script>
     <script>
+        function enterPlatform(tabId = 'fire-safety') {
+            document.getElementById('landing-page').hidden = true;
+            document.getElementById('platform-shell').hidden = false;
+            switchTab(tabId);
+            window.scrollTo(0, 0);
+        }
+
+        function returnToLanding() {
+            document.getElementById('platform-shell').hidden = true;
+            document.getElementById('landing-page').hidden = false;
+            window.scrollTo(0, 0);
+        }
+
         function switchView(viewName) {
             const dashboardView = document.getElementById('dashboard-view');
             const sensorsView = document.getElementById('sensors-view');
@@ -2830,7 +3622,10 @@
 
         function switchTab(tabId, event) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            event.target.classList.add('active');
+            const activeTab = event
+                ? (event.currentTarget || event.target)
+                : document.querySelector(`.tab[data-tab-id="${tabId}"]`);
+            if (activeTab) activeTab.classList.add('active');
             if (tabId === 'fire-extinguisher') {
                 switchView('extinguisher');
                 setActiveSectionChat(tabId);
