@@ -1142,6 +1142,92 @@
             line-height: 1.55;
         }
 
+        .flex-figures {
+            margin-top: 30px;
+        }
+
+        .flex-figures > h3 {
+            margin-bottom: 14px;
+            color: var(--text-main);
+            font-size: 13px;
+            letter-spacing: .1em;
+        }
+
+        .flex-figure {
+            margin: 14px 0;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: rgba(5,9,20,.48);
+        }
+
+        .flex-figure img {
+            display: block;
+            width: 100%;
+            max-height: 560px;
+            margin: 0 auto;
+            object-fit: contain;
+            background: #fff;
+        }
+
+        .flex-figure figcaption {
+            padding: 18px 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .flex-figure figcaption h4 {
+            margin-bottom: 12px;
+            color: var(--accent-cyan);
+            font-size: 12px;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+        }
+
+        .flex-figure figcaption p {
+            max-width: 900px;
+            margin: 8px 0;
+            color: #bac8d9;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .flex-figure .figure-takeaway {
+            margin-top: 12px;
+            padding-left: 12px;
+            border-left: 2px solid var(--accent-red);
+            color: var(--text-main);
+        }
+
+        .flex-figure .figure-note { color: var(--text-muted); }
+
+        .flex-data-table-wrap {
+            margin: 14px 0 6px;
+            overflow-x: auto;
+        }
+
+        .flex-data-table {
+            width: 100%;
+            border-collapse: collapse;
+            color: var(--text-main);
+            font-size: 12px;
+            text-align: left;
+        }
+
+        .flex-data-table th,
+        .flex-data-table td {
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            white-space: nowrap;
+        }
+
+        .flex-data-table th {
+            background: rgba(98,201,245,.08);
+            color: var(--accent-cyan);
+            font-size: 10px;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+        }
+
         .data-disclosure {
             margin: 20px 0 0;
             padding: 12px 14px;
@@ -1414,6 +1500,52 @@
                         <p>Dataset size reported by the supplied FLEX chat service.</p>
                     </article>
                 </div>
+                <section class="flex-figures" aria-labelledby="flex-figures-title">
+                    <h3 id="flex-figures-title">FLEX TEST CONDITIONS AND RESULTS (~1 ATM)</h3>
+
+                    <figure class="flex-figure">
+                        <img src="assets/flex-test-conditions.png" alt="Scatter plots of FLEX tests at approximately one atmosphere, showing initial oxygen fraction versus added carbon dioxide or helium. Point color identifies extinction, completion, or disruption; marker shape distinguishes methanol and heptane." loading="lazy" decoding="async">
+                        <figcaption>
+                            <h4>Figure 1: Test conditions map (~1 atm)</h4>
+                            <p><strong>What it shows:</strong> Every FLEX test in this map ran at approximately 1 atm and is positioned by its gas mixture. The left panel shows CO₂ added to air; the right panel shows helium added.</p>
+                            <p><strong>How to read it:</strong> Each point is one test. The horizontal axis is the added diluent fraction (0 means only oxygen and nitrogen); the vertical axis is the initial oxygen fraction. Color indicates the outcome: red, flame extinguished; green, droplet burned completely; gray, test ended by droplet disruption. Circles are methanol and squares are heptane.</p>
+                            <p>The diagonal pattern appears because adding a diluent to air automatically lowers the oxygen fraction.</p>
+                            <p class="figure-takeaway"><strong>Takeaway:</strong> This is the experimental design, not a result. It shows which conditions were actually tested.</p>
+                        </figcaption>
+                    </figure>
+
+                    <figure class="flex-figure">
+                        <img src="assets/flex-extinction-diameter.png" alt="Scatter plot of visible droplet diameter at flame extinction versus initial oxygen fraction for methanol and heptane tests with carbon dioxide, helium, or nitrogen." loading="lazy" decoding="async">
+                        <figcaption>
+                            <h4>Figure 2: Extinction diameter vs. oxygen</h4>
+                            <p><strong>What it shows:</strong> Droplet diameter when the flame went out, for tests that ended in extinction.</p>
+                            <p><strong>How to read it:</strong> A higher point means the flame went out earlier, while the droplet was still larger. A point near 1 mm means the flame lasted almost until the droplet was consumed.</p>
+                            <p class="figure-takeaway"><strong>Takeaway:</strong> With less oxygen, flames tend to go out at larger droplet sizes, consistent with cooler flames and greater radiative heat loss.</p>
+                            <p class="figure-note"><strong>Note:</strong> The scatter is large because droplets did not all start at the same size. Read this as a trend, not a precise curve.</p>
+                        </figcaption>
+                    </figure>
+
+                    <figure class="flex-figure">
+                        <img src="assets/flex-loi-upper-bound.png" alt="Bar chart showing the lowest observed oxygen fraction with a flame for methanol and heptane under nitrogen, carbon dioxide, and helium dilution." loading="lazy" decoding="async">
+                        <figcaption>
+                            <h4>Figure 3: Lowest oxygen with a flame observed</h4>
+                            <p><strong>What it shows:</strong> For each fuel and gas mixture, the lowest oxygen fraction at which a flame was still observed. The n above each bar is the number of tests.</p>
+                            <div class="flex-data-table-wrap">
+                                <table class="flex-data-table">
+                                    <thead>
+                                        <tr><th>Fuel</th><th>N₂ only</th><th>+ CO₂</th><th>+ He</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>Methanol</td><td>0.12 (n=42)</td><td>0.14 (n=29)</td><td>0.13 (n=14)</td></tr>
+                                        <tr><td>Heptane</td><td>0.13 (n=37)</td><td>0.17 (n=27)</td><td>0.16 (n=12)</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="figure-takeaway"><strong>Takeaway:</strong> Heptane needs more oxygen than methanol to sustain a flame in all three mixtures.</p>
+                            <p class="figure-note"><strong>Note:</strong> These values are upper bounds on the true Limiting Oxygen Index (LOI), not the LOI itself. CO₂ and He are not ranked by suppression effectiveness here: adding them lowered oxygen in a coupled way, so the comparison mixes experimental design with suppressant effect.</p>
+                        </figcaption>
+                    </figure>
+                </section>
                 <p class="data-disclosure">This is an educational data assistant, not emergency or operational fire-safety guidance. Messages and chat history are sent to the external FLEX chat service.</p>
                 <h3>ASK THE FLEX DATA ASSISTANT</h3>
                 <p id="flex-chat-status" role="status" aria-live="polite">Ready to query the FLEX experiment data.</p>
