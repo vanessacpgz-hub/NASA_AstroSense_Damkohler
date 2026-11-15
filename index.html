@@ -1157,12 +1157,282 @@
             align-items: start;
         }
 
+        .analysis-domain-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 370px;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .analysis-domain-module {
+            margin-top: 20px;
+        }
+
+        .analysis-domain-module h2 {
+            margin: 0 0 6px;
+            font-size: clamp(20px, 3vw, 26px);
+        }
+
+        .domain-intro {
+            max-width: 900px;
+            margin: 0 0 18px;
+            color: var(--text-muted);
+            font-size: 13px;
+            line-height: 1.65;
+        }
+
+        .domain-module-column {
+            display: flex;
+            min-width: 0;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .domain-module-column h3 {
+            margin: 0 0 14px;
+            color: var(--accent-cyan);
+            font-size: 12px;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .domain-module-column label:not(.domain-slider-card) {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .domain-control-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .domain-control-row > select {
+            min-width: min(100%, 260px);
+            flex: 1 1 260px;
+        }
+
+        .domain-description {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 10px 14px;
+            border: 1px solid rgba(98,201,245,.25);
+            border-radius: 4px;
+            background: rgba(98,201,245,.08);
+            color: #cbd5e1;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .domain-description strong,
+        .domain-panel-heading > strong {
+            flex: 0 0 auto;
+            color: var(--accent-cyan);
+            font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+            font-size: 10px;
+        }
+
+        .domain-slider-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .domain-slider-card {
+            display: grid;
+            min-width: 0;
+            gap: 8px;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: var(--bg-primary);
+            color: var(--text-muted);
+            font-size: 10px;
+        }
+
+        .domain-slider-card > span:first-child {
+            min-height: 30px;
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .domain-slider-card small {
+            display: block;
+            margin-top: 3px;
+            color: var(--text-muted);
+            font-size: 8px;
+            font-weight: 400;
+        }
+
+        .domain-slider-card output {
+            color: var(--accent-cyan);
+            font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .domain-slider-card input[type="range"] {
+            width: 100%;
+            accent-color: var(--accent-cyan);
+        }
+
+        .domain-slider-card .slider-limits {
+            display: flex;
+            justify-content: space-between;
+            gap: 5px;
+        }
+
+        .domain-slider-card .slider-limits small {
+            overflow-wrap: anywhere;
+        }
+
+        .domain-panel-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px 14px;
+            margin-bottom: 12px;
+        }
+
+        .domain-panel-heading h3 {
+            margin: 0;
+        }
+
+        .domain-panel-heading > div > span {
+            color: var(--text-muted);
+            font-size: 9px;
+        }
+
+        .domain-chart {
+            position: relative;
+            height: 170px;
+        }
+
+        .domain-visual-panel {
+            text-align: center;
+        }
+
+        .domain-visual-panel > h3 {
+            text-align: left;
+        }
+
+        .domain-visual-box {
+            margin-bottom: 12px;
+            padding: 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: var(--bg-primary);
+            text-align: left;
+        }
+
+        .domain-visual-box .domain-panel-heading {
+            font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+            font-size: 9px;
+        }
+
+        .flame-front-track {
+            height: 22px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            border-radius: 3px;
+            background: #1e293b;
+        }
+
+        #flame-front-bar {
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, #ef4444, #f59e0b, #38bdf8);
+            transition: width .3s ease;
+        }
+
+        .domain-visual-box p,
+        #heatmap-caption,
+        #droplet-status-caption {
+            margin: 10px 0 0;
+            color: var(--text-muted);
+            font-size: 10px;
+            line-height: 1.5;
+        }
+
+        .domain-status-badge {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid rgba(84,214,160,.3);
+            border-radius: 4px;
+            background: rgba(84,214,160,.15);
+            color: #71d5ae;
+            font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        #extinction-state-badge {
+            color: #71d5ae;
+        }
+
+        .domain-log {
+            height: 215px;
+            overflow-y: auto;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: var(--bg-primary);
+            color: var(--text-muted);
+            font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+            font-size: 10px;
+            line-height: 1.55;
+        }
+
+        .domain-heatmap {
+            display: flex;
+            height: 110px;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: radial-gradient(circle at 50% 50%, #f97316 10%, #3b82f6 50%, #060913 90%);
+        }
+
+        #heatmap-core {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #fef08a;
+            filter: blur(4px);
+            box-shadow: 0 0 20px #f97316;
+        }
+
+        #droplet-visual-core {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #fef08a 20%, #f97316 60%, #ef4444 90%);
+            box-shadow: 0 0 25px #f97316;
+            transition: all .3s ease;
+        }
+
         @media (max-width: 760px) {
             .flame-group-grid { grid-template-columns: minmax(0, 1fr); }
+            .analysis-domain-grid { grid-template-columns: minmax(0, 1fr); }
+        }
+
+        @media (max-width: 520px) {
+            .domain-slider-grid { grid-template-columns: minmax(0, 1fr); }
+            .domain-description { align-items: flex-start; }
         }
 
         #flame-group-view[hidden],
-        #sensor-standard-controls[hidden],
+        .sensor-domain-view[hidden],
         #sensor-target-parameter[hidden] {
             display: none;
         }
@@ -1965,13 +2235,13 @@
         <!-- Sensor Module View -->
         <div id="sensors-view" class="view-section">
             <h2 style="font-size: 16px; font-weight: 600; margin-bottom: 6px;">Telemetry & Diagnostic Comparison Console</h2>
-            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">Stream hardware inputs, select parameter domain, and evaluate live thresholds against NASA safety baselines.</p>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">Choose an analysis domain to explore simulated NASA PSI parameters, scenarios, and model outputs.</p>
 
             <div class="sensor-panel">
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="sensor-topic">1. Analysis Domain</label>
-                        <select id="sensor-topic" class="form-control" aria-controls="sensor-standard-controls flame-group-view" onchange="updateSensorDomainView()">
+                        <select id="sensor-topic" class="form-control" aria-controls="fire-safety-view predictive-modeling-view flame-group-view dissipation-view" onchange="updateSensorDomainView()">
                             <option value="fire-safety">Fire Safety & Combustion Thresholds</option>
                             <option value="predictive-modeling">Predictive Flammability Scenarios</option>
                             <option value="flame-group">Flame Group Behavior Dynamics</option>
@@ -1980,53 +2250,291 @@
                     </div>
 
                     <div id="sensor-target-parameter" class="form-group">
-                        <label for="sensor-target-value">2. Target Parameter</label>
-                        <input id="sensor-target-value" type="text" class="form-control" value="Radiative Heat Flux (kW/m²)" readonly>
+                        <label for="sensor-target-value">2. Module Focus</label>
+                        <input id="sensor-target-value" type="text" class="form-control" value="Material thresholds, smoke, spread & cabin telemetry" readonly>
                     </div>
                 </div>
 
-                <details id="sensor-standard-controls" class="sensor-panel content-accordion">
-                    <summary><span>01</span> Standard telemetry and diagnostics</summary>
-                    <div class="content-accordion-content sensor-accordion-content">
-                    <div class="telemetry-toolbar">
-                        <div class="connection-status">
-                            <div class="status-indicator"></div>
-                            <span>SIMULATED FEED / VIRTUAL NODE</span>
-                        </div>
-                        <div class="preset-group">
-                            <button class="btn-preset" onclick="setPreset('normal')">Nominal (1.2)</button>
-                            <button class="btn-preset" onclick="setPreset('caution')">Warning (2.4)</button>
-                            <button class="btn-preset" onclick="setPreset('critical')">Critical (3.8)</button>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="staged-reading">Live Staged Reading</label>
-                        <input type="text" id="staged-reading" class="form-control" value="1.2 kW/m²" style="font-family: monospace; font-size: 14px; font-weight: 600;">
-                    </div>
-
-                    <button class="btn-execute" onclick="runAnalysis()">EXECUTE CONSULTATION & COMPARATIVE SLASH</button>
-
-                    <div id="results-panel" class="diagnostic-results">
-                        <div class="slash-layout">
-                            <div class="slash-data">
-                                <h4>Slash Comparative Diagnostic</h4>
-                                <div id="metric-comparison" class="slash-metric-row">READING: 1.2 kW/m² / BASELINE: &lt; 1.8 kW/m²</div>
-                                <p id="metric-recommendation" class="slash-desc">
-                                    Parameter is within nominal operational parameters for orbital combustion testing. No intervention required.
-                                </p>
-                            </div>
-                            <div class="traffic-console">
-                                <div id="lamp-red" class="lamp red"></div>
-                                <div id="lamp-yellow" class="lamp yellow"></div>
-                                <div id="lamp-green" class="lamp green active"></div>
-                                <div id="status-text" class="traffic-status-label" style="color: #34d399;">NOMINAL</div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </details>
             </div>
+
+            <section id="fire-safety-view" class="sensor-domain-view analysis-domain-module" hidden>
+                <div class="mission-meta">
+                    <span class="mission-kicker">AstroSense / Cabin Fire Safety</span>
+                    <span class="demo-badge">SAFFIRE · BASS-II · SAME-R</span>
+                </div>
+                <h2>Fire Safety & Spacecraft Material Thresholds</h2>
+                <p class="domain-intro">Explore simulated material flammability, flame spread, smoke generation, and cabin conditions based on PSI-98/99/100, PSI-25/26, and PSI-101/102.</p>
+                <p class="data-disclosure">Simulation only: readings and response indicators are not live sensor data, emergency instructions, or operational spacecraft guidance.</p>
+
+                <div class="analysis-domain-grid">
+                    <div class="domain-module-column">
+                        <div class="sensor-panel">
+                            <label for="material-select">Spacecraft cabin material (BASS-II)</label>
+                            <div class="domain-control-row">
+                                <select id="material-select" class="form-control" onchange="changeMaterial()">
+                                    <option value="nomex">Nomex / Kevlar fabric</option>
+                                    <option value="cotton">Cotton / cellulose blend</option>
+                                    <option value="kapton">Kapton / polymer insulation</option>
+                                </select>
+                                <div class="preset-group">
+                                    <button class="btn-preset" onclick="applySafetyPreset('nominal')">Nominal</button>
+                                    <button class="btn-preset" onclick="applySafetyPreset('smolder')">Smoldering</button>
+                                    <button class="btn-preset" onclick="applySafetyPreset('fire')">Active spread</button>
+                                </div>
+                            </div>
+                            <div class="domain-description">
+                                <span id="material-desc">Flame-resistant meta-aramid (PSI-26 BASS): high Limiting Oxygen Index (LOI ~28%) and self-extinguishing in normal air.</span>
+                                <strong id="material-loi-badge">LOI: 28%</strong>
+                            </div>
+                        </div>
+
+                        <div class="sensor-panel">
+                            <h3>Cabin Fire Detection Telemetry</h3>
+                            <div class="domain-slider-grid">
+                                <label class="domain-slider-card" for="slider-smoke">
+                                    <span>Cabin Smoke Density <small>PSI-101/102 (SAME-R)</small></span>
+                                    <output id="val-smoke">1.2 mg/m³</output>
+                                    <input id="slider-smoke" type="range" min="0" max="50" step="0.5" value="1.2" oninput="updateSafetySim()">
+                                    <span class="slider-limits"><small>0 mg/m³</small><small id="limit-smoke">Alarm: &gt; 15 mg/m³</small><small>50 mg/m³</small></span>
+                                </label>
+                                <label class="domain-slider-card" for="slider-spread">
+                                    <span>Flame Spread Rate <small>PSI-25/26 (BASS-II)</small></span>
+                                    <output id="val-spread">0.0 mm/s</output>
+                                    <input id="slider-spread" type="range" min="0" max="25" step="0.5" value="0" oninput="updateSafetySim()">
+                                    <span class="slider-limits"><small>0 mm/s</small><small id="limit-spread">Max safe: 3.5 mm/s</small><small>25 mm/s</small></span>
+                                </label>
+                                <label class="domain-slider-card" for="slider-flux">
+                                    <span>Radiative Heat Flux <small>PSI-98/100 (SAFFIRE)</small></span>
+                                    <output id="val-flux">1.1 kW/m²</output>
+                                    <input id="slider-flux" type="range" min="0" max="15" step="0.2" value="1.1" oninput="updateSafetySim()">
+                                    <span class="slider-limits"><small>0 kW/m²</small><small>Threshold: &lt; 2.5 kW/m²</small><small>15 kW/m²</small></span>
+                                </label>
+                                <label class="domain-slider-card" for="slider-cabin-o2">
+                                    <span>Cabin Oxygen (O₂) <small>PSI-99 (SAFFIRE-II)</small></span>
+                                    <output id="val-cabin-o2">21.0%</output>
+                                    <input id="slider-cabin-o2" type="range" min="14" max="32" step="0.5" value="21" oninput="updateSafetySim()">
+                                    <span class="slider-limits"><small>14%</small><small id="limit-cabin-o2">Material LOI: 28%</small><small>32%</small></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="sensor-panel">
+                            <div class="domain-panel-heading">
+                                <div>
+                                    <h3>Spacecraft Containment Protocol</h3>
+                                    <span>Simulated response indicators from the supplied model</span>
+                                </div>
+                                <strong id="protocol-badge">Action: Normal HVAC</strong>
+                            </div>
+                            <div class="domain-chart"><canvas id="safetyChart" role="img" aria-label="Simulated spacecraft containment protocol comparison"></canvas></div>
+                            <p id="safety-chart-fallback" class="figure-note" role="status" hidden>Chart.js did not load, so the protocol chart is unavailable.</p>
+                        </div>
+                    </div>
+
+                    <div class="domain-module-column">
+                        <div class="sensor-panel domain-visual-panel">
+                            <h3>Material Flame Spread Monitor</h3>
+                            <div class="domain-visual-box">
+                                <div class="domain-panel-heading"><span>IGNITION POINT</span><strong id="burn-percent-label">0% CHARRED</strong></div>
+                                <div class="flame-front-track"><div id="flame-front-bar"></div></div>
+                                <p id="spread-physics-note">Airflow ventilation speed (10–20 cm/s) governs flame spread in microgravity (SAFFIRE).</p>
+                            </div>
+                            <div id="safety-status-badge" class="domain-status-badge">CABIN STATUS: NOMINAL</div>
+                        </div>
+                        <div class="sensor-panel">
+                            <div class="domain-panel-heading">
+                                <h3>Safety Diagnostic Log</h3>
+                                <strong id="safety-score">Integrity: 98%</strong>
+                            </div>
+                            <div id="safety-log-container" class="domain-log" aria-live="polite"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+                    <section id="dissipation-view" class="sensor-domain-view analysis-domain-module" hidden>
+                        <div class="mission-meta">
+                            <span class="mission-kicker">AstroSense / Flame Dissipation</span>
+                            <span class="demo-badge">PSI-69 · PSI-68 · PSI-142</span>
+                        </div>
+                        <h2>Flame Dissipation, Cooling Rates & Extinction Limits</h2>
+                        <p class="domain-intro">Explore simulated droplet cooling, oxygen dilution, and cool-flame stretch extinction using the supplied PSI-69, PSI-68, and PSI-142 parameters.</p>
+                        <p class="data-disclosure">Simulation only: outputs are illustrative, not live sensor readings, verified suppression advice, or emergency guidance.</p>
+
+                        <div class="analysis-domain-grid">
+                            <div class="domain-module-column">
+                                <div class="sensor-panel">
+                                    <label for="suppressor-select">Extinction & Suppression Mechanism</label>
+                                    <div class="domain-control-row">
+                                        <select id="suppressor-select" class="form-control" onchange="changeSuppressor()">
+                                            <option value="flex">PSI-69: FLEX droplet quenching & vaporization</option>
+                                            <option value="flex2">PSI-68: FLEX-2 pressure & oxygen dilution</option>
+                                            <option value="cool">PSI-142: Cool-flame radiation & stretch</option>
+                                        </select>
+                                        <div class="preset-group">
+                                            <button class="btn-preset" onclick="applyDissipationPreset('stable')">Burning</button>
+                                            <button class="btn-preset" onclick="applyDissipationPreset('quenching')">Active quench</button>
+                                            <button class="btn-preset" onclick="applyDissipationPreset('extinct')">Full extinction</button>
+                                        </div>
+                                    </div>
+                                    <div class="domain-description">
+                                        <span id="suppressor-desc">Evaluates droplet extinction and thermal absorption via FLEX combustion data.</span>
+                                        <strong id="suppressor-ref-badge">PSI-69</strong>
+                                    </div>
+                                </div>
+
+                                <div class="sensor-panel">
+                                    <h3>Dissipation & Quenching Telemetry</h3>
+                                    <div class="domain-slider-grid">
+                                        <label class="domain-slider-card" for="d-slider-p1">
+                                            <span id="d-label-p1">Thermal Cooling Rate</span>
+                                            <output id="d-val-p1">15.0 K/s</output>
+                                            <input id="d-slider-p1" type="range" min="1" max="150" step="1" value="15" oninput="updateDissipationSim()">
+                                            <span class="slider-limits"><small id="d-p1-min">1 K/s</small><small id="d-p1-mid">Quench: &gt; 60</small><small id="d-p1-max">150 K/s</small></span>
+                                        </label>
+                                        <label class="domain-slider-card" for="d-slider-p2">
+                                            <span id="d-label-p2">Droplet Diameter (d₀)</span>
+                                            <output id="d-val-p2">1.25 mm</output>
+                                            <input id="d-slider-p2" type="range" min="0.1" max="3" step="0.05" value="1.25" oninput="updateDissipationSim()">
+                                            <span class="slider-limits"><small id="d-p2-min">0.1 mm</small><small id="d-p2-mid">Critical: &lt; 0.4</small><small id="d-p2-max">3 mm</small></span>
+                                        </label>
+                                        <label class="domain-slider-card" for="d-slider-p3">
+                                            <span id="d-label-p3">Chamber Pressure</span>
+                                            <output id="d-val-p3">1.0 atm</output>
+                                            <input id="d-slider-p3" type="range" min="0.5" max="5" step="0.1" value="1" oninput="updateDissipationSim()">
+                                            <span class="slider-limits"><small id="d-p3-min">0.5 atm</small><small id="d-p3-mid">Nominal: 1 atm</small><small id="d-p3-max">5 atm</small></span>
+                                        </label>
+                                        <label class="domain-slider-card" for="d-slider-p4">
+                                            <span id="d-label-p4">Vaporization Rate</span>
+                                            <output id="d-val-p4">4.2 mg/s</output>
+                                            <input id="d-slider-p4" type="range" min="0.1" max="25" step="0.2" value="4.2" oninput="updateDissipationSim()">
+                                            <span class="slider-limits"><small id="d-p4-min">0.1</small><small id="d-p4-mid">Stable: &lt; 8</small><small id="d-p4-max">25 mg/s</small></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="sensor-panel">
+                                    <div class="domain-panel-heading">
+                                        <div>
+                                            <h3 id="d-chart-title-text">FLEX Droplet Quenching Efficiency</h3>
+                                            <span>Simulated extinction response</span>
+                                        </div>
+                                        <strong id="extinction-state-badge">STATUS: FLAME SUSTAINED</strong>
+                                    </div>
+                                    <div class="domain-chart"><canvas id="dissipationChart" role="img" aria-label="Simulated flame dissipation and extinction metrics"></canvas></div>
+                                    <p id="dissipation-chart-fallback" class="figure-note" role="status" hidden>Chart.js did not load, so the dissipation chart is unavailable.</p>
+                                </div>
+                            </div>
+
+                            <div class="domain-module-column">
+                                <div class="sensor-panel domain-visual-panel">
+                                    <h3>Droplet & Cool-Flame Quench</h3>
+                                    <div class="domain-heatmap"><div id="droplet-visual-core"></div></div>
+                                    <p id="droplet-status-caption">Stable spherical droplet combustion envelope in microgravity.</p>
+                                    <div id="extinction-action-badge" class="domain-status-badge">ACTION: MONITORING VAPORIZATION</div>
+                                </div>
+                                <div class="sensor-panel">
+                                    <div class="domain-panel-heading">
+                                        <h3>Extinction & Quenching Log</h3>
+                                        <strong id="dissipation-score">Readiness: 100%</strong>
+                                    </div>
+                                    <div id="dissipation-log-container" class="domain-log" aria-live="polite"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+            <section id="predictive-modeling-view" class="sensor-domain-view analysis-domain-module" hidden>
+                <div class="mission-meta">
+                    <span class="mission-kicker">AstroSense / Predictive Modeling</span>
+                    <span class="demo-badge">PSI-60 · PSI-62 · PSI-117</span>
+                </div>
+                <h2>Predictive Modeling of Flammability & Fire Scenarios</h2>
+                <p class="domain-intro">Explore simulated soot formation, flame-spread, and thermo-convective models based on the supplied PSI study parameters.</p>
+                <p class="data-disclosure">Simulation only: model outputs are illustrative and are not validated predictions, live telemetry, or emergency guidance.</p>
+
+                <div class="analysis-domain-grid">
+                    <div class="domain-module-column">
+                        <div class="sensor-panel">
+                            <label for="model-select">Predictive Algorithm Engine</label>
+                            <div class="domain-control-row">
+                                <select id="model-select" class="form-control" onchange="changeModel()">
+                                    <option value="spice">PSI-60: SPICE image processing & soot model</option>
+                                    <option value="fgm">PSI-62: Concurrent flame spread (FGM)</option>
+                                    <option value="cfd">PSI-117: Thermo-convective cool flame CFD</option>
+                                </select>
+                                <div class="preset-group">
+                                    <button class="btn-preset" onclick="applyModelPreset('stable')">Stable flow</button>
+                                    <button class="btn-preset" onclick="applyModelPreset('perturb')">Perturbed</button>
+                                    <button class="btn-preset" onclick="applyModelPreset('turbulent')">High instability</button>
+                                </div>
+                            </div>
+                            <div class="domain-description">
+                                <span id="model-desc">Extracts temperature distributions and soot volume fractions from SPICE video telemetry.</span>
+                                <strong id="model-ref-badge">PSI-60</strong>
+                            </div>
+                        </div>
+
+                        <div class="sensor-panel">
+                            <h3>Predictive Model Parameters</h3>
+                            <div class="domain-slider-grid">
+                                <label class="domain-slider-card" for="slider-p1">
+                                    <span id="label-p1">Soot Volume Fraction</span>
+                                    <output id="val-p1">2.4 ppm</output>
+                                    <input id="slider-p1" type="range" min="0.1" max="15" step="0.1" value="2.4" oninput="updateModelSim()">
+                                    <span class="slider-limits"><small id="p1-min">0.1 ppm</small><small id="p1-mid">Nominal: &lt; 5.0</small><small id="p1-max">15 ppm</small></span>
+                                </label>
+                                <label class="domain-slider-card" for="slider-p2">
+                                    <span id="label-p2">Pyrometric Temp Index</span>
+                                    <output id="val-p2">1250 K</output>
+                                    <input id="slider-p2" type="range" min="300" max="2000" step="10" value="1250" oninput="updateModelSim()">
+                                    <span class="slider-limits"><small id="p2-min">300 K</small><small id="p2-mid">Optimal: 1200 K</small><small id="p2-max">2000 K</small></span>
+                                </label>
+                                <label class="domain-slider-card" for="slider-p3">
+                                    <span id="label-p3">Optical Density Field</span>
+                                    <output id="val-p3">1.2 a.u.</output>
+                                    <input id="slider-p3" type="range" min="0" max="5" step="0.1" value="1.2" oninput="updateModelSim()">
+                                    <span class="slider-limits"><small id="p3-min">0</small><small id="p3-mid">Clear: &lt; 2.0</small><small id="p3-max">5</small></span>
+                                </label>
+                                <label class="domain-slider-card" for="slider-p4">
+                                    <span id="label-p4">Image Frame Rate</span>
+                                    <output id="val-p4">60 fps</output>
+                                    <input id="slider-p4" type="range" min="10" max="250" step="5" value="60" oninput="updateModelSim()">
+                                    <span class="slider-limits"><small id="p4-min">10 fps</small><small id="p4-mid">Standard: 60</small><small id="p4-max">250 fps</small></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="sensor-panel">
+                            <div class="domain-panel-heading">
+                                <div>
+                                    <h3 id="chart-title-text">SPICE Optical Soot Evolution</h3>
+                                    <span>Simulated model response</span>
+                                </div>
+                                <strong id="model-accuracy-badge">Accuracy: 96.4%</strong>
+                            </div>
+                            <div class="domain-chart"><canvas id="predictiveChart" role="img" aria-label="Simulated predictive model response"></canvas></div>
+                            <p id="predictive-chart-fallback" class="figure-note" role="status" hidden>Chart.js did not load, so the predictive chart is unavailable.</p>
+                        </div>
+                    </div>
+
+                    <div class="domain-module-column">
+                        <div class="sensor-panel domain-visual-panel">
+                            <h3>CFD Soot & Thermal Heatmap</h3>
+                            <div class="domain-heatmap"><div id="heatmap-core"></div></div>
+                            <p id="heatmap-caption">SPICE optical density field: stable core with minimal soot aggregation.</p>
+                            <div id="model-status-badge" class="domain-status-badge">MODEL STATUS: PREDICTION STABLE</div>
+                        </div>
+                        <div class="sensor-panel">
+                            <div class="domain-panel-heading">
+                                <h3>Predictive Engine Log</h3>
+                                <strong id="model-conf-score">Confidence: 94%</strong>
+                            </div>
+                            <div id="model-log-container" class="domain-log" aria-live="polite"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
             <div id="flame-group-view" class="flame-group-module" hidden>
                 <div class="mission-meta">
@@ -2204,6 +2712,9 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js" defer></script>
     <script src="dashboard.js" defer></script>
+    <script src="dashboard-fire-safety.js" defer></script>
+    <script src="dashboard-predictive.js" defer></script>
+    <script src="dashboard-dissipation.js" defer></script>
     <script>
         function switchView(viewName) {
             const dashboardView = document.getElementById('dashboard-view');
@@ -2216,6 +2727,7 @@
                 ? sensorsView
                 : showExtinguisher ? extinguisherView : dashboardView;
             targetView.classList.add('active');
+            if (viewName === 'sensors') updateSensorDomainView();
             setActiveSectionChat(null);
         }
 
@@ -2625,12 +3137,40 @@
         }
 
         function updateSensorDomainView() {
-            const showFlameGroup = document.getElementById('sensor-topic').value === 'flame-group';
-            document.getElementById('sensor-target-parameter').hidden = showFlameGroup;
-            document.getElementById('sensor-standard-controls').hidden = showFlameGroup;
-            document.getElementById('flame-group-view').hidden = !showFlameGroup;
-            if (showFlameGroup && typeof resizeSuppressionChart === 'function') {
-                window.requestAnimationFrame(resizeSuppressionChart);
+            const domain = document.getElementById('sensor-topic').value;
+            const domains = {
+                'fire-safety': {
+                    view: 'fire-safety-view',
+                    focus: 'Material thresholds, smoke, spread & cabin telemetry',
+                    resize: window.resizeSafetyChart
+                },
+                'predictive-modeling': {
+                    view: 'predictive-modeling-view',
+                    focus: 'PSI-60 / PSI-62 / PSI-117 model parameters',
+                    resize: window.resizePredictiveChart
+                },
+                'flame-group': {
+                    view: 'flame-group-view',
+                    focus: 'Multi-fuel combustion and flame dynamics',
+                    resize: window.resizeSuppressionChart
+                },
+                'flame-dissipation': {
+                    view: 'dissipation-view',
+                    focus: 'Droplet cooling, oxygen dilution & extinction limits',
+                    resize: window.resizeDissipationChart
+                }
+            };
+            const selectedDomain = domains[domain] ? domain : 'fire-safety';
+            const selected = domains[selectedDomain];
+
+            Object.keys(domains).forEach(key => {
+                document.getElementById(domains[key].view).hidden = key !== selectedDomain;
+            });
+            document.getElementById('sensor-target-parameter').hidden = selectedDomain === 'flame-group';
+            document.getElementById('sensor-target-value').value = selected.focus;
+
+            if (typeof selected.resize === 'function') {
+                window.requestAnimationFrame(selected.resize);
             }
         }
 
