@@ -1142,18 +1142,18 @@
             line-height: 1.55;
         }
 
-        .flex-figures {
+        .data-figures {
             margin-top: 30px;
         }
 
-        .flex-figures > h3 {
+        .data-figures > h3 {
             margin-bottom: 14px;
             color: var(--text-main);
             font-size: 13px;
             letter-spacing: .1em;
         }
 
-        .flex-figure {
+        .data-figure {
             margin: 14px 0;
             overflow: hidden;
             border: 1px solid var(--border-color);
@@ -1161,7 +1161,7 @@
             background: rgba(5,9,20,.48);
         }
 
-        .flex-figure img {
+        .data-figure img {
             display: block;
             width: 100%;
             max-height: 560px;
@@ -1170,12 +1170,12 @@
             background: #fff;
         }
 
-        .flex-figure figcaption {
+        .data-figure figcaption {
             padding: 18px 20px;
             border-top: 1px solid var(--border-color);
         }
 
-        .flex-figure figcaption h4 {
+        .data-figure figcaption h4 {
             margin-bottom: 12px;
             color: var(--accent-cyan);
             font-size: 12px;
@@ -1183,7 +1183,7 @@
             text-transform: uppercase;
         }
 
-        .flex-figure figcaption p {
+        .data-figure figcaption p {
             max-width: 900px;
             margin: 8px 0;
             color: #bac8d9;
@@ -1191,14 +1191,20 @@
             line-height: 1.7;
         }
 
-        .flex-figure .figure-takeaway {
+        .data-figure .figure-takeaway {
             margin-top: 12px;
             padding-left: 12px;
             border-left: 2px solid var(--accent-red);
             color: var(--text-main);
         }
 
-        .flex-figure .figure-note { color: var(--text-muted); }
+        .data-figure .figure-note { color: var(--text-muted); }
+
+        .dashboard-grid[hidden],
+        .event-log[hidden],
+        .data-figures[hidden] {
+            display: none;
+        }
 
         .flex-data-table-wrap {
             margin: 14px 0 6px;
@@ -1500,14 +1506,14 @@
         <div id="dashboard-view" class="view-section active">
             <div class="mission-meta">
                 <span class="mission-kicker">AstroSense / Mission Control</span>
-                <span class="demo-badge">Telemetry demo</span>
+                <span id="dashboard-badge" class="demo-badge">Telemetry demo</span>
             </div>
             <h2 id="active-tab-title" style="font-size: 16px; font-weight: 600; margin-bottom: 6px;">Fire safety</h2>
             <p id="active-tab-desc" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">
                 Real-time orbital and atmospheric telemetry monitoring cabin materials, combustion mitigation thresholds, and space station safety compliance based on NASA open databases.
             </p>
 
-            <div class="dashboard-grid">
+            <div id="dashboard-grid" class="dashboard-grid">
                 <div class="card">
                     <div class="card-header-row">
                         <h3>Cabin Oxygen</h3>
@@ -1553,12 +1559,64 @@
                 </div>
             </div>
 
-            <section class="event-log" aria-labelledby="event-log-title">
+            <section id="flight-event-log" class="event-log" aria-labelledby="event-log-title">
                 <div class="event-log-header">
                     <h3 id="event-log-title">FLIGHT EVENT LOG</h3>
                     <span>UTC · SIMULATION</span>
                 </div>
                 <div id="event-log-entries" class="event-log-entries" role="log" aria-live="polite" aria-relevant="additions"></div>
+            </section>
+
+            <section id="flame-group-research" class="data-figures" aria-labelledby="archive-title" hidden>
+                <h3 id="archive-title">PSI COMBUSTION EXPERIMENT ARCHIVE</h3>
+
+                <figure class="data-figure">
+                    <img src="assets/psi-archive-overview.png" alt="Bar chart comparing record counts for eight PSI combustion datasets, alongside the 12-day SLICE campaign timeline from February to March 2012." loading="lazy" decoding="async">
+                    <figcaption>
+                        <h4>What is in the archive: eight datasets, about 1,600 records</h4>
+                        <p><strong>What it shows:</strong> How many records each dataset in the PSI repository contributes. The three blue bars are the ACME campaigns flown on the ISS: BRE (194 flames ignited), CLD Flame (344) and s-Flame (276), 814 flames in total. The other datasets are SPICE (151 unique flames), CFI (87 tests), Flame Design (207 runs), and CFI-G (179 normal-flame tests and 154 inverse-flame tests).</p>
+                        <p><strong>How to read it:</strong> The bars do not share a unit: ACME counts flames ignited, SPICE counts unique flames, and CFI, Flame Design and CFI-G count tests or runs. Compare orders of magnitude, not quality.</p>
+                        <p>The right panel shows SLICE (PSI-106), the oldest campaign: 12 test days between February and March 2012, using methane, ethylene and ethane diluted with nitrogen, plus a final day with propane.</p>
+                    </figcaption>
+                </figure>
+
+                <figure class="data-figure">
+                    <img src="assets/psi-acme-campaigns.png" alt="Four charts summarizing ACME BRE, CLD Flame and s-Flame campaigns by test day, fuel, burner size and diluent." loading="lazy" decoding="async">
+                    <figcaption>
+                        <h4>ACME: three campaigns, 814 flames ignited in orbit</h4>
+                        <p><strong>What it shows:</strong> ACME (Advanced Combustion via Microgravity Experiments) is the largest combustion series in this set of ISS experiments. The top-left panel shows BRE (Burning Rate Emulator) by date and fuel, with a gap between April 2019 and September 2020 and an intense campaign in late 2020.</p>
+                        <p>The top-right panel summarizes BRE by fuel and burner size: 116 flames with pure ethylene, 39 with methane and 39 with 50% ethylene. A 25 mm burner was used on 16 of the 18 test days and a 50 mm burner on 2. The bottom-left panel orders the 32 CLD Flame test days in three blocks: methane, ethylene and an improved coflow design. The bottom-right panel shows s-Flame: 9 days with nitrogen as diluent (145 flames) and 9 with helium (131 flames), with the gray line giving the cumulative total of 276.</p>
+                        <p><strong>How to read it:</strong> Bar height is the number of flames ignited that day. Helium did not raise the daily ignition count (14.6 per day on average vs. 16.1 with nitrogen), so the figure should not be read as a helium advantage.</p>
+                    </figcaption>
+                </figure>
+
+                <figure class="data-figure">
+                    <img src="assets/psi-cfi-conditions.png" alt="Three charts of CFI dodecane tests showing oxygen and pressure conditions, test counts per pressure, and support-fiber use by atmosphere." loading="lazy" decoding="async">
+                    <figcaption>
+                        <h4>CFI: pressure and oxygen conditions explored with dodecane</h4>
+                        <p><strong>What it shows:</strong> CFI gathers 87 tests run between March and June 2017 with n-dodecane, pure or mixed with iso-dodecane (22 tests with pure fuel, 24 with a 75/25 mixture and 41 with a 60/40 mixture). Every test used one of two oxygen levels, 17% or 21%, at pressures from 0.5 to 5 atm; points are slightly jittered so they do not overlap. The center panel counts tests per pressure level, with 47 at 1 atm and 14 at 3 atm. The right panel crosses support-fiber use with the atmosphere.</p>
+                        <p><strong>How to read it:</strong> “N₂/O₂ without helium” groups all mixtures without helium (21/79 and 17/83). “N₂ below 0.79 (no He)” is a group of 4 tests whose nitrogen fraction is below 0.79 and that contain no helium. The table does not say what makes up the rest of the gas. The 14 tests with helium are a minority, and the high-pressure levels (3 and 5 atm) have too few tests to support firm conclusions on their own.</p>
+                    </figcaption>
+                </figure>
+
+                <figure class="data-figure">
+                    <img src="assets/psi-flame-design.png" alt="Three Flame Design charts showing adiabatic flame temperature against fuel flow and stoichiometric mixture fraction, plus steady and ramp runs per test day." loading="lazy" decoding="async">
+                    <figcaption>
+                        <h4>Flame Design: adiabatic flame temperature vs. flow and dilution</h4>
+                        <p><strong>What it shows:</strong> Flame Design contains 207 runs over 14 test days, 187 with ethylene and 20 with propane. Of these, 60 are ramps, in which the flow changes during the run, so they have no single flow value and do not appear in the first two panels. The left panel plots adiabatic flame temperature (T<sub>ad</sub>) against fuel flow for steady runs. The center panel plots it against Z<sub>st</sub>, the mean stoichiometric mixture fraction, with color showing how diluted the fuel is. The right panel counts runs per test day, separating steady runs from ramps.</p>
+                        <p><strong>How to read it:</strong> In the center panel, T<sub>ad</sub> drops as Z<sub>st</sub> rises, which in this table happens as the fuel is diluted more. Runs with nearly pure fuel (yellow) reach about 2830 K. On average, propane gives a higher T<sub>ad</sub> than ethylene (about 2632 K vs. 2425 K).</p>
+                    </figcaption>
+                </figure>
+
+                <figure class="data-figure">
+                    <img src="assets/psi-cfi-g-results.png" alt="Six CFI-G charts comparing normal and inverse flame ignition conditions, outcomes, durations, pressure, and observed inverse-flame colors." loading="lazy" decoding="async">
+                    <figcaption>
+                        <h4>CFI-G: when a flame ignites, how long it lasts and how it ends</h4>
+                        <p><strong>What it shows:</strong> CFI-G compares two geometries, normal flames (fuel inside) and inverse flames (oxidizer inside), using ethane, propane and butane. The upper-left panels plot T<sub>ad</sub> against oxygen fraction, with red for tests with hot ignition and gray for the rest. Normal flames cluster around 21% O₂ and between 35% and 40%, while inverse flames span 12% to 85%. The upper-right panel shows how each test ended: in normal flames 102 self-extinguished, 31 ended when the flow stopped and 46 are not reported; in inverse flames the counts are 81, 58 and 15.</p>
+                        <p>The lower-left panel compares flame duration by fuel: the highest medians are for ethane (about 51 s in normal flames at 30%, 48 s in inverse flames) and the lowest is propane at 30% in normal flames (5 s), with outliers up to 304 s. The lower-center panel relates pressure to mean duration. The lower-right panel counts the colors of inverse flames: 59 blue, 29 at the limit (no visible flame), 20 yellow-blue and 10 yellow.</p>
+                        <p><strong>How to read it:</strong> Hot ignition is more common at high T<sub>ad</sub>, but there are exceptions in both directions. In the pressure panel, inverse flames drop from about 55 s at 0.5 bar to about 18–20 s between 2 and 3.5 bar, while normal flames show no clear trend (80 s at 0.5 bar, 37 at 1, 57 at 2 and 2 at 3 bar, the last with only 12 tests). Each point mixes different fuels and oxygen levels, so pressure cannot be isolated as the cause.</p>
+                    </figcaption>
+                </figure>
             </section>
         </div>
 
@@ -1589,10 +1647,10 @@
                         <p>Dataset size reported by the supplied FLEX chat service.</p>
                     </article>
                 </div>
-                <section class="flex-figures" aria-labelledby="flex-figures-title">
+                <section class="data-figures" aria-labelledby="flex-figures-title">
                     <h3 id="flex-figures-title">FLEX TEST CONDITIONS AND RESULTS (~1 ATM)</h3>
 
-                    <figure class="flex-figure">
+                    <figure class="data-figure">
                         <img src="assets/flex-test-conditions.png" alt="Scatter plots of FLEX tests at approximately one atmosphere, showing initial oxygen fraction versus added carbon dioxide or helium. Point color identifies extinction, completion, or disruption; marker shape distinguishes methanol and heptane." loading="lazy" decoding="async">
                         <figcaption>
                             <h4>Figure 1: Test conditions map (~1 atm)</h4>
@@ -1603,7 +1661,7 @@
                         </figcaption>
                     </figure>
 
-                    <figure class="flex-figure">
+                    <figure class="data-figure">
                         <img src="assets/flex-extinction-diameter.png" alt="Scatter plot of visible droplet diameter at flame extinction versus initial oxygen fraction for methanol and heptane tests with carbon dioxide, helium, or nitrogen." loading="lazy" decoding="async">
                         <figcaption>
                             <h4>Figure 2: Extinction diameter vs. oxygen</h4>
@@ -1614,7 +1672,7 @@
                         </figcaption>
                     </figure>
 
-                    <figure class="flex-figure">
+                    <figure class="data-figure">
                         <img src="assets/flex-loi-upper-bound.png" alt="Bar chart showing the lowest observed oxygen fraction with a flame for methanol and heptane under nitrogen, carbon dioxide, and helium dilution." loading="lazy" decoding="async">
                         <figcaption>
                             <h4>Figure 3: Lowest oxygen with a flame observed</h4>
@@ -1765,11 +1823,18 @@
                 descEl.innerText = "Advanced machine learning models predicting ignition probabilities and flame spread across microgravity habitats using NASA Exoplanet & Material Archive datasets.";
             } else if (tabId === 'flame-group') {
                 titleEl.innerText = "Flame group";
-                descEl.innerText = "Multi-source combustion interaction analysis, evaluating thermal radiation coupling and oxygen depletion rates in multi-fuel environments.";
+                descEl.innerText = "Explore eight combustion datasets in the PSI repository, including ISS ACME campaigns and tests of pressure, dilution, flame geometry, and lifetime.";
             } else if (tabId === 'flame-dissipation') {
                 titleEl.innerText = "Flame dissipation";
                 descEl.innerText = "Thermal quenching and energy dissipation tracking to optimize fire suppression response times in aerospace engineering environments.";
             }
+            const showFlameArchive = tabId === 'flame-group';
+            document.getElementById('dashboard-grid').hidden = showFlameArchive;
+            document.getElementById('flight-event-log').hidden = showFlameArchive;
+            document.getElementById('flame-group-research').hidden = !showFlameArchive;
+            document.getElementById('dashboard-badge').innerText = showFlameArchive
+                ? 'PSI archive · ≈1,600 records'
+                : 'Telemetry demo';
             setActiveSectionChat(tabId);
         }
 
