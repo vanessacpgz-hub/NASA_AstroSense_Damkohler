@@ -1237,7 +1237,7 @@
             font-size: 11px;
         }
 
-        #flex-chat-status {
+        #section-chat-status {
             min-height: 22px;
             margin: 0;
             padding: 8px 14px;
@@ -1245,7 +1245,7 @@
             font-size: 11px;
         }
 
-        .flex-chat-launcher {
+        .section-chat-launcher {
             position: fixed;
             right: 24px;
             bottom: 24px;
@@ -1266,10 +1266,10 @@
             letter-spacing: .1em;
         }
 
-        .flex-chat-launcher:hover { transform: translateY(-2px); }
-        .flex-chat-launcher span:first-child { font-size: 18px; }
+        .section-chat-launcher:hover { transform: translateY(-2px); }
+        .section-chat-launcher span:first-child { font-size: 18px; }
 
-        .flex-chat-window {
+        .section-chat-window {
             position: fixed;
             right: 24px;
             bottom: 92px;
@@ -1286,9 +1286,9 @@
             box-shadow: 0 20px 60px rgba(0,0,0,.55);
         }
 
-        .flex-chat-window[hidden] { display: none; }
+        .section-chat-window[hidden] { display: none; }
 
-        .flex-chat-window-header {
+        .section-chat-window-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -1298,20 +1298,20 @@
             background: #102442;
         }
 
-        .flex-chat-window-header h3 {
+        .section-chat-window-header h3 {
             margin: 0;
             color: var(--text-main);
             font-size: 11px;
             letter-spacing: .08em;
         }
 
-        .flex-chat-window-header p {
+        .section-chat-window-header p {
             margin: 3px 0 0;
             color: var(--text-muted);
             font-size: 9px;
         }
 
-        .flex-chat-close {
+        .section-chat-close {
             width: 30px;
             height: 30px;
             border: 1px solid var(--border-color);
@@ -1323,7 +1323,7 @@
             line-height: 1;
         }
 
-        #extinguisher-chat-container {
+        .section-chat-container {
             display: flex;
             min-height: 0;
             flex: 1;
@@ -1332,7 +1332,7 @@
             background: #081222;
         }
 
-        .flex-chat-log {
+        .section-chat-log {
             display: flex;
             min-height: 0;
             flex: 1;
@@ -1342,7 +1342,7 @@
             padding: 18px;
         }
 
-        .flex-chat-message {
+        .section-chat-message {
             max-width: min(88%, 680px);
             padding: 10px 13px;
             border: 1px solid var(--border-color);
@@ -1354,26 +1354,26 @@
             overflow-wrap: anywhere;
         }
 
-        .flex-chat-message.assistant {
+        .section-chat-message.assistant {
             align-self: flex-start;
             background: #101f36;
         }
 
-        .flex-chat-message.user {
+        .section-chat-message.user {
             align-self: flex-end;
             border-color: rgba(98,201,245,.25);
             background: #155fc1;
         }
 
-        .flex-chat-message.pending { color: var(--text-muted); }
+        .section-chat-message.pending { color: var(--text-muted); }
 
-        .flex-chat-message.error {
+        .section-chat-message.error {
             border-color: rgba(237,69,72,.5);
             background: rgba(237,69,72,.1);
             color: #ffb4b5;
         }
 
-        .flex-chat-form {
+        .section-chat-form {
             display: flex;
             gap: 8px;
             padding: 12px;
@@ -1381,7 +1381,7 @@
             background: #0a1425;
         }
 
-        .flex-chat-input {
+        .section-chat-input {
             min-width: 0;
             min-height: 42px;
             flex: 1;
@@ -1393,12 +1393,12 @@
             font: inherit;
         }
 
-        .flex-chat-input:focus {
+        .section-chat-input:focus {
             border-color: var(--accent-cyan);
             outline: 2px solid rgba(98,201,245,.18);
         }
 
-        .flex-chat-send {
+        .section-chat-send {
             min-width: 88px;
             border: 0;
             border-radius: 4px;
@@ -1411,9 +1411,9 @@
             text-transform: uppercase;
         }
 
-        .flex-chat-send:disabled { opacity: .6; cursor: wait; }
+        .section-chat-send:disabled { opacity: .6; cursor: wait; }
 
-        .flex-chat-footnote {
+        .section-chat-footnote {
             margin: 0 !important;
             padding: 0 12px 10px;
             color: var(--text-muted) !important;
@@ -1421,18 +1421,18 @@
         }
 
         @media (max-width: 520px) {
-            .flex-chat-launcher { right: 16px; bottom: 16px; }
-            .flex-chat-window {
+            .section-chat-launcher { right: 16px; bottom: 16px; }
+            .section-chat-window {
                 right: 12px;
                 bottom: 82px;
                 width: calc(100% - 24px);
                 height: min(560px, calc(100vh - 100px));
                 min-height: 320px;
             }
-            .flex-chat-log { padding: 12px; }
-            .flex-chat-form { gap: 6px; padding: 8px; }
-            .flex-chat-send { min-width: 70px; }
-            .flex-chat-message { max-width: 94%; font-size: 12px; }
+            .section-chat-log { padding: 12px; }
+            .section-chat-form { gap: 6px; padding: 8px; }
+            .section-chat-send { min-width: 70px; }
+            .section-chat-message { max-width: 94%; font-size: 12px; }
         }
 
         @media (max-width: 760px) {
@@ -1637,32 +1637,6 @@
                 </section>
                 <p class="data-disclosure">This is an educational data assistant, not emergency or operational fire-safety guidance. Messages and chat history are sent to the external FLEX chat service.</p>
             </div>
-            <div class="flex-chat-dock">
-                <button id="flex-chat-launcher" class="flex-chat-launcher" type="button" aria-controls="flex-chat-window" aria-expanded="false" aria-label="Open FLEX data assistant" onclick="toggleFlexChat()">
-                    <span aria-hidden="true">✦</span>
-                    <span>FLEX AI</span>
-                </button>
-                <section id="flex-chat-window" class="flex-chat-window" role="dialog" aria-modal="false" aria-labelledby="flex-chat-title" hidden>
-                    <header class="flex-chat-window-header">
-                        <div>
-                            <h3 id="flex-chat-title">FLEX DATA ASSISTANT</h3>
-                            <p>EXPERIMENTAL DATA · 274 TESTS</p>
-                        </div>
-                        <button class="flex-chat-close" type="button" aria-label="Close FLEX chat" onclick="toggleFlexChat(false)">×</button>
-                    </header>
-                    <p id="flex-chat-status" role="status" aria-live="polite">Ready to query the FLEX experiment data.</p>
-                    <div id="extinguisher-chat-container" aria-label="FLEX experiment chatbot">
-                        <div id="flex-chat-log" class="flex-chat-log" role="log" aria-live="polite" aria-relevant="additions">
-                            <div class="flex-chat-message assistant">Hello. Ask about the FLEX experiments with methanol and heptane. Responses are limited to the experimental dataset.</div>
-                        </div>
-                        <form id="flex-chat-form" class="flex-chat-form" onsubmit="sendFlexChat(event)">
-                            <input id="flex-chat-input" class="flex-chat-input" type="text" maxlength="500" autocomplete="off" placeholder="Ask a question about FLEX data…" aria-label="Question for the FLEX data assistant">
-                            <button id="flex-chat-send" class="flex-chat-send" type="submit">Send</button>
-                        </form>
-                        <p class="flex-chat-footnote">The question and conversation history are sent to the external FLEX data service.</p>
-                    </div>
-                </section>
-            </div>
         </section>
 
         <!-- Sensor Module View -->
@@ -1730,6 +1704,31 @@
 
     </main>
 
+    <div id="section-chat-dock" hidden>
+        <button id="section-chat-launcher" class="section-chat-launcher" type="button" aria-controls="section-chat-window" aria-expanded="false" aria-label="Open section assistant" onclick="toggleSectionChat()">
+            <span aria-hidden="true">✦</span>
+            <span id="section-chat-button-label">NASA AI</span>
+        </button>
+        <section id="section-chat-window" class="section-chat-window" role="dialog" aria-modal="false" aria-labelledby="section-chat-title" hidden>
+            <header class="section-chat-window-header">
+                <div>
+                    <h3 id="section-chat-title">NASA DATA ASSISTANT</h3>
+                    <p id="section-chat-description">NASA FIRE SAFETY · EXTERNAL SERVICE</p>
+                </div>
+                <button class="section-chat-close" type="button" aria-label="Close section chat" onclick="toggleSectionChat(false)">×</button>
+            </header>
+            <p id="section-chat-status" role="status" aria-live="polite">Ready to ask a question.</p>
+            <div class="section-chat-container" aria-label="Section chatbot">
+                <div id="section-chat-log" class="section-chat-log" role="log" aria-live="polite" aria-relevant="additions"></div>
+                <form id="section-chat-form" class="section-chat-form" onsubmit="sendSectionChat(event)">
+                    <input id="section-chat-input" class="section-chat-input" type="text" maxlength="500" autocomplete="off" placeholder="Ask a question…" aria-label="Question for the section assistant">
+                    <button id="section-chat-send" class="section-chat-send" type="submit">Send</button>
+                </form>
+                <p class="section-chat-footnote">Your message and conversation history are sent to the external chatbot for this section.</p>
+            </div>
+        </section>
+    </div>
+
     <script>
         function switchView(viewName) {
             const dashboardView = document.getElementById('dashboard-view');
@@ -1742,7 +1741,7 @@
                 ? sensorsView
                 : showExtinguisher ? extinguisherView : dashboardView;
             targetView.classList.add('active');
-            if (!showExtinguisher) toggleFlexChat(false);
+            setActiveSectionChat(null);
         }
 
         function switchTab(tabId, event) {
@@ -1750,6 +1749,7 @@
             event.target.classList.add('active');
             if (tabId === 'fire-extinguisher') {
                 switchView('extinguisher');
+                setActiveSectionChat(tabId);
                 return;
             }
             switchView('dashboard');
@@ -1770,77 +1770,185 @@
                 titleEl.innerText = "Flame dissipation";
                 descEl.innerText = "Thermal quenching and energy dissipation tracking to optimize fire suppression response times in aerospace engineering environments.";
             }
+            setActiveSectionChat(tabId);
         }
 
-        const flexChatApi = 'https://flex-chatbot.damkohler.workers.dev/api/chat';
-        const flexChatHistory = [];
+        const sectionChatProfiles = {
+            'fire-safety': {
+                api: 'https://nasa-chatbot.damkohler.workers.dev/api/chat',
+                button: 'NASA AI',
+                title: 'NASA FIRE SAFETY ASSISTANT',
+                description: 'FIRE SAFETY · NASA CHAT SERVICE',
+                greeting: 'Hello. Ask questions about NASA fire safety and spacecraft fire protection.',
+                placeholder: 'Ask about NASA fire safety…',
+                ready: 'Ready to ask the NASA fire safety assistant.',
+                connecting: 'Contacting the NASA fire safety service…',
+                pending: 'Querying the NASA fire safety assistant…',
+                received: 'Response received from the NASA fire safety service.'
+            },
+            'flame-group': {
+                api: 'https://combustion-chatbot.damkohler.workers.dev/api/chat',
+                button: 'COMBUSTION AI',
+                title: 'COMBUSTION ASSISTANT',
+                description: 'FLAME GROUP · COMBUSTION CHAT SERVICE',
+                greeting: 'Hello. Ask questions about combustion and flame-group behavior.',
+                placeholder: 'Ask about combustion…',
+                ready: 'Ready to ask the combustion assistant.',
+                connecting: 'Contacting the combustion service…',
+                pending: 'Querying the combustion assistant…',
+                received: 'Response received from the combustion service.'
+            },
+            'fire-extinguisher': {
+                api: 'https://flex-chatbot.damkohler.workers.dev/api/chat',
+                button: 'FLEX AI',
+                title: 'FLEX DATA ASSISTANT',
+                description: 'EXPERIMENTAL DATA · 274 TESTS',
+                greeting: 'Hello. Ask about the FLEX experiments with methanol and heptane. Responses are limited to the experimental dataset.',
+                placeholder: 'Ask a question about FLEX data…',
+                ready: 'Ready to query the FLEX experiment data.',
+                connecting: 'Contacting the FLEX data service…',
+                pending: 'Querying the FLEX experiment data…',
+                received: 'Response received from the FLEX data service.'
+            }
+        };
+        const sectionChatStates = {
+            'fire-safety': { messages: [], busy: false },
+            'flame-group': { messages: [], busy: false },
+            'fire-extinguisher': { messages: [], busy: false }
+        };
+        let activeSectionChat = null;
 
-        function toggleFlexChat(forceOpen) {
-            const chatWindow = document.getElementById('flex-chat-window');
-            const launcher = document.getElementById('flex-chat-launcher');
+        function setActiveSectionChat(profileId) {
+            activeSectionChat = sectionChatProfiles[profileId] ? profileId : null;
+            const dock = document.getElementById('section-chat-dock');
+            const chatWindow = document.getElementById('section-chat-window');
+            const launcher = document.getElementById('section-chat-launcher');
+            if (!activeSectionChat) {
+                chatWindow.hidden = true;
+                launcher.setAttribute('aria-expanded', 'false');
+                dock.hidden = true;
+                return;
+            }
+
+            const profile = sectionChatProfiles[activeSectionChat];
+            dock.hidden = false;
+            document.getElementById('section-chat-button-label').textContent = profile.button;
+            launcher.setAttribute('aria-label', `Open ${profile.title.toLowerCase()}`);
+            document.getElementById('section-chat-title').textContent = profile.title;
+            document.getElementById('section-chat-description').textContent = profile.description;
+            document.getElementById('section-chat-input').placeholder = profile.placeholder;
+            document.getElementById('section-chat-input').setAttribute('aria-label', `Question for ${profile.title.toLowerCase()}`);
+            document.getElementById('section-chat-status').textContent = profile.ready;
+            renderSectionChatHistory(profile, sectionChatStates[activeSectionChat]);
+            chatWindow.hidden = true;
+            launcher.setAttribute('aria-expanded', 'false');
+            updateSectionChatControls();
+        }
+
+        function toggleSectionChat(forceOpen) {
+            if (!activeSectionChat) return;
+            const chatWindow = document.getElementById('section-chat-window');
+            const launcher = document.getElementById('section-chat-launcher');
             const isOpen = typeof forceOpen === 'boolean' ? forceOpen : chatWindow.hidden;
             chatWindow.hidden = !isOpen;
             launcher.setAttribute('aria-expanded', String(isOpen));
-            if (isOpen) document.getElementById('flex-chat-input').focus();
+            if (isOpen) document.getElementById('section-chat-input').focus();
         }
 
-        function appendFlexChatMessage(kind, text) {
+        function appendSectionChatMessage(kind, text) {
             const message = document.createElement('div');
-            message.className = `flex-chat-message ${kind}`;
+            message.className = `section-chat-message ${kind}`;
             message.textContent = text;
-            document.getElementById('flex-chat-log').appendChild(message);
+            document.getElementById('section-chat-log').appendChild(message);
             return message;
         }
 
-        async function sendFlexChat(event) {
+        function renderSectionChatHistory(profile, state) {
+            const log = document.getElementById('section-chat-log');
+            log.replaceChildren();
+            appendSectionChatMessage('assistant', profile.greeting);
+            state.messages.forEach(message => appendSectionChatMessage(message.role, message.content));
+            log.scrollTop = log.scrollHeight;
+        }
+
+        function updateSectionChatControls() {
+            const state = sectionChatStates[activeSectionChat];
+            const input = document.getElementById('section-chat-input');
+            const sendButton = document.getElementById('section-chat-send');
+            input.disabled = state.busy;
+            sendButton.disabled = state.busy;
+        }
+
+        async function sendSectionChat(event) {
             event.preventDefault();
-            const input = document.getElementById('flex-chat-input');
-            const sendButton = document.getElementById('flex-chat-send');
-            const status = document.getElementById('flex-chat-status');
-            const log = document.getElementById('flex-chat-log');
+            if (!activeSectionChat) return;
+            const profileId = activeSectionChat;
+            const profile = sectionChatProfiles[profileId];
+            const state = sectionChatStates[profileId];
+            if (state.busy) return;
+
+            const input = document.getElementById('section-chat-input');
+            const status = document.getElementById('section-chat-status');
+            const log = document.getElementById('section-chat-log');
             const question = input.value.trim();
             if (!question) return;
 
             input.value = '';
-            input.disabled = true;
-            sendButton.disabled = true;
-            appendFlexChatMessage('user', question);
-            flexChatHistory.push({ role: 'user', content: question });
-            const pending = appendFlexChatMessage('assistant pending', 'Querying the FLEX experiment data…');
-            status.innerText = 'Contacting the FLEX data service…';
+            state.busy = true;
+            updateSectionChatControls();
+            appendSectionChatMessage('user', question);
+            state.messages.push({ role: 'user', content: question });
+            const pending = appendSectionChatMessage('assistant pending', profile.pending);
+            status.textContent = profile.connecting;
             log.scrollTop = log.scrollHeight;
 
             try {
-                const response = await fetch(flexChatApi, {
+                const response = await fetch(profile.api, {
                     method: 'POST',
                     headers: { 'Content-Type': 'text/plain' },
-                    body: JSON.stringify({ messages: flexChatHistory })
+                    body: JSON.stringify({ messages: state.messages })
                 });
                 const result = await response.json();
                 if (!response.ok) {
-                    throw new Error(result.error || `FLEX service returned HTTP ${response.status}.`);
+                    throw new Error(result.error || `${profile.title} service returned HTTP ${response.status}.`);
                 }
                 if (typeof result.answer !== 'string' || !result.answer.trim()) {
-                    throw new Error('The FLEX service returned an empty answer.');
+                    throw new Error(`${profile.title} service returned an empty answer.`);
                 }
 
-                pending.classList.remove('pending');
-                pending.textContent = result.answer;
-                flexChatHistory.push({ role: 'assistant', content: result.answer });
-                status.innerText = 'Response received from the FLEX data service.';
+                state.messages.push({ role: 'assistant', content: result.answer });
+                if (activeSectionChat === profileId) {
+                    if (pending.isConnected) {
+                        pending.classList.remove('pending');
+                        pending.textContent = result.answer;
+                    } else {
+                        appendSectionChatMessage('assistant', result.answer);
+                    }
+                    status.textContent = profile.received;
+                }
             } catch (error) {
-                pending.classList.remove('pending');
-                pending.classList.add('error');
-                pending.textContent = 'Could not reach the FLEX service. Check your connection and try again.';
-                flexChatHistory.pop();
-                status.innerText = 'Request failed. Please try again.';
+                state.messages.pop();
+                if (activeSectionChat === profileId) {
+                    if (pending.isConnected) {
+                        pending.classList.remove('pending');
+                        pending.classList.add('error');
+                        pending.textContent = `Request failed: ${error.message}`;
+                    } else {
+                        appendSectionChatMessage('assistant error', `Request failed: ${error.message}`);
+                    }
+                    status.textContent = 'Request failed. Please try again.';
+                }
             } finally {
-                input.disabled = false;
-                sendButton.disabled = false;
-                input.focus();
-                log.scrollTop = log.scrollHeight;
+                state.busy = false;
+                if (activeSectionChat === profileId) {
+                    updateSectionChatControls();
+                    input.focus();
+                    log.scrollTop = log.scrollHeight;
+                }
             }
         }
+
+        setActiveSectionChat('fire-safety');
 
         function toggleCRTMode() {
             const enabled = document.body.classList.toggle('crt-mode');
