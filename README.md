@@ -38,11 +38,10 @@ AstroSense is built with strict scientific rigor and transparency:
 
 ##  Tech Stack
 
-* **Frontend:** [Ej. HTML5, CSS3, JavaScript / React / Astro / Tailwind CSS]
-* **Data Visualization:** [Ej. Chart.js / D3.js / Custom SVG]
-* **AI Integration:** [Ej. Gemini API / OpenAI API / RAG Pipeline]
+* **Frontend / Architecture:** Astro, Tailwind CSS, JavaScript (ES6+)
+* **Data Visualization & UI:** Custom interactive components & dynamic charts
+* **AI-Assisted Development:** **Google Gemini** & **GitHub Copilot** (used for research synthesis, mathematical model structuring, code optimization, and documentation)
 * **Deployment:** Vercel
-
 ---
 
 ## Getting Started
