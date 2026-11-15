@@ -6,7 +6,7 @@
 
 ---
 
-## 🌌 Overview
+## Overview
 
 **AstroSense** is an integrated scientific platform designed to organize, explore, and analyze NASA research on fire behavior, combustion, and fire safety in microgravity and space environments. 
 
@@ -14,7 +14,7 @@ In space, fire behaves fundamentally differently due to the absence of buoyancy-
 
 ---
 
-## ✨ Key Features
+## Key Features
 
 * **🛰️ Mission Control Telemetry Dashboard:** Simulated real-time orbital and cabin environmental monitoring (Cabin Oxygen `% O₂`, Radiative Heat Flux `kW/m²`, and Cabin Pressure `kPa`) paired with a Flight Event Log.
 * **📚 Structured NASA Research Modules:** Deep integration and visual breakdowns of landmark microgravity combustion experiments:
@@ -28,7 +28,7 @@ In space, fire behaves fundamentally differently due to the absence of buoyancy-
 
 ---
 
-## ⚠️ Scientific Transparency & Limitations
+##  Scientific Transparency & Limitations
 
 AstroSense is built with strict scientific rigor and transparency:
 * **Simulations:** The Scenario Explorer uses mathematical approximations derived from published NASA literature rather than live Computational Fluid Dynamics (CFD) or experimentally validated flight tests.
@@ -36,7 +36,7 @@ AstroSense is built with strict scientific rigor and transparency:
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 * **Frontend:** [Ej. HTML5, CSS3, JavaScript / React / Astro / Tailwind CSS]
 * **Data Visualization:** [Ej. Chart.js / D3.js / Custom SVG]
@@ -45,7 +45,7 @@ AstroSense is built with strict scientific rigor and transparency:
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 To run a local copy of AstroSense, follow these steps:
 
