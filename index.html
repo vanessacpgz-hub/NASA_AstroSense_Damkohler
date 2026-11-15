@@ -1904,7 +1904,7 @@
         <div id="dashboard-view" class="view-section active">
             <div class="mission-meta">
                 <span class="mission-kicker">AstroSense / Mission Control</span>
-                <span id="dashboard-badge" class="demo-badge">Telemetry demo</span>
+                <span id="dashboard-badge" class="demo-badge">BASS · SAFFIRE · SAME research</span>
             </div>
             <h2 id="active-tab-title" style="font-size: 16px; font-weight: 600; margin-bottom: 6px;">Fire safety</h2>
             <p id="active-tab-desc" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">
@@ -1976,6 +1976,103 @@
                 </summary>
                 <div id="event-log-entries" class="event-log-entries" role="log" aria-live="polite" aria-relevant="additions"></div>
             </details>
+
+            <section id="fire-safety-research" class="data-figures" aria-labelledby="fire-safety-research-title">
+                <h3 id="fire-safety-research-title">SOLID-FUEL COMBUSTION & SMOKE RESEARCH</h3>
+                <p class="telemetry-note">Explore the BASS, SAFFIRE, and SAME study records. Select a study title to expand its details and figure.</p>
+                <div class="content-accordion-list">
+                    <details class="content-accordion">
+                        <summary><span>01</span> BASS: Burning and Suppression of Solids</summary>
+                        <div class="content-accordion-content">
+                            <p>BASS is a log of solid-fuel combustion tests. Each row lists the date, GMT day, run number, sample number, and fuel material. It contains 121 tests from March to August 2012 and April to June 2013.</p>
+                            <p>Spheres were the most tested fuel (50 tests, 41%), followed by candles and wax (23), PMMA 1–2 cm (20), SIBAL fabric (12), PMMA slabs (8), Nomex (6), and Ultem (2). The busiest month was June 2012 (26 tests), followed by April 2013 (24).</p>
+                            <figure class="data-figure">
+                                <img src="assets/bass-tests-by-fuel.png" alt="BASS charts showing 121 tests by fuel material and month from March 2012 through June 2013." loading="lazy" decoding="async">
+                                <figcaption>
+                                    <p><strong>How to read it:</strong> The left chart counts tests by fuel; the right chart shows monthly counts split by material.</p>
+                                    <p class="figure-note"><strong>Limitation:</strong> This table contains no measurements. It shows which materials have experimental support and when they were tested.</p>
+                                </figcaption>
+                            </figure>
+                        </div>
+                    </details>
+
+                    <details class="content-accordion">
+                        <summary><span>02</span> BASS-II: gas measurements and flow settings</summary>
+                        <div class="content-accordion-content">
+                            <p>BASS-II follows the BASS record structure and adds gas measurements and flow settings for each test. It contains 129 tests by six investigators: T’ien (29), Olson (27), Fernandez-Pello (27), Bhattacharjee (22), Miller (20), and Ferkul (4). Almost all were run in 2014; Olson’s last three tests are from 2016.</p>
+                            <p>Materials include PMMA films and slabs of different thicknesses, PMMA rods (¼, ⅜, and ½ inch), SIBAL fabric, Nomex, and wax candles. Each test records initial and final O₂, CO₂, and CO, airflow, and radiometer gain.</p>
+                            <figure class="data-figure">
+                                <img src="assets/bass-ii-tests.png" alt="BASS-II charts showing test counts by investigator, initial oxygen ranges, and oxygen consumed versus carbon dioxide produced for 121 tests." loading="lazy" decoding="async">
+                                <figcaption>
+                                    <p><strong>How to read it:</strong> Most tests started between 17% and 19% O₂ (46 of 129), below the 21% in normal air. In the 121 tests with complete gas readings, greater O₂ consumption is associated with more CO₂ production. The highest points are mostly from Miller and 2–5 mm PMMA slabs.</p>
+                                    <p class="figure-note">The association describes these recorded tests; it does not isolate a cause.</p>
+                                </figcaption>
+                            </figure>
+                        </div>
+                    </details>
+
+                    <details class="content-accordion">
+                        <summary><span>03</span> SAFFIRE: large-scale spacecraft fire experiments</summary>
+                        <div class="content-accordion-content">
+                            <p>SAFFIRE (Spacecraft Fire Safety Experiment) studies large fires in orbit. Samples are ignited with airflow either concurrent (in the direction of flame spread) or opposed.</p>
+                            <figure class="data-figure">
+                                <img src="assets/saffire-burn-time.png" alt="Burn-time comparison for SAFFIRE-1 and SAFFIRE-2 samples, including concurrent and opposed airflow tests and tests with insignificant combustion." loading="lazy" decoding="async">
+                                <figcaption>
+                                    <p>In SAFFIRE-1, the concurrent SIBAL test burned for 420 s versus 70 s for the opposed-flow test. In SAFFIRE-2, four silicone samples did not sustain combustion. In long PMMA tests, the flame stayed anchored at the base, with a slow regression rate of 0.01–0.04 mm/s.</p>
+                                    <p class="figure-note">SAFFIRE-1 and SAFFIRE-2 are not directly comparable because their samples have different sizes.</p>
+                                </figcaption>
+                            </figure>
+                        </div>
+                    </details>
+
+                    <details class="content-accordion">
+                        <summary><span>04</span> SAME: Smoke Aerosol Measurement Experiment run plan</summary>
+                        <div class="content-accordion-content">
+                            <p>SAME measures smoke produced by each material. This table is the initial run plan; entries marked pending are not completed measurements.</p>
+                            <div class="flex-data-table-wrap">
+                                <table class="flex-data-table">
+                                    <thead>
+                                        <tr><th>Sample</th><th>Material</th><th>Air flow (cm/s)</th><th>Weight loss (mg/min)</th><th>Aging (min)</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>1</td><td>Teflon</td><td>5</td><td>2</td><td>1</td></tr>
+                                        <tr><td>2</td><td>Teflon</td><td>5</td><td>1</td><td>1</td></tr>
+                                        <tr><td>3</td><td>Teflon</td><td>5</td><td>2</td><td>20</td></tr>
+                                        <tr><td>4</td><td>Teflon</td><td>10</td><td>2</td><td>1</td></tr>
+                                        <tr><td>5–8</td><td>Kapton, silicone rubber, lampwick, and dibutyl phthalate</td><td>Same conditions as samples 1–4</td><td>Pending</td><td>Pending</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="content-accordion">
+                        <summary><span>05</span> SAME-R: smoke records and aerosol aging</summary>
+                        <div class="content-accordion-content">
+                            <p>SAME-R is the detailed log of SAME runs from July to September. It contains 109 records for five materials: Kapton (29), silicone (22), lampwick (20), Pyrell (20), and Teflon (18). Runs used inlet velocities of 0, 1, 2, and 8.1 cm/s.</p>
+                            <div class="flex-data-table-wrap">
+                                <table class="flex-data-table">
+                                    <thead>
+                                        <tr><th>Material</th><th>Rt/R0 range</th><th>Fresh net aging (s)</th><th>Aged net aging (s)</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>Kapton</td><td>1.38–1.48</td><td>34</td><td>578</td></tr>
+                                        <tr><td>Silicone</td><td>1.304–1.36</td><td>45</td><td>873</td></tr>
+                                        <tr><td>Lampwick</td><td>1.245–1.28</td><td>39</td><td>526</td></tr>
+                                        <tr><td>Teflon</td><td>1.445–1.452</td><td>33</td><td>600</td></tr>
+                                        <tr><td>Pyrell</td><td>1.22–1.23</td><td>45</td><td>678</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p>Each material operates within its own Rt/R0 range; only Kapton and Teflon ranges overlap. Net aging rises from 33–45 s in fresh runs (11 s primary aging) to 526–873 s in aged readings, with the longest aged time for silicone. Zero- and low-flow runs were also aged to study ventilation effects.</p>
+                            <figure class="data-figure">
+                                <img src="assets/same-r-smoke-aging.png" alt="SAME-R charts comparing Rt/R0 ranges by material, mean net aging time for fresh and aged runs, and records per date." loading="lazy" decoding="async">
+                                <figcaption><p><strong>How to read it:</strong> The panels summarize material-specific Rt/R0 ranges, fresh versus aged mean net aging, and records by date.</p></figcaption>
+                            </figure>
+                        </div>
+                    </details>
+                </div>
+            </section>
 
             <section id="flame-group-research" class="data-figures" aria-labelledby="archive-title" hidden>
                 <h3 id="archive-title">PSI COMBUSTION EXPERIMENT ARCHIVE</h3>
@@ -2759,14 +2856,17 @@
             }
             const showFlameArchive = tabId === 'flame-group';
             const showFlammabilityResearch = tabId === 'predictive-modeling';
+            const showFireSafetyResearch = tabId === 'fire-safety';
             const showResearch = showFlameArchive || showFlammabilityResearch;
             document.getElementById('dashboard-grid').hidden = showResearch;
             document.getElementById('flight-event-log').hidden = showResearch;
+            document.getElementById('fire-safety-research').hidden = !showFireSafetyResearch;
             document.getElementById('flame-group-research').hidden = !showFlameArchive;
             document.getElementById('flammability-research').hidden = !showFlammabilityResearch;
             document.getElementById('dashboard-badge').innerText = showFlameArchive
                 ? 'PSI archive · ≈1,600 records'
-                : showFlammabilityResearch ? 'NASA PSI · FLAMMABILITY RESEARCH' : 'Telemetry demo';
+                : showFlammabilityResearch ? 'NASA PSI · FLAMMABILITY RESEARCH'
+                    : showFireSafetyResearch ? 'BASS · SAFFIRE · SAME research' : 'Telemetry demo';
             setActiveSectionChat(tabId);
         }
 
