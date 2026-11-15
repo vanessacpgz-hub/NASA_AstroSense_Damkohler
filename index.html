@@ -130,23 +130,6 @@
             background-color: #1d4ed8;
         }
 
-        .btn-leave {
-            background: transparent;
-            color: var(--text-muted);
-            border: 1px solid var(--border-color);
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-
-        .btn-leave:hover {
-            color: white;
-            border-color: var(--text-muted);
-        }
-
         /* Navigation Tabs */
         .nav-tabs {
             display: flex;
@@ -471,6 +454,10 @@
 
         .user-profile { gap: 14px; }
 
+        .user-profile .come-back-button {
+            flex: 0 0 auto;
+        }
+
         .avatar-circle {
             position: relative;
             width: 44px;
@@ -517,12 +504,8 @@
 
         .btn-sensors:hover { background: #d6373b; }
 
-        .btn-leave {
-            padding: 8px 13px;
-            border-radius: 4px;
-            font-size: 11px;
-            letter-spacing: .04em;
-            text-transform: uppercase;
+        .module-test-access {
+            margin-bottom: 20px;
         }
 
         .nav-tabs {
@@ -727,7 +710,7 @@
         .btn-execute:focus-visible,
         .btn-sensors:focus-visible,
         .tab:focus-visible,
-        .btn-leave:focus-visible {
+        .come-back-button:focus-visible {
             outline: 2px solid var(--accent-cyan);
             outline-offset: 3px;
         }
@@ -779,7 +762,6 @@
             .avatar-circle { width: 38px; height: 38px; flex-basis: 38px; }
             .user-info h1 { font-size: 12px; }
             .user-info p { font-size: 9px; }
-            .btn-leave { display: none; }
             .mission-meta { align-items: flex-start; }
             .mission-kicker, .demo-badge { font-size: 8px; }
             .form-grid { grid-template-columns: 1fr; gap: 0; }
@@ -883,25 +865,6 @@
             cursor: pointer;
             font: inherit;
             text-decoration: underline;
-        }
-
-        body.crt-mode::after {
-            position: fixed;
-            inset: 0;
-            z-index: 20;
-            background: repeating-linear-gradient(to bottom, transparent 0 3px, rgba(74,222,128,.07) 4px);
-            content: "";
-            pointer-events: none;
-        }
-
-        body.crt-mode {
-            --accent-cyan: #7ee787;
-        }
-
-        body.crt-mode .workspace,
-        body.crt-mode header,
-        body.crt-mode .nav-tabs {
-            text-shadow: 0 0 8px rgba(126,231,135,.16);
         }
 
         .card-header-row {
@@ -1652,22 +1615,28 @@
             z-index: 40;
             display: inline-flex;
             align-items: center;
-            gap: 9px;
-            min-height: 54px;
-            padding: 0 18px;
-            border: 1px solid rgba(255,255,255,.55);
-            border-radius: 28px;
-            background: linear-gradient(120deg, #1769e0, #0d3d91);
-            box-shadow: 0 8px 28px rgba(0,0,0,.42), 0 0 0 4px rgba(23,105,224,.16);
-            color: white;
+            justify-content: center;
+            width: 66px;
+            height: 80px;
+            padding: 0;
+            border: 0;
+            background: transparent;
+            filter: drop-shadow(0 8px 10px rgba(0,0,0,.42));
             cursor: pointer;
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: .1em;
+            touch-action: none;
         }
 
         .section-chat-launcher:hover { transform: translateY(-2px); }
-        .section-chat-launcher span:first-child { font-size: 18px; }
+        .section-chat-launcher.drag { cursor: grabbing; }
+
+        .section-chat-launcher img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            pointer-events: none;
+            user-select: none;
+        }
 
         .section-chat-window {
             position: fixed;
@@ -1698,6 +1667,20 @@
             background: #102442;
         }
 
+        .flamy-chat-heading {
+            display: flex;
+            min-width: 0;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .flamy-chat-heading img {
+            width: 30px;
+            height: 38px;
+            flex: 0 0 auto;
+            object-fit: contain;
+        }
+
         .section-chat-window-header h3 {
             margin: 0;
             color: var(--text-main);
@@ -1710,6 +1693,34 @@
             color: var(--text-muted);
             font-size: 9px;
         }
+
+        .section-chat-modes {
+            display: flex;
+            gap: 8px;
+            padding: 9px 12px;
+            border-bottom: 1px solid var(--border-color);
+            background: #0a1425;
+        }
+
+        .section-chat-mode {
+            min-height: 34px;
+            flex: 1;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .section-chat-mode[aria-pressed="true"] {
+            border-color: var(--accent-cyan);
+            background: rgba(98,201,245,.12);
+            color: var(--accent-cyan);
+        }
+
+        .section-chat-mode:disabled { opacity: .6; cursor: wait; }
 
         .section-chat-close {
             width: 30px;
@@ -1820,6 +1831,135 @@
             font-size: 10px !important;
         }
 
+        .flamy-nudge {
+            position: fixed;
+            z-index: 121;
+            padding: 9px 13px;
+            border: 1px solid rgba(255,255,255,.35);
+            border-radius: 14px;
+            background: #102442;
+            box-shadow: 0 8px 24px rgba(0,0,0,.4);
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .flamy-nudge[hidden] { display: none; }
+
+        .usage-guide-replay {
+            position: fixed;
+            left: 24px;
+            bottom: 24px;
+            z-index: 50;
+            min-height: 38px;
+            padding: 8px 13px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: rgba(13,25,48,.9);
+            color: var(--text-main);
+            cursor: pointer;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+        }
+
+        .usage-guide-replay:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); }
+
+        .usage-guide {
+            position: fixed;
+            inset: 0;
+            z-index: 80;
+        }
+
+        .usage-guide[hidden] { display: none; }
+
+        .usage-guide-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(2,6,16,.76);
+        }
+
+        .usage-guide-card {
+            position: fixed;
+            z-index: 83;
+            width: min(390px, calc(100vw - 32px));
+            padding: 20px;
+            border: 1px solid rgba(98,201,245,.5);
+            border-radius: 7px;
+            background: #081222;
+            box-shadow: 0 16px 48px rgba(0,0,0,.55);
+        }
+
+        .usage-guide-progress {
+            margin: 0 0 8px;
+            color: var(--accent-cyan);
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+
+        .usage-guide-card h2 {
+            margin: 0 0 8px;
+            color: var(--text-main);
+            font-size: 16px;
+        }
+
+        .usage-guide-card > p:not(.usage-guide-progress) {
+            margin: 0;
+            color: #bac8d9;
+            font-size: 12px;
+            line-height: 1.65;
+        }
+
+        .usage-guide-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 18px;
+        }
+
+        .usage-guide-actions button {
+            min-height: 34px;
+            padding: 7px 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: transparent;
+            color: var(--text-main);
+            cursor: pointer;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .usage-guide-actions button:hover:not(:disabled) {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        .usage-guide-actions #usage-guide-next {
+            margin-left: auto;
+            border-color: var(--accent-blue);
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .usage-guide-actions button:disabled { opacity: .45; cursor: default; }
+
+        .usage-guide-target {
+            z-index: 81 !important;
+            outline: 3px solid var(--accent-cyan) !important;
+            outline-offset: 3px !important;
+            box-shadow: 0 0 0 6px rgba(98,201,245,.18) !important;
+            pointer-events: none !important;
+        }
+
+        .usage-guide-target:not(.nav-tabs):not(#section-chat-launcher) { position: relative; }
+        .nav-tabs.usage-guide-target { position: sticky; }
+        #section-chat-launcher.usage-guide-target { position: fixed; z-index: 120 !important; }
+
         @media (max-width: 520px) {
             .section-chat-launcher { right: 16px; bottom: 16px; }
             .section-chat-window {
@@ -1833,6 +1973,8 @@
             .section-chat-form { gap: 6px; padding: 8px; }
             .section-chat-send { min-width: 70px; }
             .section-chat-message { max-width: 94%; font-size: 12px; }
+            .usage-guide-replay { left: 14px; bottom: 14px; }
+            .usage-guide-card { padding: 16px; }
         }
 
         @media (max-width: 760px) {
@@ -1845,9 +1987,32 @@
         }
 
         #platform-shell {
+            position: relative;
+            isolation: isolate;
             display: flex;
             min-height: 100vh;
             flex-direction: column;
+            background-color: var(--bg-primary);
+            background-image:
+                linear-gradient(180deg, rgba(7, 13, 26, .68), rgba(11, 19, 41, .84)),
+                url('assets/platform-moon-background.jpeg');
+            background-position: center, center 38%;
+            background-size: cover, cover;
+            background-attachment: fixed, fixed;
+        }
+
+        #platform-shell > header {
+            background: rgba(7, 13, 26, .72);
+            backdrop-filter: blur(12px);
+        }
+
+        #platform-shell > .nav-tabs {
+            background: rgba(7, 13, 26, .66);
+            backdrop-filter: blur(12px);
+        }
+
+        #platform-shell > .workspace {
+            background: transparent;
         }
 
         .landing-page {
@@ -2594,6 +2759,7 @@
     <!-- Header -->
     <header>
         <div class="user-profile">
+            <button class="header-control come-back-button" type="button" aria-label="Come back to the landing page" onclick="returnToLanding()">Come back</button>
             <div class="avatar-circle">A</div>
             <div class="user-info">
                 <h1>ASTROSENSE</h1>
@@ -2618,13 +2784,10 @@
         </div>
 
         <div class="header-actions">
-            <button class="header-control" type="button" onclick="returnToLanding()">Home</button>
-            <button id="crt-toggle" class="header-control" type="button" aria-pressed="false" onclick="toggleCRTMode()">CRT: OFF</button>
-            <button class="header-control alert-test" type="button" onclick="triggerO2Alert()">TEST ALERT</button>
-            <button class="btn-sensors" onclick="switchView('sensors')">
-                <span>⚡</span> Connect Sensors
+            <button id="test-alert-button" class="header-control alert-test" type="button" onclick="triggerO2Alert()">TEST ALERT</button>
+            <button id="connect-sensors-button" class="btn-sensors" onclick="switchView('sensors')">
+                Connect Sensors
             </button>
-            <a href="#" class="btn-leave">Exit session</a>
         </div>
     </header>
 
@@ -2635,12 +2798,11 @@
     </section>
 
     <!-- Navigation Tabs -->
-    <nav class="nav-tabs">
+    <nav id="module-tabs" class="nav-tabs">
         <button class="tab active" data-tab-id="fire-safety" onclick="switchTab('fire-safety', event)">Fire safety</button>
         <button class="tab" data-tab-id="fire-extinguisher" onclick="switchTab('fire-extinguisher', event)">Fire extinguisher</button>
         <button class="tab" data-tab-id="predictive-modeling" onclick="switchTab('predictive-modeling', event)">Predictive modeling of flammability and fire scenarios</button>
         <button class="tab" data-tab-id="flame-group" onclick="switchTab('flame-group', event)">Flame group</button>
-        <button class="tab" data-tab-id="flame-dissipation" onclick="switchTab('flame-dissipation', event)">Flame dissipation</button>
     </nav>
 
     <!-- Workspace -->
@@ -2656,6 +2818,7 @@
             <p id="active-tab-desc" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">
                 Real-time orbital and atmospheric telemetry monitoring cabin materials, combustion mitigation thresholds, and space station safety compliance based on NASA open databases.
             </p>
+            <button id="module-test-access" class="btn-sensors module-test-access" type="button" aria-controls="sensors-view" onclick="openActiveModuleTests()">Open this module's tests</button>
 
             <div id="dashboard-grid" class="dashboard-grid">
                 <details class="card content-accordion telemetry-accordion">
@@ -2985,12 +3148,13 @@
             </div>
             <h2>Fire Extinguisher Research</h2>
             <p>Explore how fire-suppression research studies flames in microgravity, where combustion can behave differently from flames on Earth.</p>
+            <button class="btn-sensors module-test-access" type="button" aria-controls="flex-test-conditions" onclick="openExtinguisherTests()">Open FLEX test results</button>
             <div class="extinguisher-panel">
                 <div class="content-accordion-list">
                     <details class="content-accordion">
                         <summary><span>01</span> FLEX experiment overview</summary>
                         <div class="content-accordion-content">
-                            <p>The Flame Extinguishment Experiment (FLEX) investigates flame behavior and extinguishment in microgravity. The assistant below is scoped to the FLEX dataset supplied by its service, rather than the live-style telemetry elsewhere in AstroSense.</p>
+                            <p>The Flame Extinguishment Experiment (FLEX) investigates flame behavior and extinguishment in microgravity. Ask Flamy about this research using the connected database or web mode.</p>
                             <div class="extinguisher-facts">
                                 <article class="extinguisher-fact">
                                     <span>EXPERIMENT ENVIRONMENT</span>
@@ -3003,9 +3167,9 @@
                                     <p>Ask the assistant to compare records for these two fuels.</p>
                                 </article>
                                 <article class="extinguisher-fact">
-                                    <span>ASSISTANT DATASET</span>
+                                    <span>FLEX DATASET</span>
                                     <strong>274 tests</strong>
-                                    <p>Dataset size reported by the supplied FLEX chat service.</p>
+                                    <p>Number of experimental tests summarized in this module.</p>
                                 </article>
                             </div>
                         </div>
@@ -3015,7 +3179,7 @@
                     <h3 id="flex-figures-title">FLEX TEST CONDITIONS AND RESULTS (~1 ATM)</h3>
                     <div class="content-accordion-list">
 
-                        <details class="content-accordion">
+                        <details id="flex-test-conditions" class="content-accordion">
                             <summary><span>01</span> Test conditions map (~1 atm)</summary>
                             <div class="content-accordion-content">
                                 <figure class="data-figure">
@@ -3071,7 +3235,7 @@
                         </details>
                     </div>
                 </section>
-                <p class="data-disclosure">This is an educational data assistant, not emergency or operational fire-safety guidance. Messages and chat history are sent to the external FLEX chat service.</p>
+                <p class="data-disclosure">This is an educational data assistant, not emergency or operational fire-safety guidance. Messages are sent to the external Flamy service.</p>
             </div>
         </section>
 
@@ -3084,11 +3248,10 @@
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="sensor-topic">1. Analysis Domain</label>
-                        <select id="sensor-topic" class="form-control" aria-controls="fire-safety-view predictive-modeling-view flame-group-view dissipation-view" onchange="updateSensorDomainView()">
+                        <select id="sensor-topic" class="form-control" aria-controls="fire-safety-view predictive-modeling-view flame-group-view" onchange="updateSensorDomainView()">
                             <option value="fire-safety">Fire Safety & Combustion Thresholds</option>
                             <option value="predictive-modeling">Predictive Flammability Scenarios</option>
                             <option value="flame-group">Flame Group Behavior Dynamics</option>
-                            <option value="flame-dissipation">Flame Dissipation & Cooling Rates</option>
                         </select>
                     </div>
 
@@ -3194,98 +3357,6 @@
                     </div>
                 </div>
             </section>
-
-                    <section id="dissipation-view" class="sensor-domain-view analysis-domain-module" hidden>
-                        <div class="mission-meta">
-                            <span class="mission-kicker">AstroSense / Flame Dissipation</span>
-                            <span class="demo-badge">PSI-69 · PSI-68 · PSI-142</span>
-                        </div>
-                        <h2>Flame Dissipation, Cooling Rates & Extinction Limits</h2>
-                        <p class="domain-intro">Explore simulated droplet cooling, oxygen dilution, and cool-flame stretch extinction using the supplied PSI-69, PSI-68, and PSI-142 parameters.</p>
-                        <p class="data-disclosure">Simulation only: outputs are illustrative, not live sensor readings, verified suppression advice, or emergency guidance.</p>
-
-                        <div class="analysis-domain-grid">
-                            <div class="domain-module-column">
-                                <div class="sensor-panel">
-                                    <label for="suppressor-select">Extinction & Suppression Mechanism</label>
-                                    <div class="domain-control-row">
-                                        <select id="suppressor-select" class="form-control" onchange="changeSuppressor()">
-                                            <option value="flex">PSI-69: FLEX droplet quenching & vaporization</option>
-                                            <option value="flex2">PSI-68: FLEX-2 pressure & oxygen dilution</option>
-                                            <option value="cool">PSI-142: Cool-flame radiation & stretch</option>
-                                        </select>
-                                        <div class="preset-group">
-                                            <button class="btn-preset" onclick="applyDissipationPreset('stable')">Burning</button>
-                                            <button class="btn-preset" onclick="applyDissipationPreset('quenching')">Active quench</button>
-                                            <button class="btn-preset" onclick="applyDissipationPreset('extinct')">Full extinction</button>
-                                        </div>
-                                    </div>
-                                    <div class="domain-description">
-                                        <span id="suppressor-desc">Evaluates droplet extinction and thermal absorption via FLEX combustion data.</span>
-                                        <strong id="suppressor-ref-badge">PSI-69</strong>
-                                    </div>
-                                </div>
-
-                                <div class="sensor-panel">
-                                    <h3>Dissipation & Quenching Telemetry</h3>
-                                    <div class="domain-slider-grid">
-                                        <label class="domain-slider-card" for="d-slider-p1">
-                                            <span id="d-label-p1">Thermal Cooling Rate</span>
-                                            <output id="d-val-p1">15.0 K/s</output>
-                                            <input id="d-slider-p1" type="range" min="1" max="150" step="1" value="15" oninput="updateDissipationSim()">
-                                            <span class="slider-limits"><small id="d-p1-min">1 K/s</small><small id="d-p1-mid">Quench: &gt; 60</small><small id="d-p1-max">150 K/s</small></span>
-                                        </label>
-                                        <label class="domain-slider-card" for="d-slider-p2">
-                                            <span id="d-label-p2">Droplet Diameter (d₀)</span>
-                                            <output id="d-val-p2">1.25 mm</output>
-                                            <input id="d-slider-p2" type="range" min="0.1" max="3" step="0.05" value="1.25" oninput="updateDissipationSim()">
-                                            <span class="slider-limits"><small id="d-p2-min">0.1 mm</small><small id="d-p2-mid">Critical: &lt; 0.4</small><small id="d-p2-max">3 mm</small></span>
-                                        </label>
-                                        <label class="domain-slider-card" for="d-slider-p3">
-                                            <span id="d-label-p3">Chamber Pressure</span>
-                                            <output id="d-val-p3">1.0 atm</output>
-                                            <input id="d-slider-p3" type="range" min="0.5" max="5" step="0.1" value="1" oninput="updateDissipationSim()">
-                                            <span class="slider-limits"><small id="d-p3-min">0.5 atm</small><small id="d-p3-mid">Nominal: 1 atm</small><small id="d-p3-max">5 atm</small></span>
-                                        </label>
-                                        <label class="domain-slider-card" for="d-slider-p4">
-                                            <span id="d-label-p4">Vaporization Rate</span>
-                                            <output id="d-val-p4">4.2 mg/s</output>
-                                            <input id="d-slider-p4" type="range" min="0.1" max="25" step="0.2" value="4.2" oninput="updateDissipationSim()">
-                                            <span class="slider-limits"><small id="d-p4-min">0.1</small><small id="d-p4-mid">Stable: &lt; 8</small><small id="d-p4-max">25 mg/s</small></span>
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <div class="sensor-panel">
-                                    <div class="domain-panel-heading">
-                                        <div>
-                                            <h3 id="d-chart-title-text">FLEX Droplet Quenching Efficiency</h3>
-                                            <span>Simulated extinction response</span>
-                                        </div>
-                                        <strong id="extinction-state-badge">STATUS: FLAME SUSTAINED</strong>
-                                    </div>
-                                    <div class="domain-chart"><canvas id="dissipationChart" role="img" aria-label="Simulated flame dissipation and extinction metrics"></canvas></div>
-                                    <p id="dissipation-chart-fallback" class="figure-note" role="status" hidden>Chart.js did not load, so the dissipation chart is unavailable.</p>
-                                </div>
-                            </div>
-
-                            <div class="domain-module-column">
-                                <div class="sensor-panel domain-visual-panel">
-                                    <h3>Droplet & Cool-Flame Quench</h3>
-                                    <div class="domain-heatmap"><div id="droplet-visual-core"></div></div>
-                                    <p id="droplet-status-caption">Stable spherical droplet combustion envelope in microgravity.</p>
-                                    <div id="extinction-action-badge" class="domain-status-badge">ACTION: MONITORING VAPORIZATION</div>
-                                </div>
-                                <div class="sensor-panel">
-                                    <div class="domain-panel-heading">
-                                        <h3>Extinction & Quenching Log</h3>
-                                        <strong id="dissipation-score">Readiness: 100%</strong>
-                                    </div>
-                                    <div id="dissipation-log-container" class="domain-log" aria-live="polite"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
 
             <section id="predictive-modeling-view" class="sensor-domain-view analysis-domain-module" hidden>
                 <div class="mission-meta">
@@ -3529,26 +3600,47 @@
     </main>
 
     <div id="section-chat-dock" hidden>
-        <button id="section-chat-launcher" class="section-chat-launcher" type="button" aria-controls="section-chat-window" aria-expanded="false" aria-label="Open section assistant" onclick="toggleSectionChat()">
-            <span aria-hidden="true">✦</span>
-            <span id="section-chat-button-label">NASA AI</span>
+        <button id="section-chat-launcher" class="section-chat-launcher" type="button" aria-controls="section-chat-window" aria-expanded="false" aria-label="Open chat with Flamy" onclick="toggleSectionChat()">
+            <img id="flamy-launcher-image" src="assets/flamy-web.webp" alt="">
         </button>
         <section id="section-chat-window" class="section-chat-window" role="dialog" aria-modal="false" aria-labelledby="section-chat-title" hidden>
             <header class="section-chat-window-header">
-                <div>
-                    <h3 id="section-chat-title">NASA DATA ASSISTANT</h3>
-                    <p id="section-chat-description">NASA FIRE SAFETY · EXTERNAL SERVICE</p>
+                <div class="flamy-chat-heading">
+                    <img id="flamy-header-image" src="assets/flamy-web.webp" alt="">
+                    <div>
+                        <h3 id="section-chat-title">FLAMY</h3>
+                        <p id="section-chat-description">AI RESEARCH COORDINATOR</p>
+                    </div>
                 </div>
                 <button class="section-chat-close" type="button" aria-label="Close section chat" onclick="toggleSectionChat(false)">×</button>
             </header>
-            <p id="section-chat-status" role="status" aria-live="polite">Ready to ask a question.</p>
+            <div class="section-chat-modes" role="group" aria-label="Flamy response mode">
+                <button id="flamy-mode-web" class="section-chat-mode" type="button" aria-pressed="true" onclick="setFlamyMode('web')">Web</button>
+                <button id="flamy-mode-base" class="section-chat-mode" type="button" aria-pressed="false" onclick="setFlamyMode('base')">Database</button>
+            </div>
+            <p id="section-chat-status" role="status" aria-live="polite">Flamy is ready to help.</p>
             <div class="section-chat-container" aria-label="Section chatbot">
                 <div id="section-chat-log" class="section-chat-log" role="log" aria-live="polite" aria-relevant="additions"></div>
                 <form id="section-chat-form" class="section-chat-form" onsubmit="sendSectionChat(event)">
-                    <input id="section-chat-input" class="section-chat-input" type="text" maxlength="500" autocomplete="off" placeholder="Ask a question…" aria-label="Question for the section assistant">
+                    <input id="section-chat-input" class="section-chat-input" type="text" maxlength="500" autocomplete="off" placeholder="Ask Flamy a question…" aria-label="Question for Flamy">
                     <button id="section-chat-send" class="section-chat-send" type="submit">Send</button>
                 </form>
-                <p class="section-chat-footnote">Your message and conversation history are sent to the external chatbot for this section.</p>
+                <p class="section-chat-footnote">Messages are sent to the external Flamy service.</p>
+            </div>
+        </section>
+    </div>
+    <div id="flamy-nudge" class="flamy-nudge" role="status" aria-live="polite" hidden>Ask me a question</div>
+    <button id="usage-guide-replay" class="usage-guide-replay" type="button" aria-controls="usage-guide" aria-expanded="false" onclick="startUsageGuide()">How to use</button>
+    <div id="usage-guide" class="usage-guide" hidden>
+        <div class="usage-guide-backdrop" aria-hidden="true"></div>
+        <section class="usage-guide-card" role="dialog" aria-modal="true" aria-labelledby="usage-guide-title" aria-describedby="usage-guide-text">
+            <p id="usage-guide-progress" class="usage-guide-progress"></p>
+            <h2 id="usage-guide-title"></h2>
+            <p id="usage-guide-text"></p>
+            <div class="usage-guide-actions">
+                <button id="usage-guide-previous" type="button" onclick="previousUsageGuideStep()">Previous</button>
+                <button id="usage-guide-skip" type="button" onclick="closeUsageGuide()">Skip</button>
+                <button id="usage-guide-next" type="button" onclick="nextUsageGuideStep()">Next</button>
             </div>
         </section>
     </div>
@@ -3558,20 +3650,233 @@
     <script src="dashboard.js" defer></script>
     <script src="dashboard-fire-safety.js" defer></script>
     <script src="dashboard-predictive.js" defer></script>
-    <script src="dashboard-dissipation.js" defer></script>
     <script>
+        const usageGuideSteps = [
+            {
+                title: 'Return to the landing page',
+                text: 'Use Come back to leave the workspace and return to the AstroSense home screen.',
+                target: '.come-back-button',
+                before: restoreOriginalUsageView
+            },
+            {
+                title: 'Your current module',
+                text: 'This area shows the selected module’s research. Click section headings to expand details, data, and figures.',
+                target: getCurrentModuleGuideTarget,
+                before: restoreOriginalUsageView
+            },
+            {
+                title: 'Switch modules',
+                text: 'Use these tabs to move between Fire Safety, Fire Extinguisher, Predictive Modeling, and Flame Group.',
+                target: '#module-tabs',
+                before: restoreOriginalUsageView
+            },
+            {
+                title: 'Open module tests',
+                text: 'Use this shortcut to jump to the selected module’s tests. Fire Extinguisher opens its FLEX results.',
+                target: getModuleTestsGuideTarget,
+                before: restoreOriginalUsageView
+            },
+            {
+                title: 'Test alert',
+                text: 'This button triggers a demonstration oxygen alert. It is not a real spacecraft warning.',
+                target: '#test-alert-button',
+                before: restoreOriginalUsageView
+            },
+            {
+                title: 'Connect Sensors',
+                text: 'Open the diagnostic console to explore simulated readings, parameters, and model outputs.',
+                target: '#connect-sensors-button',
+                before: restoreOriginalUsageView
+            },
+            {
+                title: 'Choose a test domain',
+                text: 'Select a research domain here, then adjust the available test parameters and review the simulated results.',
+                target: '#sensor-topic',
+                before: prepareSensorGuide
+            },
+            {
+                title: 'Adjust test parameters',
+                text: 'Change these controls to explore different simulated conditions. Charts and status indicators update with the values.',
+                target: getTestControlsGuideTarget,
+                before: prepareSensorGuide
+            },
+            {
+                title: 'Ask Flamy',
+                text: 'Click the floating flame to chat. Choose Web or Database mode, ask a question, or drag Flamy to another corner.',
+                target: '#section-chat-launcher'
+            }
+        ];
+        let usageGuideIndex = -1;
+        let usageGuideTarget = null;
+        let usageGuideOriginalTabId = null;
+        let usageGuideOriginalViewId = null;
+        let hasAutoStartedUsageGuide = false;
+        let flamyNudgeTimer = null;
+
         function enterPlatform(tabId = 'fire-safety') {
             document.getElementById('landing-page').hidden = true;
             document.getElementById('platform-shell').hidden = false;
             switchTab(tabId);
             window.scrollTo(0, 0);
+            showFlamyNudge();
+            if (!hasAutoStartedUsageGuide) {
+                hasAutoStartedUsageGuide = true;
+                startUsageGuide();
+            }
         }
 
         function returnToLanding() {
+            if (!document.getElementById('usage-guide').hidden) closeUsageGuide(false);
+            setActiveSectionChat(null);
             document.getElementById('platform-shell').hidden = true;
             document.getElementById('landing-page').hidden = false;
             window.scrollTo(0, 0);
         }
+
+        function getCurrentModuleGuideTarget() {
+            const activeView = document.querySelector('.view-section.active');
+            if (activeView.id === 'extinguisher-view') return activeView.querySelector('h2');
+            return activeView.querySelector('h2');
+        }
+
+        function getModuleTestsGuideTarget() {
+            const activeView = document.querySelector('.view-section.active');
+            if (activeView.id === 'sensors-view') return document.getElementById('sensor-topic');
+            return activeView.querySelector('.module-test-access');
+        }
+
+        function prepareSensorGuide() {
+            if (usageGuideOriginalViewId !== 'sensors-view') {
+                const domainsByTab = {
+                    'fire-safety': 'fire-safety',
+                    'predictive-modeling': 'predictive-modeling',
+                    'flame-group': 'flame-group'
+                };
+                const domain = domainsByTab[usageGuideOriginalTabId];
+                if (domain) document.getElementById('sensor-topic').value = domain;
+            }
+            switchView('sensors');
+            const control = getTestControlsGuideTarget();
+            const controlPanel = control && control.closest('details');
+            if (controlPanel) controlPanel.open = true;
+        }
+
+        function getTestControlsGuideTarget() {
+            const controlIds = {
+                'fire-safety': 'slider-smoke',
+                'predictive-modeling': 'slider-p1',
+                'flame-group': 'slider-pressure'
+            };
+            return document.getElementById(controlIds[document.getElementById('sensor-topic').value]);
+        }
+
+        function restoreOriginalUsageView() {
+            if (usageGuideOriginalViewId === 'sensors-view') {
+                switchView('sensors');
+            } else if (usageGuideOriginalTabId) {
+                switchTab(usageGuideOriginalTabId);
+            }
+        }
+
+        function startUsageGuide() {
+            const activeView = document.querySelector('.view-section.active');
+            usageGuideOriginalViewId = activeView ? activeView.id : 'dashboard-view';
+            const activeTab = document.querySelector('.tab.active');
+            usageGuideOriginalTabId = activeTab ? activeTab.dataset.tabId : 'fire-safety';
+            const guide = document.getElementById('usage-guide');
+            guide.hidden = false;
+            document.getElementById('usage-guide-replay').setAttribute('aria-expanded', 'true');
+            document.getElementById('usage-guide-next').focus();
+            showUsageGuideStep(0);
+        }
+
+        function showUsageGuideStep(index) {
+            if (usageGuideTarget) usageGuideTarget.classList.remove('usage-guide-target');
+            usageGuideIndex = index;
+            const step = usageGuideSteps[index];
+            if (step.before) step.before();
+
+            const target = typeof step.target === 'function' ? step.target() : document.querySelector(step.target);
+            if (!target || target.hidden || target.closest('[hidden]')) {
+                console.error(`Usage guide target is unavailable: ${step.title}`);
+                closeUsageGuide(false);
+                return;
+            }
+
+            usageGuideTarget = target;
+            target.scrollIntoView({ behavior: 'auto', block: 'center' });
+            target.classList.add('usage-guide-target');
+            document.getElementById('usage-guide-progress').textContent = `Step ${index + 1} of ${usageGuideSteps.length}`;
+            document.getElementById('usage-guide-title').textContent = step.title;
+            document.getElementById('usage-guide-text').textContent = step.text;
+            document.getElementById('usage-guide-previous').disabled = index === 0;
+            document.getElementById('usage-guide-next').textContent = index === usageGuideSteps.length - 1 ? 'Finish' : 'Next';
+            window.requestAnimationFrame(() => positionUsageGuideCard(target));
+        }
+
+        function positionUsageGuideCard(target) {
+            const card = document.querySelector('.usage-guide-card');
+            const targetRect = target.getBoundingClientRect();
+            const cardRect = card.getBoundingClientRect();
+            const gap = 16;
+            let top = targetRect.bottom + gap;
+            if (top + cardRect.height > window.innerHeight - gap) top = targetRect.top - cardRect.height - gap;
+            top = Math.max(gap, Math.min(top, window.innerHeight - cardRect.height - gap));
+            const left = Math.max(
+                gap,
+                Math.min(targetRect.left + targetRect.width / 2 - cardRect.width / 2, window.innerWidth - cardRect.width - gap)
+            );
+            card.style.left = `${left}px`;
+            card.style.top = `${top}px`;
+        }
+
+        function nextUsageGuideStep() {
+            if (usageGuideIndex >= usageGuideSteps.length - 1) {
+                closeUsageGuide();
+                return;
+            }
+            showUsageGuideStep(usageGuideIndex + 1);
+        }
+
+        function previousUsageGuideStep() {
+            if (usageGuideIndex > 0) showUsageGuideStep(usageGuideIndex - 1);
+        }
+
+        function closeUsageGuide(restore = true) {
+            if (usageGuideTarget) usageGuideTarget.classList.remove('usage-guide-target');
+            usageGuideTarget = null;
+            usageGuideIndex = -1;
+            document.getElementById('usage-guide').hidden = true;
+            document.getElementById('usage-guide-replay').setAttribute('aria-expanded', 'false');
+            if (restore) restoreOriginalUsageView();
+            document.getElementById('usage-guide-replay').focus();
+        }
+
+        function positionFlamyNudge() {
+            const launcher = document.getElementById('section-chat-launcher');
+            const nudge = document.getElementById('flamy-nudge');
+            const rect = launcher.getBoundingClientRect();
+            const gap = 12;
+            const rightSpace = window.innerWidth - rect.right;
+            const left = rightSpace >= nudge.offsetWidth + gap
+                ? rect.right + gap
+                : Math.max(gap, rect.left - nudge.offsetWidth - gap);
+            const top = Math.max(gap, Math.min(rect.top + (rect.height - nudge.offsetHeight) / 2, window.innerHeight - nudge.offsetHeight - gap));
+            nudge.style.left = `${left}px`;
+            nudge.style.top = `${top}px`;
+        }
+
+        function showFlamyNudge() {
+            const nudge = document.getElementById('flamy-nudge');
+            window.clearTimeout(flamyNudgeTimer);
+            nudge.hidden = false;
+            positionFlamyNudge();
+            flamyNudgeTimer = window.setTimeout(() => { nudge.hidden = true; }, 5000);
+        }
+
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && !document.getElementById('usage-guide').hidden) closeUsageGuide();
+        });
 
         function switchView(viewName) {
             const dashboardView = document.getElementById('dashboard-view');
@@ -3585,7 +3890,35 @@
                 : showExtinguisher ? extinguisherView : dashboardView;
             targetView.classList.add('active');
             if (viewName === 'sensors') updateSensorDomainView();
-            setActiveSectionChat(null);
+            else setActiveSectionChat(document.querySelector('.tab.active').dataset.tabId);
+        }
+
+        function openActiveModuleTests() {
+            const activeTab = document.querySelector('.tab.active');
+            const sensorDomains = {
+                'fire-safety': 'fire-safety',
+                'predictive-modeling': 'predictive-modeling',
+                'flame-group': 'flame-group'
+            };
+            const sensorDomain = activeTab && sensorDomains[activeTab.dataset.tabId];
+            if (!sensorDomain) {
+                console.error('No Connect Sensors test domain is configured for the active module.');
+                return;
+            }
+
+            document.getElementById('sensor-topic').value = sensorDomain;
+            switchView('sensors');
+        }
+
+        function openExtinguisherTests() {
+            const testConditions = document.getElementById('flex-test-conditions');
+            if (!testConditions) {
+                console.error('FLEX test conditions are unavailable.');
+                return;
+            }
+
+            testConditions.open = true;
+            testConditions.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         function switchTab(tabId, event) {
@@ -3613,9 +3946,6 @@
             } else if (tabId === 'flame-group') {
                 titleEl.innerText = "Flame group";
                 descEl.innerText = "Explore eight combustion datasets in the PSI repository, including ISS ACME campaigns and tests of pressure, dilution, flame geometry, and lifetime.";
-            } else if (tabId === 'flame-dissipation') {
-                titleEl.innerText = "Flame dissipation";
-                descEl.innerText = "Thermal quenching and energy dissipation tracking to optimize fire suppression response times in aerospace engineering environments.";
             }
             const showFlameArchive = tabId === 'flame-group';
             const showFlammabilityResearch = tabId === 'predictive-modeling';
@@ -3634,50 +3964,37 @@
             setActiveSectionChat(tabId);
         }
 
-        const sectionChatProfiles = {
-            'fire-safety': {
-                api: 'https://nasa-chatbot.damkohler.workers.dev/api/chat',
-                button: 'NASA AI',
-                title: 'NASA FIRE SAFETY ASSISTANT',
-                description: 'FIRE SAFETY · NASA CHAT SERVICE',
-                greeting: 'Hello. Ask questions about NASA fire safety and spacecraft fire protection.',
-                placeholder: 'Ask about NASA fire safety…',
-                ready: 'Ready to ask the NASA fire safety assistant.',
-                connecting: 'Contacting the NASA fire safety service…',
-                pending: 'Querying the NASA fire safety assistant…',
-                received: 'Response received from the NASA fire safety service.'
-            },
-            'flame-group': {
-                api: 'https://combustion-chatbot.damkohler.workers.dev/api/chat',
-                button: 'COMBUSTION AI',
-                title: 'COMBUSTION ASSISTANT',
-                description: 'FLAME GROUP · COMBUSTION CHAT SERVICE',
-                greeting: 'Hello. Ask questions about combustion and flame-group behavior.',
-                placeholder: 'Ask about combustion…',
-                ready: 'Ready to ask the combustion assistant.',
-                connecting: 'Contacting the combustion service…',
-                pending: 'Querying the combustion assistant…',
-                received: 'Response received from the combustion service.'
-            },
-            'fire-extinguisher': {
-                api: 'https://flex-chatbot.damkohler.workers.dev/api/chat',
-                button: 'FLEX AI',
-                title: 'FLEX DATA ASSISTANT',
-                description: 'EXPERIMENTAL DATA · 274 TESTS',
-                greeting: 'Hello. Ask about the FLEX experiments with methanol and heptane. Responses are limited to the experimental dataset.',
-                placeholder: 'Ask a question about FLEX data…',
-                ready: 'Ready to query the FLEX experiment data.',
-                connecting: 'Contacting the FLEX data service…',
-                pending: 'Querying the FLEX experiment data…',
-                received: 'Response received from the FLEX data service.'
-            }
+        const flamyApiUrl = 'https://broken-thunder-9656.haroldprf09.workers.dev';
+        const flamyProfile = {
+            button: 'FLAMY',
+            title: 'FLAMY',
+            greeting: 'Hello, I’m Flamy. Ask me about fire safety, suppression, flammability, or flame behavior in space.',
+            placeholder: 'Ask Flamy a question…',
+            ready: 'Flamy is ready to help.',
+            connecting: 'Connecting to Flamy…',
+            pending: 'Flamy is thinking…',
+            received: 'Flamy replied.'
         };
+        const sectionChatProfiles = {
+            'fire-safety': { ...flamyProfile, description: 'FIRE SAFETY · RESEARCH ASSISTANT' },
+            'predictive-modeling': { ...flamyProfile, description: 'PREDICTIVE MODELING · RESEARCH ASSISTANT' },
+            'flame-group': { ...flamyProfile, description: 'FLAME GROUP · RESEARCH ASSISTANT' },
+            'fire-extinguisher': { ...flamyProfile, description: 'FLEX · RESEARCH ASSISTANT' }
+        };
+        const createFlamyModeStates = () => ({
+            web: { messages: [], busy: false },
+            base: { messages: [], busy: false }
+        });
         const sectionChatStates = {
-            'fire-safety': { messages: [], busy: false },
-            'flame-group': { messages: [], busy: false },
-            'fire-extinguisher': { messages: [], busy: false }
+            'fire-safety': createFlamyModeStates(),
+            'predictive-modeling': createFlamyModeStates(),
+            'flame-group': createFlamyModeStates(),
+            'fire-extinguisher': createFlamyModeStates()
         };
         let activeSectionChat = null;
+        let flamyMode = 'web';
+        let flamyDrag = null;
+        let suppressFlamyClick = false;
 
         function setActiveSectionChat(profileId) {
             activeSectionChat = sectionChatProfiles[profileId] ? profileId : null;
@@ -3693,27 +4010,126 @@
 
             const profile = sectionChatProfiles[activeSectionChat];
             dock.hidden = false;
-            document.getElementById('section-chat-button-label').textContent = profile.button;
-            launcher.setAttribute('aria-label', `Open ${profile.title.toLowerCase()}`);
+            launcher.setAttribute('aria-label', `Open chat with ${profile.title}`);
             document.getElementById('section-chat-title').textContent = profile.title;
             document.getElementById('section-chat-description').textContent = profile.description;
             document.getElementById('section-chat-input').placeholder = profile.placeholder;
-            document.getElementById('section-chat-input').setAttribute('aria-label', `Question for ${profile.title.toLowerCase()}`);
+            document.getElementById('section-chat-input').setAttribute('aria-label', `Question for ${profile.title}`);
             document.getElementById('section-chat-status').textContent = profile.ready;
-            renderSectionChatHistory(profile, sectionChatStates[activeSectionChat]);
+            renderSectionChatHistory(profile, sectionChatStates[activeSectionChat][flamyMode]);
             chatWindow.hidden = true;
             launcher.setAttribute('aria-expanded', 'false');
             updateSectionChatControls();
         }
 
+        function setFlamyMode(mode) {
+            if (mode !== 'web' && mode !== 'base') {
+                console.error(`Unsupported Flamy mode: ${mode}`);
+                return;
+            }
+            if (activeSectionChat && sectionChatStates[activeSectionChat][flamyMode].busy) return;
+
+            flamyMode = mode;
+            const isWeb = mode === 'web';
+            document.getElementById('flamy-mode-web').setAttribute('aria-pressed', String(isWeb));
+            document.getElementById('flamy-mode-base').setAttribute('aria-pressed', String(!isWeb));
+            const imagePath = isWeb ? 'assets/flamy-web.webp' : 'assets/flamy-base.webp';
+            document.getElementById('flamy-launcher-image').src = imagePath;
+            document.getElementById('flamy-header-image').src = imagePath;
+
+            if (activeSectionChat) {
+                const profile = sectionChatProfiles[activeSectionChat];
+                document.getElementById('section-chat-status').textContent = profile.ready;
+                renderSectionChatHistory(profile, sectionChatStates[activeSectionChat][flamyMode]);
+                updateSectionChatControls();
+            }
+        }
+
         function toggleSectionChat(forceOpen) {
+            if (suppressFlamyClick) {
+                suppressFlamyClick = false;
+                return;
+            }
             if (!activeSectionChat) return;
             const chatWindow = document.getElementById('section-chat-window');
             const launcher = document.getElementById('section-chat-launcher');
             const isOpen = typeof forceOpen === 'boolean' ? forceOpen : chatWindow.hidden;
             chatWindow.hidden = !isOpen;
             launcher.setAttribute('aria-expanded', String(isOpen));
-            if (isOpen) document.getElementById('section-chat-input').focus();
+            if (isOpen) {
+                positionFlamyPanel();
+                document.getElementById('section-chat-input').focus();
+            }
+        }
+
+        function positionFlamyPanel() {
+            const launcher = document.getElementById('section-chat-launcher');
+            const panel = document.getElementById('section-chat-window');
+            if (panel.hidden) return;
+
+            const buttonRect = launcher.getBoundingClientRect();
+            const panelWidth = panel.offsetWidth;
+            const panelHeight = panel.offsetHeight;
+            const gap = 10;
+            let top = buttonRect.top - panelHeight - gap;
+            if (top < gap) top = buttonRect.bottom + gap;
+            top = Math.max(gap, Math.min(top, window.innerHeight - panelHeight - gap));
+            const left = Math.max(
+                gap,
+                Math.min(buttonRect.left + buttonRect.width / 2 - panelWidth / 2, window.innerWidth - panelWidth - gap)
+            );
+            panel.style.right = 'auto';
+            panel.style.bottom = 'auto';
+            panel.style.left = `${left}px`;
+            panel.style.top = `${top}px`;
+        }
+
+        function initializeFlamyDragging() {
+            const launcher = document.getElementById('section-chat-launcher');
+            launcher.addEventListener('pointerdown', event => {
+                if (event.button !== 0) return;
+                const rect = launcher.getBoundingClientRect();
+                flamyDrag = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, left: rect.left, top: rect.top, moved: false };
+                launcher.setPointerCapture(event.pointerId);
+            });
+            launcher.addEventListener('pointermove', event => {
+                if (!flamyDrag || event.pointerId !== flamyDrag.pointerId) return;
+                const deltaX = event.clientX - flamyDrag.x;
+                const deltaY = event.clientY - flamyDrag.y;
+                if (!flamyDrag.moved && Math.abs(deltaX) + Math.abs(deltaY) > 6) {
+                    flamyDrag.moved = true;
+                    launcher.classList.add('drag');
+                }
+                if (!flamyDrag.moved) return;
+
+                launcher.style.left = `${Math.max(10, Math.min(flamyDrag.left + deltaX, window.innerWidth - launcher.offsetWidth - 10))}px`;
+                launcher.style.top = `${Math.max(10, Math.min(flamyDrag.top + deltaY, window.innerHeight - launcher.offsetHeight - 10))}px`;
+                launcher.style.right = 'auto';
+                launcher.style.bottom = 'auto';
+                positionFlamyPanel();
+            });
+            launcher.addEventListener('pointerup', event => {
+                if (!flamyDrag || event.pointerId !== flamyDrag.pointerId) return;
+                const moved = flamyDrag.moved;
+                flamyDrag = null;
+                launcher.classList.remove('drag');
+                if (!moved) return;
+
+                const rect = launcher.getBoundingClientRect();
+                const dockLeft = rect.left + rect.width / 2 < window.innerWidth / 2;
+                launcher.style.left = dockLeft ? '10px' : 'auto';
+                launcher.style.right = dockLeft ? 'auto' : '10px';
+                launcher.style.top = `${Math.max(10, Math.min(rect.top, window.innerHeight - rect.height - 10))}px`;
+                launcher.style.bottom = 'auto';
+                suppressFlamyClick = true;
+                window.setTimeout(() => { suppressFlamyClick = false; }, 0);
+                positionFlamyPanel();
+            });
+            launcher.addEventListener('pointercancel', () => {
+                flamyDrag = null;
+                launcher.classList.remove('drag');
+            });
+            window.addEventListener('resize', positionFlamyPanel);
         }
 
         function appendSectionChatMessage(kind, text) {
@@ -3733,11 +4149,13 @@
         }
 
         function updateSectionChatControls() {
-            const state = sectionChatStates[activeSectionChat];
+            const state = sectionChatStates[activeSectionChat][flamyMode];
             const input = document.getElementById('section-chat-input');
             const sendButton = document.getElementById('section-chat-send');
             input.disabled = state.busy;
             sendButton.disabled = state.busy;
+            document.getElementById('flamy-mode-web').disabled = state.busy;
+            document.getElementById('flamy-mode-base').disabled = state.busy;
         }
 
         async function sendSectionChat(event) {
@@ -3745,7 +4163,8 @@
             if (!activeSectionChat) return;
             const profileId = activeSectionChat;
             const profile = sectionChatProfiles[profileId];
-            const state = sectionChatStates[profileId];
+            const requestMode = flamyMode;
+            const state = sectionChatStates[profileId][requestMode];
             if (state.busy) return;
 
             const input = document.getElementById('section-chat-input');
@@ -3764,32 +4183,37 @@
             log.scrollTop = log.scrollHeight;
 
             try {
-                const response = await fetch(profile.api, {
+                const response = await fetch(flamyApiUrl, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'text/plain' },
-                    body: JSON.stringify({ messages: state.messages })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        messages: state.messages.slice(-12),
+                        search: requestMode === 'web',
+                        modo: requestMode,
+                        tarea: 'pregunta'
+                    })
                 });
-                const result = await response.json();
-                if (!response.ok) {
-                    throw new Error(result.error || `${profile.title} service returned HTTP ${response.status}.`);
+                const result = await response.json().catch(() => null);
+                if (!response.ok || !result || result.error) {
+                    throw new Error((result && result.error) || `${profile.title} service returned HTTP ${response.status}.`);
                 }
-                if (typeof result.answer !== 'string' || !result.answer.trim()) {
+                if (typeof result.reply !== 'string' || !result.reply.trim()) {
                     throw new Error(`${profile.title} service returned an empty answer.`);
                 }
 
-                state.messages.push({ role: 'assistant', content: result.answer });
-                if (activeSectionChat === profileId) {
+                state.messages.push({ role: 'assistant', content: result.reply });
+                if (activeSectionChat === profileId && flamyMode === requestMode) {
                     if (pending.isConnected) {
                         pending.classList.remove('pending');
-                        pending.textContent = result.answer;
+                        pending.textContent = result.reply;
                     } else {
-                        appendSectionChatMessage('assistant', result.answer);
+                        appendSectionChatMessage('assistant', result.reply);
                     }
                     status.textContent = profile.received;
                 }
             } catch (error) {
                 state.messages.pop();
-                if (activeSectionChat === profileId) {
+                if (activeSectionChat === profileId && flamyMode === requestMode) {
                     if (pending.isConnected) {
                         pending.classList.remove('pending');
                         pending.classList.add('error');
@@ -3801,7 +4225,7 @@
                 }
             } finally {
                 state.busy = false;
-                if (activeSectionChat === profileId) {
+                if (activeSectionChat === profileId && flamyMode === requestMode) {
                     updateSectionChatControls();
                     input.focus();
                     log.scrollTop = log.scrollHeight;
@@ -3809,14 +4233,8 @@
             }
         }
 
-        setActiveSectionChat('fire-safety');
-
-        function toggleCRTMode() {
-            const enabled = document.body.classList.toggle('crt-mode');
-            document.getElementById('crt-toggle').setAttribute('aria-pressed', String(enabled));
-            document.getElementById('crt-toggle').innerText = enabled ? "CRT: ON" : "CRT: OFF";
-            addEvent("DISPLAY", `CRT display mode ${enabled ? "enabled" : "disabled"}.`);
-        }
+        initializeFlamyDragging();
+        setActiveSectionChat(null);
 
         const missionStart = Date.now();
         const telemetry = {
@@ -4017,11 +4435,6 @@
                     view: 'flame-group-view',
                     focus: 'Multi-fuel combustion and flame dynamics',
                     resize: window.resizeSuppressionChart
-                },
-                'flame-dissipation': {
-                    view: 'dissipation-view',
-                    focus: 'Droplet cooling, oxygen dilution & extinction limits',
-                    resize: window.resizeDissipationChart
                 }
             };
             const selectedDomain = domains[domain] ? domain : 'fire-safety';
@@ -4036,6 +4449,7 @@
             if (typeof selected.resize === 'function') {
                 window.requestAnimationFrame(selected.resize);
             }
+            setActiveSectionChat(selectedDomain);
         }
 
         updateSensorDomainView();
