@@ -1142,6 +1142,27 @@
             line-height: 1.55;
         }
 
+        .flame-group-module {
+            margin-top: 20px;
+        }
+
+        .flame-group-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 370px;
+            gap: 20px;
+            align-items: start;
+        }
+
+        @media (max-width: 760px) {
+            .flame-group-grid { grid-template-columns: minmax(0, 1fr); }
+        }
+
+        #flame-group-view[hidden],
+        #sensor-standard-controls[hidden],
+        #sensor-target-parameter[hidden] {
+            display: none;
+        }
+
         .data-figures {
             margin-top: 30px;
         }
@@ -1705,55 +1726,191 @@
             <div class="sensor-panel">
                 <div class="form-grid">
                     <div class="form-group">
-                        <label>1. Analysis Domain</label>
-                        <select id="sensor-topic" class="form-control">
-                            <option>Fire Safety & Combustion Thresholds</option>
-                            <option>Predictive Flammability Scenarios</option>
-                            <option>Flame Group Behavior Dynamics</option>
-                            <option>Flame Dissipation & Cooling Rates</option>
+                        <label for="sensor-topic">1. Analysis Domain</label>
+                        <select id="sensor-topic" class="form-control" aria-controls="sensor-standard-controls flame-group-view" onchange="updateSensorDomainView()">
+                            <option value="fire-safety">Fire Safety & Combustion Thresholds</option>
+                            <option value="predictive-modeling">Predictive Flammability Scenarios</option>
+                            <option value="flame-group">Flame Group Behavior Dynamics</option>
+                            <option value="flame-dissipation">Flame Dissipation & Cooling Rates</option>
                         </select>
                     </div>
 
+                    <div id="sensor-target-parameter" class="form-group">
+                        <label for="sensor-target-value">2. Target Parameter</label>
+                        <input id="sensor-target-value" type="text" class="form-control" value="Radiative Heat Flux (kW/m²)" readonly>
+                    </div>
+                </div>
+
+                <div id="sensor-standard-controls">
+                    <div class="telemetry-toolbar">
+                        <div class="connection-status">
+                            <div class="status-indicator"></div>
+                            <span>SIMULATED FEED / VIRTUAL NODE</span>
+                        </div>
+                        <div class="preset-group">
+                            <button class="btn-preset" onclick="setPreset('normal')">Nominal (1.2)</button>
+                            <button class="btn-preset" onclick="setPreset('caution')">Warning (2.4)</button>
+                            <button class="btn-preset" onclick="setPreset('critical')">Critical (3.8)</button>
+                        </div>
+                    </div>
+
                     <div class="form-group">
-                        <label>2. Target Parameter</label>
-                        <input type="text" class="form-control" value="Radiative Heat Flux (kW/m²)" readonly>
+                        <label for="staged-reading">Live Staged Reading</label>
+                        <input type="text" id="staged-reading" class="form-control" value="1.2 kW/m²" style="font-family: monospace; font-size: 14px; font-weight: 600;">
+                    </div>
+
+                    <button class="btn-execute" onclick="runAnalysis()">EXECUTE CONSULTATION & COMPARATIVE SLASH</button>
+
+                    <div id="results-panel" class="diagnostic-results">
+                        <div class="slash-layout">
+                            <div class="slash-data">
+                                <h4>Slash Comparative Diagnostic</h4>
+                                <div id="metric-comparison" class="slash-metric-row">READING: 1.2 kW/m² / BASELINE: &lt; 1.8 kW/m²</div>
+                                <p id="metric-recommendation" class="slash-desc">
+                                    Parameter is within nominal operational parameters for orbital combustion testing. No intervention required.
+                                </p>
+                            </div>
+                            <div class="traffic-console">
+                                <div id="lamp-red" class="lamp red"></div>
+                                <div id="lamp-yellow" class="lamp yellow"></div>
+                                <div id="lamp-green" class="lamp green active"></div>
+                                <div id="status-text" class="traffic-status-label" style="color: #34d399;">NOMINAL</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="telemetry-toolbar">
-                    <div class="connection-status">
-                        <div class="status-indicator"></div>
-                        <span>SIMULATED FEED / VIRTUAL NODE</span>
-                    </div>
-                    <div class="preset-group">
-                        <button class="btn-preset" onclick="setPreset('normal')">Nominal (1.2)</button>
-                        <button class="btn-preset" onclick="setPreset('caution')">Warning (2.4)</button>
-                        <button class="btn-preset" onclick="setPreset('critical')">Critical (3.8)</button>
-                    </div>
+            <div id="flame-group-view" class="flame-group-module" hidden>
+                <div class="mission-meta">
+                    <span class="mission-kicker">AstroSense / Multi-Fuel Combustion Dynamics</span>
+                    <span class="demo-badge">PSI Research Module</span>
                 </div>
+                <h2 style="font-size: 26px; font-weight: 600; margin-bottom: 6px;">Flame Group & Multi-Fuel Analysis</h2>
+                <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px;">
+                    Interactive sandbox simulator evaluating cool flame stability, pressure thresholds, and suppression agents based on NASA PSI datasets (PSI-39, PSI-117, PSI-142, PSI-115).
+                </p>
+                <p class="data-disclosure">Simulation only: outputs and suppression-agent rankings are not live sensor readings, emergency advice, or operational fire-safety guidance.</p>
 
-                <div class="form-group">
-                    <label>Live Staged Reading</label>
-                    <input type="text" id="staged-reading" class="form-control" value="1.2 kW/m²" style="font-family: monospace; font-size: 14px; font-weight: 600;">
-                </div>
+                <div class="flame-group-grid">
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <div class="sensor-panel" style="padding: 18px 20px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 14px;">
+                                <div>
+                                    <label for="fuel-select" style="display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; margin-bottom: 6px; color: var(--text-muted);">Active Fuel Specimen</label>
+                                    <select id="fuel-select" onchange="changeFuel()" class="form-control" style="width: auto; min-width: 240px;">
+                                        <option value="dodecane">n-Dodecane (C₁₂H₂₆)</option>
+                                        <option value="heptane">n-Heptane (C₇H₁₆)</option>
+                                        <option value="methanol">Methanol (CH₃OH)</option>
+                                    </select>
+                                </div>
+                                <div style="display: flex; gap: 6px; align-items: center;">
+                                    <span style="font-size: 10px; color: var(--text-muted); font-family: monospace; margin-right: 4px;">Simulate:</span>
+                                    <button class="btn-preset" onclick="applyPreset('nominal')" style="color: #71d5ae; border-color: rgba(84,214,160,0.3);">Nominal</button>
+                                    <button class="btn-preset" onclick="applyPreset('cool')" style="color: #fbbf24; border-color: rgba(251,191,36,0.3);">Cool Flame</button>
+                                    <button class="btn-preset" onclick="applyPreset('critical')" style="color: #ffb4b5; border-color: rgba(237,69,72,0.4);">Critical</button>
+                                </div>
+                            </div>
+                            <div style="padding: 10px 14px; border-radius: 4px; background: rgba(98, 201, 245, 0.08); border: 1px solid rgba(98, 201, 245, 0.25); display: flex; justify-content: space-between; align-items: center; gap: 12px;">
+                                <span id="fuel-description" style="font-size: 11px; color: #cbd5e1; line-height: 1.4;">Standard heavy alkane (PSI-39 / PSI-117): strong NTC behavior and stable spherical cool flames in microgravity.</span>
+                                <span id="fuel-formula-badge" style="font-family: monospace; font-size: 11px; padding: 3px 8px; border-radius: 3px; background: rgba(98, 201, 245, 0.18); color: var(--accent-cyan); font-weight: 700; white-space: nowrap;">C₁₂H₂₆</span>
+                            </div>
+                        </div>
 
-                <button class="btn-execute" onclick="runAnalysis()">EXECUTE CONSULTATION & COMPARATIVE SLASH</button>
+                        <div class="sensor-panel">
+                            <h3 style="margin-bottom: 16px; color: var(--accent-cyan); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;">🎛️ Sensor Telemetry Simulation Sliders</h3>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                                <div style="background: var(--bg-primary); padding: 14px; border-radius: 4px; border: 1px solid var(--border-color);">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                        <span style="font-size: 11px; color: var(--text-muted);">Chamber Pressure <span style="color: var(--accent-cyan); font-size: 9px; display: block;">Ref: PSI-39</span></span>
+                                        <span id="val-pressure" style="font-family: monospace; color: var(--accent-cyan); font-weight: 600;">1.00 atm</span>
+                                    </div>
+                                    <input type="range" id="slider-pressure" min="0.1" max="6.0" step="0.05" value="1.0" oninput="updateSimulation()" style="width: 100%; accent-color: var(--accent-cyan); cursor: pointer;">
+                                    <div class="slider-limits">
+                                        <span>0.1 atm</span>
+                                        <span id="label-pressure-range" style="color: #71d5ae;">Optimal: 0.25 - 5.0</span>
+                                        <span>6.0 atm</span>
+                                    </div>
+                                </div>
+                                <div style="background: var(--bg-primary); padding: 14px; border-radius: 4px; border: 1px solid var(--border-color);">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                        <span style="font-size: 11px; color: var(--text-muted);">O₂ Concentration <span style="color: var(--accent-cyan); font-size: 9px; display: block;">Ref: PSI-142</span></span>
+                                        <span id="val-oxygen" style="font-family: monospace; color: var(--accent-cyan); font-weight: 600;">21.0 %</span>
+                                    </div>
+                                    <input type="range" id="slider-oxygen" min="5" max="35" step="0.5" value="21.0" oninput="updateSimulation()" style="width: 100%; accent-color: var(--accent-cyan); cursor: pointer;">
+                                    <div class="slider-limits">
+                                        <span id="label-oxygen-crit" style="color: #ff9a9c;">&lt;14% Extinction</span>
+                                        <span>21% Air</span>
+                                        <span style="color: #ff9a9c;">&gt;30%</span>
+                                    </div>
+                                </div>
+                                <div style="background: var(--bg-primary); padding: 14px; border-radius: 4px; border: 1px solid var(--border-color);">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                        <span style="font-size: 11px; color: var(--text-muted);">Flame Temperature <span style="color: var(--accent-cyan); font-size: 9px; display: block;">Ref: PSI-117 (FLEX)</span></span>
+                                        <span id="val-temp" style="font-family: monospace; color: var(--accent-cyan); font-weight: 600;">680 K</span>
+                                    </div>
+                                    <input type="range" id="slider-temp" min="300" max="1500" step="10" value="680" oninput="updateSimulation()" style="width: 100%; accent-color: var(--accent-cyan); cursor: pointer;">
+                                    <div class="slider-limits">
+                                        <span>300K</span>
+                                        <span id="label-temp-cf" style="color: #fbbf24;">Cool: 550-850K</span>
+                                        <span>1500K</span>
+                                    </div>
+                                </div>
+                                <div style="background: var(--bg-primary); padding: 14px; border-radius: 4px; border: 1px solid var(--border-color);">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                        <span style="font-size: 11px; color: var(--text-muted);">DBP Aerosols <span style="color: var(--accent-cyan); font-size: 9px; display: block;">Ref: PSI-115</span></span>
+                                        <span id="val-dbp" style="font-family: monospace; color: var(--accent-cyan); font-weight: 600;">420 p/cm³</span>
+                                    </div>
+                                    <input type="range" id="slider-dbp" min="0" max="1500" step="10" value="420" oninput="updateSimulation()" style="width: 100%; accent-color: var(--accent-cyan); cursor: pointer;">
+                                    <div class="slider-limits">
+                                        <span>0</span>
+                                        <span id="particle-threshold-label" style="color: var(--accent-cyan);">Limit μg: 500</span>
+                                        <span>1500</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                <!-- Diagnostic Results (Slash & Traffic Light) -->
-                <div id="results-panel" class="diagnostic-results">
-                    <div class="slash-layout">
-                        <div class="slash-data">
-                            <h4>Slash Comparative Diagnostic</h4>
-                            <div id="metric-comparison" class="slash-metric-row">READING: 1.2 kW/m² / BASELINE: &lt; 1.8 kW/m²</div>
-                            <p id="metric-recommendation" class="slash-desc">
-                                Parameter is within nominal operational parameters for orbital combustion testing. No intervention required.
+                        <div class="sensor-panel">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 8px; flex-wrap: wrap;">
+                                <div>
+                                    <h3 style="margin: 0; color: var(--text-main); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;">🧯 Optimal Suppression Agent</h3>
+                                    <span style="font-size: 10px; color: var(--text-muted);">Efficiency ranked by flame regime, fuel chemistry & pressure</span>
+                                </div>
+                                <span id="recommended-ext-badge" style="font-size: 11px; font-weight: 700; font-family: monospace; padding: 4px 10px; border-radius: 4px; background: rgba(84,214,160,0.15); color: #71d5ae; border: 1px solid rgba(84,214,160,0.35);">Ideal: Xenon (Xe)</span>
+                            </div>
+                            <div style="height: 175px; position: relative;">
+                                <canvas id="extinguisherChart" aria-label="Simulated suppression efficiency by agent" role="img"></canvas>
+                            </div>
+                            <p id="extinguisher-chart-fallback" class="figure-note" role="status" hidden>Chart.js did not load, so the suppression chart is unavailable.</p>
+                            <p id="extinguisher-rationale" style="font-size: 11px; color: var(--text-muted); margin-top: 12px; background: var(--bg-primary); padding: 10px 12px; border-radius: 4px; border: 1px solid var(--border-color); line-height: 1.5;">
+                                For n-Dodecane Cool Flames in microgravity, Xenon (Xe) excels due to low thermal diffusivity and high heat capacity without dispersing droplets.
                             </p>
                         </div>
-                        <div class="traffic-console">
-                            <div id="lamp-red" class="lamp red"></div>
-                            <div id="lamp-yellow" class="lamp yellow"></div>
-                            <div id="lamp-green" class="lamp green active"></div>
-                            <div id="status-text" class="traffic-status-label" style="color: #34d399;">NOMINAL</div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <div class="sensor-panel" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                            <h3 style="align-self: flex-start; margin-bottom: 12px; color: var(--text-main); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;">🔥 Flame Geometry & Cluster</h3>
+                            <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; margin-bottom: 12px; background: var(--bg-primary); padding: 8px 12px; border-radius: 4px; border: 1px solid var(--border-color);">
+                                <span style="font-size: 10px; color: var(--text-muted);">Environment:</span>
+                                <button id="gravity-btn" type="button" onclick="toggleGravity()" class="header-control" style="font-size: 9px; padding: 4px 8px;">μg (Microgravity)</button>
+                            </div>
+                            <div style="position: relative; width: 110px; height: 110px; margin: 10px 0; display: flex; align-items: center; justify-content: center; background: var(--bg-primary); border-radius: 50%; border: 1px solid var(--border-color);">
+                                <div id="flame-sphere" style="width: 56px; height: 56px; border-radius: 50%; background: rgba(98,201,245,0.8); filter: blur(2px); transition: all 0.3s ease; box-shadow: 0 0 25px rgba(98,201,245,0.6);"></div>
+                            </div>
+                            <p id="flame-cluster-desc" style="font-family: monospace; font-size: 11px; color: var(--accent-cyan); margin-top: 6px;">Cluster: Cool Flame (Stable Spherical)</p>
+                            <div id="simulation-status-badge" style="margin-top: 12px; width: 100%; padding: 8px; border-radius: 4px; font-size: 11px; font-weight: 700; font-family: monospace; background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3);">
+                                STATUS: COOL FLAME DETECTED
+                            </div>
+                        </div>
+
+                        <div class="sensor-panel">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                <h3 style="margin: 0; color: var(--text-main); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;">📋 PSI Technical Log</h3>
+                                <span id="global-score" style="font-family: monospace; font-size: 10px; color: var(--accent-cyan);">Safety Score: 84/100</span>
+                            </div>
+                            <div id="log-container" style="background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 4px; padding: 10px; height: 185px; overflow-y: auto; font-family: monospace; font-size: 10px; color: var(--text-muted); line-height: 1.55; text-align: left;"></div>
                         </div>
                     </div>
                 </div>
@@ -1787,6 +1944,8 @@
         </section>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js" defer></script>
+    <script src="dashboard.js" defer></script>
     <script>
         function switchView(viewName) {
             const dashboardView = document.getElementById('dashboard-view');
@@ -2203,6 +2362,18 @@
                 recommendationEl.innerText = "CRITICAL ALERT: Combustion threshold breached. Fire suppression sequence initiated immediately.";
             }
         }
+
+        function updateSensorDomainView() {
+            const showFlameGroup = document.getElementById('sensor-topic').value === 'flame-group';
+            document.getElementById('sensor-target-parameter').hidden = showFlameGroup;
+            document.getElementById('sensor-standard-controls').hidden = showFlameGroup;
+            document.getElementById('flame-group-view').hidden = !showFlameGroup;
+            if (showFlameGroup && typeof resizeSuppressionChart === 'function') {
+                window.requestAnimationFrame(resizeSuppressionChart);
+            }
+        }
+
+        updateSensorDomainView();
 
     </script>
 </body>
