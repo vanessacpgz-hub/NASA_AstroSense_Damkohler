@@ -1945,17 +1945,41 @@
         }
 
         .landing-hero {
+            position: relative;
+            isolation: isolate;
             display: grid;
             min-height: min(700px, calc(100vh - 86px));
             align-items: center;
             padding: 64px 0 72px;
+            background: #07101f;
+        }
+
+        .landing-hero::before {
+            position: absolute;
+            z-index: -1;
+            inset: 0;
+            background:
+                linear-gradient(90deg, rgba(7, 16, 31, .98) 0%, rgba(7, 16, 31, .88) 42%, rgba(7, 16, 31, .38) 100%),
+                linear-gradient(0deg, #07101f 0%, rgba(7, 16, 31, .08) 30%, rgba(7, 16, 31, .08) 70%, #07101f 100%);
+            content: "";
+        }
+
+        .landing-hero-image {
+            position: absolute;
+            z-index: -2;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 44%;
         }
 
         .landing-hero-grid {
             display: grid;
-            grid-template-columns: minmax(0, 1.08fr) minmax(340px, .92fr);
+            grid-template-columns: minmax(0, 1fr);
             align-items: center;
-            gap: clamp(36px, 5vw, 64px);
+            max-width: 850px;
+            position: relative;
         }
 
         .landing-eyebrow {
@@ -2046,49 +2070,6 @@
             margin-right: 18px;
             color: var(--landing-cyan);
             content: "·";
-        }
-
-        .landing-hero-figure {
-            position: relative;
-            margin: 0;
-            padding: 10px;
-            border: 1px solid var(--landing-border);
-            background: linear-gradient(145deg, rgba(25, 50, 72, .82), rgba(7, 16, 31, .75));
-            box-shadow: 0 26px 90px rgba(0, 0, 0, .34);
-        }
-
-        .landing-hero-figure::before {
-            position: absolute;
-            z-index: 1;
-            top: -1px;
-            left: -1px;
-            width: 56px;
-            height: 3px;
-            background: var(--landing-cyan);
-            content: "";
-        }
-
-        .landing-hero-figure img {
-            display: block;
-            width: 100%;
-            aspect-ratio: 1.8;
-            object-fit: cover;
-            background: #02060c;
-        }
-
-        .landing-hero-figure figcaption {
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-            padding: 12px 4px 2px;
-            color: #a7b5c5;
-            font-size: 9px;
-            letter-spacing: .08em;
-            line-height: 1.5;
-        }
-
-        .landing-hero-figure figcaption strong {
-            color: #e8f4fa;
         }
 
         .landing-section {
@@ -2396,9 +2377,8 @@
         @media (max-width: 900px) {
             .landing-nav { gap: 16px; }
             .landing-nav a { font-size: 8px; }
-            .landing-hero-grid { grid-template-columns: 1fr; gap: 34px; }
+            .landing-hero-grid { grid-template-columns: 1fr; }
             .landing-hero h1 { font-size: clamp(40px, 6vw, 58px); }
-            .landing-hero-figure { max-width: 760px; }
         }
 
         @media (max-width: 700px) {
@@ -2414,7 +2394,6 @@
             .landing-simulation-grid { grid-template-columns: 1fr; gap: 36px; }
             .landing-hero h1 { font-size: clamp(38px, 10vw, 58px); }
             .landing-hero-copy { font-size: 14px; }
-            .landing-hero-figure { max-width: 560px; }
             .landing-section { padding: 72px 0; }
             .landing-section-heading { margin-bottom: 28px; }
             .landing-modules-grid { grid-template-columns: 1fr; }
@@ -2428,7 +2407,6 @@
             .landing-brand-copy small { font-size: 7px; }
             .landing-nav a { letter-spacing: .04em; }
             .landing-hero h1 { font-size: 36px; }
-            .landing-hero-figure figcaption { flex-direction: column; }
             .landing-footer { flex-direction: column; }
         }
 
@@ -2466,23 +2444,17 @@
 
             <div class="landing-main">
                 <section id="landing-top" class="landing-hero">
+                    <img class="landing-hero-image" src="assets/astro-microgravity-flame.png" alt="Spherical flame with glowing particles in a microgravity combustion experiment." fetchpriority="high">
                     <div class="landing-hero-grid">
                         <div>
-                            <p class="landing-eyebrow">SPACE FIRE RESEARCH · 2026</p>
+                            <p class="landing-eyebrow">NASA SPACE APPS CHALLENGE 2026</p>
                             <h1>UNDERSTANDING FIRE.<br><span>PROTECTING THE FUTURE</span> OF SPACE EXPLORATION.</h1>
-                            <p class="landing-hero-copy">An AI-powered scientific platform for exploring fire safety, suppression, flammability and flame behavior in space.</p>
-                            <button class="landing-primary" type="button" onclick="enterPlatform('fire-safety')">EXPLORE ASTROSENSE <span aria-hidden="true">→</span></button>
+                            <p class="landing-hero-copy">An integrated scientific platform for exploring fire safety, suppression technologies, flammability prediction and flame behavior in space environments.</p>
+                            <button class="landing-primary" type="button" onclick="enterPlatform('fire-safety')">EXPLORE THE PLATFORM <span aria-hidden="true">→</span></button>
                             <div class="landing-tags" aria-label="Research, artificial intelligence, and simulation">
                                 <span>RESEARCH</span><span>ARTIFICIAL INTELLIGENCE</span><span>SIMULATION</span>
                             </div>
                         </div>
-                        <figure class="landing-hero-figure">
-                            <img src="assets/saffire-hero.jpg" alt="Plexiglass burning inside NASA's SAFFIRE-IV spacecraft fire experiment." fetchpriority="high">
-                            <figcaption>
-                                <strong>FIRE BEHAVIOR IN MICROGRAVITY</strong>
-                                <span>NASA/JSC · SAFFIRE-IV</span>
-                            </figcaption>
-                        </figure>
                     </div>
                 </section>
 
@@ -2490,42 +2462,42 @@
                     <div class="landing-about-grid">
                         <div>
                             <p class="landing-eyebrow">ABOUT THE PROJECT</p>
-                            <h2>Bridging scientific research and intelligent analysis for fire safety in space.</h2>
+                            <h2>Bridging Scientific Research and Intelligent Analysis for Fire Safety in Space.</h2>
                         </div>
                         <div class="landing-about-copy">
                             <p>AstroSense is an integrated scientific platform designed to organize, explore and analyze NASA research on fire behavior and safety in space environments.</p>
-                            <p>By combining specialized AI assistants, structured scientific databases and interactive mathematical simulations, AstroSense transforms complex research into accessible tools for scientific exploration and scenario analysis.</p>
+                            <p>By combining specialized AI assistants, structured scientific databases and interactive mathematical simulations, AstroSense transforms complex scientific research into accessible tools for scientific exploration and scenario analysis.</p>
                         </div>
                     </div>
                 </section>
 
                 <section id="modules" class="landing-section">
                     <div class="landing-section-heading">
-                        <p class="landing-eyebrow">EXPLORE THE PLATFORM</p>
+                        <p class="landing-eyebrow">EXPLORE THE MODULES</p>
                         <h2>Four research domains. One connected workspace.</h2>
                     </div>
                     <div class="landing-modules-grid">
                         <button class="module-card" type="button" onclick="enterPlatform('fire-safety')">
-                            <span class="module-index">01 — FIRE SAFETY</span>
-                            <strong>Protect the crew and spacecraft</strong>
+                            <span class="module-index">01</span>
+                            <strong>Fire Safety</strong>
                             <p>Explore fire hazards, prevention strategies, material safety and fire protection considerations in spacecraft environments.</p>
                             <span class="module-card-cta"><span>Explore module</span><span aria-hidden="true">↗</span></span>
                         </button>
                         <button class="module-card" type="button" onclick="enterPlatform('fire-extinguisher')">
-                            <span class="module-index">02 — FIRE EXTINGUISHER</span>
-                            <strong>Understand suppression in space</strong>
+                            <span class="module-index">02</span>
+                            <strong>Fire Extinguisher</strong>
                             <p>Explore fire suppression technologies, extinguishing agents and their behavior under microgravity conditions.</p>
                             <span class="module-card-cta"><span>Explore module</span><span aria-hidden="true">↗</span></span>
                         </button>
                         <button class="module-card" type="button" onclick="enterPlatform('predictive-modeling')">
-                            <span class="module-index">03 — PREDICTIVE MODELING</span>
-                            <strong>Explore flammability scenarios</strong>
+                            <span class="module-index">03</span>
+                            <strong>Predictive Modeling of Flammability and Fire Scenarios</strong>
                             <p>Analyze flammability parameters and explore mathematical models for predicting fire behavior and potential scenarios.</p>
                             <span class="module-card-cta"><span>Explore module</span><span aria-hidden="true">↗</span></span>
                         </button>
                         <button class="module-card" type="button" onclick="enterPlatform('flame-group')">
-                            <span class="module-index">04 — FLAME GROUP</span>
-                            <strong>Study combustion and flame dynamics</strong>
+                            <span class="module-index">04</span>
+                            <strong>Flame Group</strong>
                             <p>Explore scientific research on flame behavior, combustion dynamics and flame characteristics in space environments.</p>
                             <span class="module-card-cta"><span>Explore module</span><span aria-hidden="true">↗</span></span>
                         </button>
@@ -2536,10 +2508,10 @@
                     <div class="landing-flamy-grid">
                         <div>
                             <p class="landing-eyebrow">MEET FLAMY</p>
-                            <h2>Your AI-powered research coordinator.</h2>
+                            <h2>Your AI-Powered Research Coordinator</h2>
                             <div class="landing-flamy-copy">
                                 <p><strong>One platform. Multiple specialized AI assistants.</strong></p>
-                                <p>Flamy coordinates specialized AI assistants connected to scientific datasets and research for their respective modules. Ask scientific questions, retrieve relevant information and explore the research in two consultation modes.</p>
+                                <p>Flamy coordinates a network of specialized AI assistants, each connected to scientific datasets and research belonging to its respective module. It allows users to ask scientific questions, retrieve relevant information and explore research through two consultation modes:</p>
                             </div>
                         </div>
                         <div class="flamy-panel">
@@ -2550,7 +2522,7 @@
                             <div class="flamy-modes">
                                 <div class="flamy-mode">
                                     <strong>DATABASE MODE</strong>
-                                    <p>Answers based exclusively on the integrated research database.</p>
+                                    <p>Answers based exclusively on the integrated scientific research database.</p>
                                 </div>
                                 <div class="flamy-mode">
                                     <strong>INTERNET MODE</strong>
@@ -2564,14 +2536,15 @@
                 <section id="simulations" class="landing-section landing-simulation">
                     <div class="landing-simulation-grid">
                         <div class="landing-simulation-copy">
-                            <p class="landing-eyebrow">FROM SCIENTIFIC RESEARCH TO INTERACTIVE SIMULATION</p>
-                            <h2>Explore how parameters shape fire-related scenarios.</h2>
-                            <p>Use mathematical approximations based on scientific research to explore different operating conditions.</p>
+                            <p class="landing-eyebrow">INTERACTIVE SIMULATIONS</p>
+                            <h2>From Scientific Research to Interactive Simulation.</h2>
+                            <p>Explore how different parameters influence fire-related scenarios through mathematical approximations based on scientific research.</p>
                             <ul>
                                 <li>Modify simulation parameters.</li>
                                 <li>Explore different operating conditions.</li>
                                 <li>Compare selected values against reference conditions.</li>
                                 <li>Visualize parameter proximity through an indicator system.</li>
+                                <li>Analyze the relationship between variables and their influence on fire-related scenarios.</li>
                             </ul>
                             <button class="landing-primary" type="button" onclick="enterPlatform('predictive-modeling')">EXPLORE THE MODELS <span aria-hidden="true">→</span></button>
                         </div>
@@ -2603,8 +2576,8 @@
                 <section class="landing-section">
                     <div class="landing-final-cta">
                         <p class="landing-eyebrow">CONTINUE THE EXPLORATION</p>
-                        <h2>Explore the science behind fire in space.</h2>
-                        <p>Discover research, interact with scientific data and explore fire behavior through AI and mathematical modeling.</p>
+                        <h2>EXPLORE THE SCIENCE BEHIND FIRE IN SPACE.</h2>
+                        <p>Discover research, interact with scientific data and explore fire behavior through artificial intelligence and mathematical modeling.</p>
                         <button class="landing-primary" type="button" onclick="enterPlatform('fire-safety')">ENTER THE PLATFORM <span aria-hidden="true">→</span></button>
                     </div>
                 </section>
