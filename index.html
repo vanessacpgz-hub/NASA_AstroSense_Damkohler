@@ -1174,6 +1174,70 @@
             letter-spacing: .1em;
         }
 
+        .flammability-accordion-list {
+            display: grid;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .flammability-accordion {
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            background: rgba(5,9,20,.48);
+        }
+
+        .flammability-accordion summary {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 18px;
+            color: var(--text-main);
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .04em;
+            list-style: none;
+        }
+
+        .flammability-accordion summary::-webkit-details-marker { display: none; }
+        .flammability-accordion summary:focus-visible { outline: 2px solid var(--accent-cyan); outline-offset: -3px; }
+
+        .flammability-accordion summary::after {
+            margin-left: auto;
+            color: var(--accent-cyan);
+            content: "+";
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        .flammability-accordion[open] summary::after { content: "−"; }
+
+        .flammability-accordion summary span {
+            color: var(--accent-cyan);
+            font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+        }
+
+        .flammability-accordion-content {
+            padding: 2px 18px 18px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .flammability-accordion-content p {
+            margin: 12px 0;
+            color: #bac8d9;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .flammability-accordion-content ul {
+            margin: 10px 0;
+            padding-left: 22px;
+            color: #bac8d9;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
         .data-figure {
             margin: 14px 0;
             overflow: hidden;
@@ -1639,6 +1703,89 @@
                     </figcaption>
                 </figure>
             </section>
+
+            <section id="flammability-research" class="data-figures" aria-labelledby="flammability-research-title" hidden>
+                <h3 id="flammability-research-title">NASA PSI FLAMMABILITY RESEARCH</h3>
+                <p class="telemetry-note">Select a study title to expand its findings, study parameters, and figure.</p>
+
+                <div class="flammability-accordion-list">
+                    <details class="flammability-accordion">
+                        <summary><span>01</span> Soot (PSI-60)</summary>
+                        <div class="flammability-accordion-content">
+                            <p>Without gravity, flames are longer, wider and about 230 K cooler, and they produce much more soot.</p>
+                            <ul>
+                                <li>Methane peak local soot volume fraction: about 2× (range 1.8–2) in 0g vs. 1g.</li>
+                                <li>Acetylene at 100%: 3×; acetylene at 50%: 4×.</li>
+                                <li>Ethylene total soot: 6.5× (range 5–8).</li>
+                                <li>Fuel-flow test cases: 1.2, 1.6 and 2.2 mg/s (4.32, 5.76 and 7.92 g/h), plus a baseline preheated to 160 °C (433 K). Ethylene-acetylene cases use an expected 4× soot factor.</li>
+                            </ul>
+                            <p><strong>Monte Carlo inputs:</strong> Soot scaling factors use truncated normal distributions: acetylene 100% (μ = 3, σ = 0.3), acetylene 50% (μ = 4, σ = 0.4) and ethylene (μ = 6.5, σ = 0.75).</p>
+                            <figure class="data-figure">
+                                <img src="assets/psi-soot-microgravity.png" alt="Soot increase ratios in microgravity, fuel-flow test cases, and truncated-normal input distributions for soot scaling." loading="lazy" decoding="async">
+                                <figcaption><h4>Soot increase, fuel-flow cases and sampled scaling factors</h4></figcaption>
+                            </figure>
+                        </div>
+                    </details>
+
+                    <details class="flammability-accordion">
+                        <summary><span>02</span> Smoke and Aerosols (PSI-115)</summary>
+                        <div class="flammability-accordion-content">
+                            <p><strong>Particle size distribution:</strong> Smoke particles follow a lognormal distribution, and most are smaller than 500 nm. In 0g smoke does not rise, so it ages in place through coagulation and condensation for 10–1,800 s.</p>
+                            <p><strong>Characteristic diameters:</strong> D<sub>10</sub>, D<sub>32</sub> and mass median diameter are computed from geometric mean diameter (D<sub>g</sub>) and geometric standard deviation (σ<sub>g</sub>) with Hatch–Choate relations. For silicone (D<sub>g</sub> = 240 nm, σ<sub>g</sub> = 1.7), the mass median diameter rises to about 560 nm.</p>
+                            <p><strong>Test time scales:</strong> Igniter activation 15–60 s; pyrolysis event 120 s; smoke aging 10–1,800 s.</p>
+                            <figure class="data-figure">
+                                <img src="assets/psi-smoke-aerosols.png" alt="Lognormal smoke-particle size distributions for six materials, Hatch–Choate characteristic diameters, and SAME test time scales." loading="lazy" decoding="async">
+                                <figcaption><h4>Smoke particle sizes, characteristic diameters and test durations</h4></figcaption>
+                            </figure>
+                        </div>
+                    </details>
+
+                    <details class="flammability-accordion">
+                        <summary><span>03</span> Flame Spread over Solids (PSI-62 and SAME)</summary>
+                        <div class="flammability-accordion-content">
+                            <p><strong>SAME pyrolysis tests:</strong> Eight tests on Teflon and Kapton at 5 or 10 cm/s airflow, with a mass-loss rate of 1–2 mg/min and 1 or 20 minutes of smoke aging.</p>
+                            <p><strong>Parameter space:</strong> BASS wind-tunnel tests forced flow from 0 to 40 cm/s and oxygen from 14% to 21% (nominal: 18% oxygen and 20 cm/s). The goal is the “Goldilocks” flammability zone: too little flow and radiation quenches the flame; too much and the flame is blown off.</p>
+                            <p><strong>Sample and duct scale:</strong> BASS duct 76 × 76 mm (58 cm²); SAFFIRE-II sample 145 cm²; SAFFIRE-I sample 3,760 cm² (about 26 times larger than SAFFIRE-II). SIBAL fabric is 75% cotton and 25% fiberglass.</p>
+                        </div>
+                    </details>
+
+                    <details class="flammability-accordion">
+                        <summary><span>04</span> FLEX: Methanol Droplets, Burning Rate and LOI</summary>
+                        <div class="flammability-accordion-content">
+                            <p>The figure compares initial and extinction droplet diameters across five methanol FLEX tests at 1 atm and 21% oxygen; test 4 has no extinction-diameter data. The measured burning rates range from 0.48 to 0.60 mm²/s, with a mean of 0.556 mm²/s.</p>
+                            <p>The right panel shows minimum oxygen fractions to sustain a flame (0g): methanol 12%, n-heptane 15%, and air as a 21% reference.</p>
+                            <figure class="data-figure">
+                                <img src="assets/psi-flex-methanol-results.png" alt="Methanol FLEX initial and extinction droplet diameters, burning rate by test, and minimum oxygen fractions for methanol, n-heptane, and air reference." loading="lazy" decoding="async">
+                                <figcaption><h4>Methanol droplet measurements, burning rate and limiting oxygen index</h4></figcaption>
+                            </figure>
+                        </div>
+                    </details>
+
+                    <details class="flammability-accordion">
+                        <summary><span>05</span> Monte Carlo Parameters</summary>
+                        <div class="flammability-accordion-content">
+                            <p>The chart gives the minimum, maximum and mean (μ) for 14 variables across four studies, with normal, truncated normal, lognormal or uniform distributions. Every simulation run samples these ranges to generate thousands of possible fire scenarios.</p>
+                            <p>A marker near the center indicates a symmetric distribution; a marker near an end indicates skew, as for pressure, particle diameter and fuel flow.</p>
+                            <figure class="data-figure">
+                                <img src="assets/psi-monte-carlo-ranges.png" alt="Minimum, maximum and mean values for 14 Monte Carlo variables, grouped by the PSI-60, PSI-115, PSI-62, and PSI-117 studies." loading="lazy" decoding="async">
+                                <figcaption><h4>Simulation ranges and mean values across four studies</h4></figcaption>
+                            </figure>
+                        </div>
+                    </details>
+
+                    <details class="flammability-accordion">
+                        <summary><span>06</span> Research Map: The NASA PSI Studies Behind the Model</summary>
+                        <div class="flammability-accordion-content">
+                            <p>The left panel shows the active period of eight NASA Physical Sciences Informatics (PSI) investigations. Blue bars are ground-based studies (analysis, CFD and direct numerical simulation); orange bars are experiments flown on the International Space Station (ISS). The right panel shows the number of scientific publications in the reference catalog (13 total).</p>
+                            <p><strong>How the studies connect:</strong> Each ground study is validated against one or more ISS flight experiments, so every part of the model can be checked against real microgravity data.</p>
+                            <figure class="data-figure">
+                                <img src="assets/psi-research-map.png" alt="Active periods of eight NASA PSI investigations grouped as ground-based studies and ISS flights, with publication counts totaling 13." loading="lazy" decoding="async">
+                                <figcaption><h4>Study timelines and publications in the reference catalog</h4></figcaption>
+                            </figure>
+                        </div>
+                    </details>
+                </div>
+            </section>
         </div>
 
         <section id="extinguisher-view" class="view-section">
@@ -1979,7 +2126,7 @@
                 descEl.innerText = "Real-time orbital and atmospheric telemetry monitoring cabin materials, combustion mitigation thresholds, and space station safety compliance based on NASA open databases.";
             } else if (tabId === 'predictive-modeling') {
                 titleEl.innerText = "Predictive modeling of flammability and fire scenarios";
-                descEl.innerText = "Advanced machine learning models predicting ignition probabilities and flame spread across microgravity habitats using NASA Exoplanet & Material Archive datasets.";
+                descEl.innerText = "Explore NASA PSI research on soot, smoke, flame spread, and flammability models across ground-based and ISS studies.";
             } else if (tabId === 'flame-group') {
                 titleEl.innerText = "Flame group";
                 descEl.innerText = "Explore eight combustion datasets in the PSI repository, including ISS ACME campaigns and tests of pressure, dilution, flame geometry, and lifetime.";
@@ -1988,12 +2135,15 @@
                 descEl.innerText = "Thermal quenching and energy dissipation tracking to optimize fire suppression response times in aerospace engineering environments.";
             }
             const showFlameArchive = tabId === 'flame-group';
-            document.getElementById('dashboard-grid').hidden = showFlameArchive;
-            document.getElementById('flight-event-log').hidden = showFlameArchive;
+            const showFlammabilityResearch = tabId === 'predictive-modeling';
+            const showResearch = showFlameArchive || showFlammabilityResearch;
+            document.getElementById('dashboard-grid').hidden = showResearch;
+            document.getElementById('flight-event-log').hidden = showResearch;
             document.getElementById('flame-group-research').hidden = !showFlameArchive;
+            document.getElementById('flammability-research').hidden = !showFlammabilityResearch;
             document.getElementById('dashboard-badge').innerText = showFlameArchive
                 ? 'PSI archive · ≈1,600 records'
-                : 'Telemetry demo';
+                : showFlammabilityResearch ? 'NASA PSI · FLAMMABILITY RESEARCH' : 'Telemetry demo';
             setActiveSectionChat(tabId);
         }
 
