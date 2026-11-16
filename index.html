@@ -2584,6 +2584,38 @@
                 animation-duration: .01ms !important;
             }
         }
+
+        /* ---- Flamy: explain selected text / explain buttons (additive block) ---- */
+        #flamy-explain-chip {
+            position: fixed;
+            z-index: 122;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px 6px 8px;
+            border: 1px solid rgba(98,201,245,.45);
+            border-radius: 999px;
+            background: #102442;
+            color: #fff;
+            font: 700 12px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(0,0,0,.45);
+        }
+
+        #flamy-explain-chip[hidden] { display: none; }
+
+        #flamy-explain-chip img {
+            width: 18px;
+            height: 22px;
+            object-fit: contain;
+            pointer-events: none;
+        }
+
+        body.flamy-explain :is(a[href], button, [role="button"], input[type="button"], input[type="submit"], summary):not(#section-chat-dock *):not(#usage-guide *):not(#usage-guide-replay):not(#flamy-explain-chip):hover {
+            outline: 2px dashed var(--accent-cyan);
+            outline-offset: 3px;
+            cursor: help;
+        }
     </style>
 </head>
 <body>
@@ -4454,6 +4486,227 @@
 
         updateSensorDomainView();
 
+    </script>
+    <script>
+        /* Flamy: explain selected text + explain buttons/links.
+           Self-contained block; it only reuses the existing Flamy section chat
+           (state, endpoint, message rendering) and changes none of its code. */
+        (() => {
+            const SEL = 'a[href],button,[role="button"],input[type="button"],input[type="submit"],summary';
+            const SKIP = '#section-chat-dock,#usage-guide,#usage-guide-replay,#flamy-explain-chip,#flamy-nudge';
+            const dock = document.getElementById('section-chat-dock');
+            const chatWin = document.getElementById('section-chat-window');
+            if (!dock || !chatWin) return;
+
+            const chip = document.createElement('button');
+            chip.id = 'flamy-explain-chip';
+            chip.type = 'button';
+            chip.hidden = true;
+            chip.innerHTML = '<img alt=""><span>Explain with Flamy</span>';
+            document.body.appendChild(chip);
+
+            const apiPrompts = new WeakMap();   // full prompt sent to the API for a message shown in short form
+            let explainOn = false;
+            let selTimer = null;
+            let chipText = '';
+            let chipContext = '';
+
+            const chatReady = () => !!activeSectionChat && !dock.hidden;
+            const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+            const short = (t, n) => (t.length > n ? t.slice(0, n) + '…' : t);
+
+            /* ---- explain mode (active while the chat is open) ---- */
+            function setExplain(on) {
+                if (on === explainOn) return;
+                explainOn = on;
+                document.body.classList.toggle('flamy-explain', on);
+                if (on && chatReady()) {
+                    appendSectionChatMessage('assistant', 'While this chat is open, click any button or link and I\u2019ll tell you what it does, without opening it. To use the page normally, close the chat.');
+                }
+            }
+
+            function syncExplainMode() {
+                const on = !chatWin.hidden && !dock.hidden;
+                setExplain(on);
+                if (!chatReady()) chip.hidden = true;
+            }
+            const observer = new MutationObserver(syncExplainMode);
+            observer.observe(chatWin, { attributes: true, attributeFilter: ['hidden'] });
+            observer.observe(dock, { attributes: true, attributeFilter: ['hidden'] });
+            syncExplainMode();
+
+            /* ---- send an explain request through the existing section chat ---- */
+            async function flamyAsk(shown, prompt) {
+                if (!chatReady()) return;
+                const profileId = activeSectionChat;
+                const profile = sectionChatProfiles[profileId];
+                const requestMode = flamyMode;
+                const state = sectionChatStates[profileId][requestMode];
+                const status = document.getElementById('section-chat-status');
+                const log = document.getElementById('section-chat-log');
+
+                if (chatWin.hidden) toggleSectionChat(true);
+                if (state.busy) {
+                    status.textContent = 'Flamy is still answering. Try again in a moment.';
+                    return;
+                }
+
+                state.busy = true;
+                updateSectionChatControls();
+                appendSectionChatMessage('user', shown);
+                const msg = { role: 'user', content: shown };
+                apiPrompts.set(msg, prompt);
+                state.messages.push(msg);
+                const pending = appendSectionChatMessage('assistant pending', profile.pending);
+                status.textContent = profile.connecting;
+                log.scrollTop = log.scrollHeight;
+
+                try {
+                    const response = await fetch(flamyApiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            messages: state.messages.slice(-12).map(m => ({ role: m.role, content: apiPrompts.get(m) || m.content })),
+                            search: false,
+                            modo: requestMode,
+                            tarea: 'explicar'
+                        })
+                    });
+                    const result = await response.json().catch(() => null);
+                    if (!response.ok || !result || result.error) {
+                        throw new Error((result && result.error) || `${profile.title} service returned HTTP ${response.status}.`);
+                    }
+                    if (typeof result.reply !== 'string' || !result.reply.trim()) {
+                        throw new Error(`${profile.title} service returned an empty answer.`);
+                    }
+                    state.messages.push({ role: 'assistant', content: result.reply });
+                    if (activeSectionChat === profileId && flamyMode === requestMode) {
+                        if (pending.isConnected) {
+                            pending.classList.remove('pending');
+                            pending.textContent = result.reply;
+                        } else {
+                            appendSectionChatMessage('assistant', result.reply);
+                        }
+                        status.textContent = profile.received;
+                    }
+                } catch (error) {
+                    state.messages.pop();
+                    if (activeSectionChat === profileId && flamyMode === requestMode) {
+                        if (pending.isConnected) {
+                            pending.classList.remove('pending');
+                            pending.classList.add('error');
+                            pending.textContent = `Request failed: ${error.message}`;
+                        } else {
+                            appendSectionChatMessage('assistant error', `Request failed: ${error.message}`);
+                        }
+                        status.textContent = 'Request failed. Please try again.';
+                    }
+                } finally {
+                    state.busy = false;
+                    if (activeSectionChat === profileId && flamyMode === requestMode) {
+                        updateSectionChatControls();
+                        log.scrollTop = log.scrollHeight;
+                    }
+                }
+            }
+
+            /* ---- explain selected text ---- */
+            function explainText(text, context) {
+                flamyAsk(
+                    'Explain: \u00AB' + short(text, 70) + '\u00BB',
+                    'Explain in very simple terms, as if I knew nothing about the topic, what this text I selected on the page means: \u00AB' + text + '\u00BB.' +
+                    (context && context !== text ? ' It appears in this passage: \u00AB' + context + '\u00BB.' : '') +
+                    ' Answer in at most 4 short sentences, without jargon.'
+                );
+            }
+
+            function checkSelection() {
+                const sel = window.getSelection();
+                const text = sel ? sel.toString().trim() : '';
+                if (!chatReady() || !text || text.length < 3 || text.length > 600 || !sel.rangeCount) {
+                    chip.hidden = true;
+                    return;
+                }
+                const node = sel.anchorNode && (sel.anchorNode.nodeType === 1 ? sel.anchorNode : sel.anchorNode.parentElement);
+                if (!node || node.closest(SKIP + ',input,textarea,select,[contenteditable]')) {
+                    chip.hidden = true;
+                    return;
+                }
+                chipText = text;
+                chipContext = (node.closest('p,li,h1,h2,h3,h4,td,th,blockquote,.card') || node).innerText.trim().slice(0, 400);
+                chip.querySelector('img').src = document.getElementById('flamy-launcher-image').src;
+                const rect = sel.getRangeAt(0).getBoundingClientRect();
+                chip.hidden = false;
+                const w = chip.offsetWidth;
+                let top = rect.top - chip.offsetHeight - 8;
+                if (top < 8) top = rect.bottom + 8;
+                chip.style.left = clamp(rect.left + rect.width / 2 - w / 2, 8, window.innerWidth - w - 8) + 'px';
+                chip.style.top = top + 'px';
+            }
+
+            document.addEventListener('selectionchange', () => {
+                clearTimeout(selTimer);
+                selTimer = setTimeout(checkSelection, 250);
+            });
+            window.addEventListener('scroll', () => { chip.hidden = true; }, { passive: true });
+            chip.addEventListener('pointerdown', e => e.preventDefault());   // keep the selection alive
+            chip.addEventListener('click', () => {
+                chip.hidden = true;
+                window.getSelection().removeAllRanges();
+                explainText(chipText, chipContext);
+            });
+
+            /* ---- explain buttons and links ---- */
+            function explainEl(el) {
+                const label = (el.getAttribute('aria-label') || el.innerText || el.value || el.title || '').trim().replace(/\s+/g, ' ').slice(0, 80) || '(no text)';
+                const facts = ['Visible text: \u00AB' + label + '\u00BB'];
+                const anchor = el.closest('a[href]');
+                if (el.dataset.flamy) facts.push('Description given by the page author: ' + el.dataset.flamy);
+                if (el.title && el.title !== label) facts.push('Tooltip: ' + el.title);
+                if (anchor) {
+                    const href = anchor.getAttribute('href');
+                    try {
+                        if (href[0] === '#') {
+                            const target = href.length > 1 && document.getElementById(href.slice(1));
+                            facts.push(target
+                                ? 'Internal link that scrolls to the section \u00AB' + (target.querySelector('h1,h2,h3') || target).innerText.trim().slice(0, 60) + '\u00BB of this same page'
+                                : 'Internal link within this same page');
+                        } else if (/^mailto:/i.test(href)) {
+                            facts.push('Opens an email to ' + href.slice(7).split('?')[0]);
+                        } else if (/^tel:/i.test(href)) {
+                            facts.push('Starts a call to ' + href.slice(4));
+                        } else if (/^javascript:/i.test(href)) {
+                            facts.push('Runs an action on the page');
+                        } else {
+                            const url = new URL(anchor.href);
+                            facts.push(url.origin === location.origin
+                                ? 'Goes to another page of this site (' + url.pathname + ')'
+                                : 'Goes to another website (' + url.hostname + ')');
+                            if (anchor.target === '_blank') facts.push('Opens in a new tab');
+                        }
+                    } catch (_) { /* ignore malformed URLs */ }
+                } else {
+                    const handler = (el.getAttribute('onclick') || '').trim().slice(0, 120);
+                    if (el.dataset.tabId) facts.push('Switches the page to the \u00AB' + el.dataset.tabId + '\u00BB section/tab');
+                    facts.push(el.form
+                        ? 'Button inside a form' + (el.type === 'submit' ? ' that submits the data' : '')
+                        : 'Button that runs an action on the page' + (handler ? ' (page code hint: ' + handler + ')' : '; its exact result is not known'));
+                }
+                flamyAsk(
+                    'What does \u00AB' + label + '\u00BB do?',
+                    'The visitor pointed at a button or link on this page and wants to know where it goes or what it does. Real data: ' + facts.join('. ') +
+                    '. Explain it in 2 or 3 simple sentences using only this data; if it is not enough to know, say so honestly instead of making something up.'
+                );
+            }
+
+            document.addEventListener('click', e => {
+                const el = e.target.closest && e.target.closest(SEL);
+                if (!el || el.closest(SKIP) || !(explainOn || e.altKey) || !chatReady()) return;
+                e.preventDefault();
+                e.stopPropagation();
+                explainEl(el);
+            }, true);
+        })();
     </script>
 </body>
 </html>
